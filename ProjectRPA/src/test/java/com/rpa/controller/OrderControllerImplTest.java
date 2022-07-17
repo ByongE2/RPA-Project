@@ -1,4 +1,4 @@
-package com.rpa.order.controller;
+package com.rpa.controller;
 
 public class OrderControllerImplTest {
 
