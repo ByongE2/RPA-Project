@@ -191,7 +191,7 @@
 		</dependency>
 
 		<!-- 추가: log4j 라이브러리 Log4j-api, Log4j-core (수업내용과 다름. 에러나서 추가로 해결. -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.0.1</version>
@@ -201,7 +201,7 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.0.1</version>
-		</dependency>
+		</dependency> -->
 
 	</dependencies>
 	<build>
