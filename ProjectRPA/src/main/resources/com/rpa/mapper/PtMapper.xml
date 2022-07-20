@@ -5,6 +5,8 @@
   
 <mapper namespace="com.rpa.pt.mapper.Pt_Goods_Mapper">
 
-  
+  <insert id="ptinsert">
+  	insert into PTproduct
+  </insert>
   
 </mapper>
