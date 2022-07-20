@@ -11,8 +11,7 @@ DB
 
 
 --------------------------------------------------------------
--pt ≈◊¿Ã∫Ì ±∏¡∂
-/* ≥™¡ﬂø° ºˆ¡§ø‰∏¡
+-pt ÌÖåÏù¥Î∏î Íµ¨Ï°∞
 CREATE TABLE Member (
   id VARCHAR(20) NOT NULL,
   pw VARCHAR(20) NOT NULL,
@@ -25,6 +24,10 @@ CREATE TABLE Member (
   PRIMARY KEY (id));
 
 
+
+
+
+
 CREATE TABLE PTproduct (
   PT_no INT NOT NULL,
   pt_name VARCHAR(45) NOT NULL,
@@ -34,7 +37,7 @@ CREATE TABLE PTproduct (
   PT_Price INT NOT NULL,
   PT_code INT NOT NULL,
   PT_State VARCHAR(45) NOT NULL,
-  PT_title VARCHAR(45) NOT NULL,
+  PT_title VARCHAR(45)UNIQUE NOT NULL,
   PT_photourl VARCHAR(1000) NULL,
   Calendar_before VARCHAR(45) NULL,
   Calendar_after VARCHAR(45) NULL,
@@ -49,20 +52,13 @@ CREATE TABLE PTbasket (
   pt_photourl_basket VARCHAR(1000) ,
   purchase_basket VARCHAR(45),
   pt_date DATE NULL,
-   constraint PT_price_basket1
-    FOREIGN KEY (PT_price_basket)
-    REFERENCES PTproduct (PT_Price),
-    constraint PT_price_basket2
+
     FOREIGN KEY (PT_title_basket)
     REFERENCES PTproduct (PT_title),
-   constraint PT_price_basket3
-    FOREIGN KEY (pt_photourl_basket)
-    REFERENCES PTproduct (PT_photourl),
-   constraint PT_id_basket1
+
+  
     FOREIGN KEY (PT_id_basket)
     REFERENCES Member (id));
-*/
-
-
+------------------------------------------------------
 
 
