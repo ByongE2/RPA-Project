@@ -1,19 +1,3 @@
-
-
-jdk11
-sts tool(5.2.7)
-oracle 11g
-Encoding utf-8
-git ( https://github.com/ByongE2/RPA-Project.git )
-lombok-1.18.24.jar (  ) 
-
-DB
-
-
-mybatis
-
-
-
 -------------------------------------------------------------
 pt데이터베이스 구조
 -pt 테이블 구조
@@ -37,16 +21,34 @@ CREATE TABLE PTproduct (
   PT_id VARCHAR(45) NOT NULL,
   PT_Registration DATE NOT NULL,
   PT_Price INT NOT NULL,
-  PT_code INT NOT NULL,
-  PT_State VARCHAR(45) NOT NULL,
-  PT_title VARCHAR(45) NOT NULL,
+  PT_code INT  NOT NULL,
+  PT_title VARCHAR(45) unique,
   PT_photourl VARCHAR(1000) NULL,
   Calendar_before VARCHAR(45) NULL,
   Calendar_after VARCHAR(45) NULL,
-  PRIMARY KEY (PT_no),
+  PRIMARY KEY (PT_code),
   foreign key(pt_id)
   references member(id));
 
+/*
+시퀀스 추가
+create sequence no_seq increment by 1 start with 1 minvalue 1 maxvalue 9999;
+
+멤버 등록
+insert into member(id,pw,phone,address,Email,grade,name,todate)
+values('kkao45617','1234','010-1234-1234','경기도화성시 병점동','kkao45617@naver.com','2','이재현',sysdate);
+
+pt상품 등록 
+insert into PTproduct(PT_no,PT_title,PT_content,pt_name,PT_Price,PT_photourl,Calendar_before,Calendar_after,PT_id,PT_Registration,PT_code) 
+values(no_seq.nextval,'당신의 멋진 몸을 위해','이 내용을 토대로 저는 이 이미지와 글을 썻으며 이것을 활용해 여러분도 즐겨보세요','이재현',30000,'이미지','날짜전','날짜후','kkao45617',TO_DATE(sysdate,'yyyy-MM-dd'),1);
+
+
+
+
+
+
+
+*/
 
 */
 	롬복 없어서 추가
