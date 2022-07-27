@@ -1,5 +1,10 @@
 package com.rpa.pt.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.rpa.pt.domain.Pt_Goods_DTO;
@@ -17,10 +22,19 @@ public class Pt_Goods_Serviceimpl  implements Pt_Goods_Service{
 
 	@Override
 	public void Ptregister(Pt_Goods_DTO dto) {
-		log.info("pt 관리자 글쓰기 완료");
+		log.info("들어는 왔음");
 		mapper.ptinsert(dto);
-		
+		log.info("pt 관리자 글쓰기 완료");
 	}
+
+	@Override
+	public List<Pt_Goods_DTO> getlist() {
+		return mapper.getlist();
+	}
+
+	
+
+
 	
 
 }
