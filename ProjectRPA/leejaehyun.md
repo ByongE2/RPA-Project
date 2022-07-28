@@ -99,18 +99,28 @@ SELECT DBMS_RANDOM.STRING('X', 100) STR FROM DUAL
 		
 	이미지 업로드
 	
-	<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.3.3</version>
-		</dependency>
+			<dependency>
+              <groupId>commons-io</groupId>
+              <artifactId>commons-io</artifactId>
+              <version>2.6</version>
+          </dependency>
+		
+		
+          <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+          <!-- json 변환 -->
+          <dependency>
+              <groupId>com.google.code.gson</groupId>
+              <artifactId>gson</artifactId>
+              <version>2.8.6</version>
+          </dependency>
 
-		<!-- commons-io -->
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
+          <!-- commons-fileupload -->
+          <!-- multipart등을 사용할수 있음 -->
+          <dependency>
+              <groupId>commons-fileupload</groupId>
+              <artifactId>commons-fileupload</artifactId>
+              <version>1.3.1</version>
+          </dependency>
 		
 
 ----------------------------------------------------------------------------------------

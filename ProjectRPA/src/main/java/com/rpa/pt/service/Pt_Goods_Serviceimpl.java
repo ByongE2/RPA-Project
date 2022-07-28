@@ -32,6 +32,11 @@ public class Pt_Goods_Serviceimpl  implements Pt_Goods_Service{
 		return mapper.getlist();
 	}
 
+	@Override
+	public Pt_Goods_DTO pt_get(int pt_get) {
+		return mapper.ptread(pt_get);
+	}
+
 	
 
 

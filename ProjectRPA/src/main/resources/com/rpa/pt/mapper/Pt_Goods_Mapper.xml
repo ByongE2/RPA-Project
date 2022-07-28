@@ -18,4 +18,8 @@ select * from PTproduct
 
 </select>
 
+<select id="ptread" resultType="com.rpa.pt.domain.Pt_Goods_DTO">
+select * from PTproduct where PT_no=#{PT_no}
+</select>
+
 </mapper>

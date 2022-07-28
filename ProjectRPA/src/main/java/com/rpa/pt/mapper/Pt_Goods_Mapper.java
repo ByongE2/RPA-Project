@@ -10,5 +10,5 @@ import com.rpa.pt.domain.Pt_Goods_DTO;
 public interface Pt_Goods_Mapper {
 	public int ptinsert(Pt_Goods_DTO dto);
 	public List<Pt_Goods_DTO> getlist();
-
+	public Pt_Goods_DTO ptread(int PT_no);
 }

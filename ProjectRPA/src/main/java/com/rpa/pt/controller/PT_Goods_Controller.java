@@ -1,11 +1,15 @@
 package com.rpa.pt.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpa.pt.domain.Pt_Goods_DTO;
@@ -13,6 +17,8 @@ import com.rpa.pt.service.Pt_Goods_Service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+
+
 
 
 @Controller
@@ -23,7 +29,7 @@ public class PT_Goods_Controller {
 	private Pt_Goods_Service service;
 	
 	//글쓰기
-	@RequestMapping(value = "/ptregister", method = RequestMethod.POST)
+	@PostMapping("/ptregister")
 	public String ptregister(Pt_Goods_DTO dto, RedirectAttributes rttr) {
 		log.info("관리자 글쓰기에 들어옴"+dto);
 		service.Ptregister(dto);
@@ -32,6 +38,15 @@ public class PT_Goods_Controller {
 		
 		return "redirect:/ptproduct/list";
 	}
+	
+	@GetMapping("/ptget")
+	public void ptget(int PT_no, Model model) {
+		log.info(PT_no+" 번 째 상세보기");
+		System.out.println("( "+PT_no+" ) 번째");
+		model.addAttribute("pt_no", service.pt_get(PT_no));
+	}
+	
+	
 	
 	@GetMapping("/ptregister")
 	public void ptregister() {

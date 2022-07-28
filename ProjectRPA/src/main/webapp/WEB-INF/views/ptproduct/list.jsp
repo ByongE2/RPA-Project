@@ -31,10 +31,10 @@
 			<td>${pt.pt_name} </td>
 			<td>${pt.PT_content}</td>
 			<td>${pt.PT_id}</td>
-			<td>${pt.PT_Registration}</td>
+			<td><fmt:formatDate value="${pt.PT_Registration}" pattern="yyyy-MM-dd"/> </td>
 			<td>${pt.PT_Price}</td>
 			<td>${pt.PT_code}</td>
-			<td>${pt.PT_title}</td>
+			<td><a href="/ptproduct/ptget?PT_no=${pt.PT_no }"> ${pt.PT_title}</a></td>
 			<td>${pt.PT_photourl}</td>
 			
 		</tr>
