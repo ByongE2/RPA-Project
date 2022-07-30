@@ -22,4 +22,13 @@ select * from PTproduct
 select * from PTproduct where PT_no=#{PT_no}
 </select>
 
+
+<select id="PtReadGet" resultType="int">
+	select max(PT_no) from PTproduct
+</select>
+
+<delete id="ptdelete">
+	delete from PTproduct where PT_no=#{PT_no}
+</delete>
+
 </mapper>

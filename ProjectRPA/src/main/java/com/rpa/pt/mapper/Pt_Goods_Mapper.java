@@ -11,4 +11,6 @@ public interface Pt_Goods_Mapper {
 	public int ptinsert(Pt_Goods_DTO dto);
 	public List<Pt_Goods_DTO> getlist();
 	public Pt_Goods_DTO ptread(int PT_no);
+	public int PtReadGet();
+	public void ptdelete(int PT_no);
 }

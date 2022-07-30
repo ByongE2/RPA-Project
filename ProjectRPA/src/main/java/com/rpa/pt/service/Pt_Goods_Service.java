@@ -16,5 +16,10 @@ public interface Pt_Goods_Service {
 	//글 자세히보기
 	public  Pt_Goods_DTO pt_get(int pt_get);
 	
+	//글쓰기 후 상세페이지로 바로가기
+	public int PtViewGet();
 	
+	
+	//관리자 글 삭제
+	public void ptdelete(int PT_no);
 }

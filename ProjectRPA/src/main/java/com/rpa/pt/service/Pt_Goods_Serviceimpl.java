@@ -37,6 +37,16 @@ public class Pt_Goods_Serviceimpl  implements Pt_Goods_Service{
 		return mapper.ptread(pt_get);
 	}
 
+	@Override
+	public int PtViewGet() {
+		return mapper.PtReadGet();
+	}
+
+	@Override
+	public void ptdelete(int PT_no) {
+		mapper.ptdelete(PT_no);
+	}
+
 	
 
 

@@ -35,14 +35,14 @@ public class PT_Goods_Controller {
 		service.Ptregister(dto);
 		rttr.addFlashAttribute("result",dto.getPT_no());
 		
-		
-		return "redirect:/ptproduct/list";
+		int ptnum= service.PtViewGet();
+		return "redirect:/ptproduct/ptget?PT_no="+ptnum;
 	}
 	
 	@GetMapping("/ptget")
 	public void ptget(int PT_no, Model model) {
 		log.info(PT_no+" 번 째 상세보기");
-		System.out.println("( "+PT_no+" ) 번째");
+		System.out.println("( "+PT_no+" ) 번째 상품"+service.pt_get(PT_no));
 		model.addAttribute("pt_no", service.pt_get(PT_no));
 	}
 	
@@ -59,5 +59,11 @@ public class PT_Goods_Controller {
 		model.addAttribute("list",service.getlist());
 	}
 	
+	@GetMapping("/ptremove")
+	public String ptdelete(int pt_no) {
+		log.info(pt_no+" 번째가 삭제 되었습니다");
+		service.ptdelete(pt_no);
+		return  "redirect:/ptproduct/list";
+	}
 
 }
