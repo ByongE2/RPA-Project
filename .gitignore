@@ -1,12 +1,16 @@
 hello
 
 .metadata
-target
-Servers
+target/
+Servers/
+
 bin/
 tmp/
 data
 .settings
+
+.pom.properties
+
 *.tmp
 *.bak
 *.swp
