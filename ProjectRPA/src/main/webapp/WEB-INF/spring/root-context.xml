@@ -23,7 +23,7 @@
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
-		<property name="username" value="book"></property>
+		<property name="username" value="kbh"></property>
 		<property name="password" value="1234"></property>
 	</bean>
 
@@ -37,9 +37,8 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<!-- mapper xml 생성 후 주석 해제. -->
-	<!-- <mybatis-spring:scan base-package="com.rpa.mapper" /> -->
+	<mybatis-spring:scan base-package="com.rpa" />
 
-	<context:component-scan	base-package="com.rpa"></context:component-scan>
+	<context:component-scan	base-package="com.rpa.service"></context:component-scan>
 
 </beans>
