@@ -21,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 public class SportsWearMapperTest {
 
 	@Autowired
-	private Admin_Goods_SportsWearMapper2 mapper;
+	private Admin_Goods_SportsWearMapper mapper;
 	
 	//mapper 테스트
 	@Test
@@ -31,7 +31,6 @@ public class SportsWearMapperTest {
 	
 	@Test
 	public void admin_goods_swMapperTest() {
-		//테스트 전 로컬 db 전체 삭제.
 //		mapper.deleteAll();
 		SportsWearDto dto = new SportsWearDto();
 //		dto.setGoods_swID(2L);
@@ -39,7 +38,6 @@ public class SportsWearMapperTest {
 		dto.setGoods_swPrice(1000);
 		dto.setGoods_swStock(30);
 		dto.setGoods_swDetail("맵퍼 테스트 상세내용");
-//		mapper.swRegister(dto);
 		assertTrue(mapper.swRegister(dto)==1);
 		
 	}

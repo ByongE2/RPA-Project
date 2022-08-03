@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <!--  <mapper namespace="com.rpa.admin.goods.sportswear.mapper.Admin_Goods_SportsWearMapper"> -->
-  <mapper namespace="com.rpa.admin.goods.sportswear.mapper.Admin_Goods_SportsWearMapper2">
+  <mapper namespace="com.rpa.mapper.Admin_Goods_SportsWearMapper">
 	<insert id="swRegister">
 	insert into goods_sportsWear
 	(goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail)
