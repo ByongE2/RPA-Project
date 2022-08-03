@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.rpa">
+	<logger name="com.rpa.controller">
 		<level value="info" />
 	</logger>
 	
@@ -31,6 +31,7 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+
 
 	<!-- Root Logger -->
 	<root>
