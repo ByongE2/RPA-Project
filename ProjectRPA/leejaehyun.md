@@ -70,7 +70,6 @@ values(no_seq.nextval,'복근있는 여름을 잘 보내기','이 내용은 말그대로 내용이며 �
 
 
 /*
-
 create sequence no_seq increment by 1 start with 1 minvalue 1 maxvalue 9999;
 
 
