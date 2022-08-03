@@ -3,11 +3,14 @@ hello
 .metadata
 target/
 Servers/
+
 bin/
 tmp/
 data
 .settings
+
 .pom.properties
+
 *.tmp
 *.bak
 *.swp
