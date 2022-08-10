@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
@@ -41,10 +42,14 @@ import lombok.extern.log4j.Log4j;
 public class PT_Goods_Controller {
 	private Pt_Goods_Service service;
 	
+	
+	
 	//글쓰기
 	@PostMapping("/ptregister")
-	public String ptregister(Pt_Goods_DTO dto, RedirectAttributes rttr) {
-		log.info("관리자 글쓰기에 들어옴"+dto);
+	public String ptregister(MultipartHttpServletRequest requset,Pt_Goods_DTO dto,RedirectAttributes rttr) {
+		System.out.println("글쓰기 들어옴"+dto);
+		
+		
 		service.Ptregister(dto);
 		rttr.addFlashAttribute("result",dto.getPT_no());
 		

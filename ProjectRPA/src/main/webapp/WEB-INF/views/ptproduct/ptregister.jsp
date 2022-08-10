@@ -60,7 +60,6 @@
 			}
 		});
 	}
-	
 </script>
 </head>
 
@@ -72,7 +71,7 @@
 
 
 	<div style="width: 60%; margin: auto;">
-		<form id="articleForm" role="form" method="post" action="/ptproduct/ptregister">
+		<form id="articleForm" role="form" enctype="multipart/form-data" method="post" action="/ptproduct/ptregister">
 			<input type="text" name="PT_title" style="width: 40%;" placeholder="제목" /><br>
 			 <label>작성자 : </label><input type="text" name="pt_name"><br> 
 			 <label>썸네일 : </label><input type="file" name="PT_photourl"><br>
