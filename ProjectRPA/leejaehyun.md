@@ -156,4 +156,19 @@ servlet-context.xml
 		<beans:property name="maxUploadSize" value="100000000"></beans:property>
 	</beans:bean>
 </beans:beans>
+----------------------------------------------------------------
+아임포트
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+
+<!-- dependencies 안에 추가합니다 -->
+<dependency>
+  <groupId>com.github.iamport</groupId>
+  <artifactId>iamport-rest-client-java</artifactId>
+  <version>0.2.14</version>
+</dependency>
 

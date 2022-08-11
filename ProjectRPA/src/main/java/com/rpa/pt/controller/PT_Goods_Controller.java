@@ -1,6 +1,7 @@
 package com.rpa.pt.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +47,9 @@ public class PT_Goods_Controller {
 	
 	//글쓰기
 	@PostMapping("/ptregister")
-	public String ptregister(MultipartHttpServletRequest requset,Pt_Goods_DTO dto,RedirectAttributes rttr) {
+	public String ptregister(Pt_Goods_DTO dto,RedirectAttributes rttr) throws IOException {
+		
 		System.out.println("글쓰기 들어옴"+dto);
-		
-		
-		service.Ptregister(dto);
 		rttr.addFlashAttribute("result",dto.getPT_no());
 		
 		int ptnum= service.PtViewGet();
