@@ -23,5 +23,13 @@
 	
 	<context:component-scan base-package="com.rpa" />
 	
+	<!-- 인터셉터 적용 : /admin 경로가 붙는 모든 url -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/**"></mapping>
+			<beans:bean id="AdminInterceptor" class="com.rpa.interceptor.AdminInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+	
 	
 </beans:beans>

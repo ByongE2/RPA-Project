@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>메인 테스트</h1>
-<button href="">테스트</button>
+<jsp:include page="includes/allNav.jsp"></jsp:include>
+
 </body>
 </html>

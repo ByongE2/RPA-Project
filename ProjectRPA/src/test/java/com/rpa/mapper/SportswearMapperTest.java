@@ -10,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.rpa.admin.goods.sportswear.mapper.Admin_Goods_SportsWearMapper2;
-import com.rpa.goods.sportswear.domain.SportsWearDto;
+import com.rpa.admin.goods.sportswear.mapper.Admin_Goods_SportswearMapper;
+import com.rpa.goods.sportswear.domain.SportswearDto;
 
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class SportsWearMapperTest {
+public class SportswearMapperTest {
 
 	@Autowired
-	private Admin_Goods_SportsWearMapper mapper;
+	private Admin_Goods_SportswearMapper mapper;
 	
 	//mapper 테스트
 	@Test
@@ -30,23 +30,18 @@ public class SportsWearMapperTest {
 	}
 	
 	@Test
-	public void admin_goods_swMapperTest() {
+	public void admin_goods_swMapperTest() throws Exception {
 //		mapper.deleteAll();
-		SportsWearDto dto = new SportsWearDto();
+		SportswearDto dto = new SportswearDto();
 //		dto.setGoods_swID(2L);
-		dto.setGoods_swName("맵퍼 테스트");
+		dto.setGoods_swName("sw insert test");
 		dto.setGoods_swPrice(1000);
 		dto.setGoods_swStock(30);
-		dto.setGoods_swDetail("맵퍼 테스트 상세내용");
-		assertTrue(mapper.swRegister(dto)==1);
-		
+		dto.setGoods_swDetail("sw insert test detail");
+		assertTrue(mapper.swInsert(dto)==1);
 	}
 	
-	@Test
-	public void testsel2() {
-		List<SportsWearDto> aa = mapper.testSel(1L);
-		log.info(aa);
-	}
+	
 	
 	
 	

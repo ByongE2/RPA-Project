@@ -24,7 +24,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class SportsWearDto {
+public class SportswearDto {
 
 	private Long goods_swID;
 	private int goods_swPrice, goods_swStock;
