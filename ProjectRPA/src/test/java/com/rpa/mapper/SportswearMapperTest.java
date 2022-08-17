@@ -23,7 +23,6 @@ public class SportswearMapperTest {
 	@Autowired
 	private Admin_Goods_SportswearMapper mapper;
 	
-	//mapper 테스트
 	@Test
 	public void testMapper() {
 		log.info(mapper);
