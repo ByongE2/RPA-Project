@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.rpa.admin.goods.sportswear.mapper.Admin_Goods_SportswearMapper">
+	
+	<!-- <select id="count" resultType="int">
+        SELECT count(*) FROM goods_sportswear
+    </select>
+	
+	<delete id="deleteAll">
+        DELETE FROM goods_sportswear
+    </delete>
+	
+	<delete id="delete" parameterType="map">
+        DELETE FROM goods_sportswear WHERE goods_swId = #{goods_swId} and writer = #{writer}
+    </delete> -->
+	
+	<!-- 등록 -->
+	<insert id="swInsert">
+		insert into goods_sportsWear
+		(goods_swID, goods_swName, goods_swPrice, goods_swStock, goods_swDetail)
+		values
+		(seq_Goods_sportsWear.nextval, #{goods_swName}, #{goods_swPrice}, #{goods_swStock}, #{goods_swDetail})
+	</insert>
+	
+	<!-- 목록 -->
+	<select id="swGetList" resultType="com.rpa.goods.sportswear.domain.SportswearDto">
+	    <![CDATA[
+	          select goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,
+	                  goods_swRegDate, goods_swUpdateDate 
+	           from (
+	              select /* +INDEX_DESC(goods_sportswear idx_goods_sportswear) */ 
+	                  rownum as rn, goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,
+	                  goods_swRegDate, goods_swUpdateDate
+	            from goods_sportswear 
+	            where
+	    ]]>         
+	            <if test="keyword != null">
+	                goods_swName like '%'||#{keyword}||'%' and
+	            </if>
+	    <![CDATA[        
+	             rownum <= #{pageNum} * #{amount}
+	            )
+	        where rn > (#{pageNum} - 1) * #{amount}
+	    ]]>
+	      
+ 	</select>
+ 	<!-- 상품 총 갯수 -->
+ 	<select id="swGetTotal" resultType="int">
+        select count(*) 
+        from goods_sportswear
+        <if test="keyword != null">
+           where goods_swName like '%' || #{keyword} || '%'
+        </if>
+    </select> 
+    
+    <!-- 상세조회 -->
+    <select id="swGetDetail" resultType="com.rpa.goods.sportswear.domain.SportswearDto">
+		select * from goods_sportswear where goods_swId = #{goods_swId}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="swModify">
+		update goods_sportswear 
+		set 
+			goods_swName = #{goods_swName}, 
+			goods_swPrice = #{goods_swPrice}, 
+			goods_swStock = #{goods_swStock}, 
+			goods_swDetail = #{goods_swDetail},
+			goods_swUpdateDate = sysdate
+		where goods_swID = #{goods_swID}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="swRemove">
+		delete from goods_sportswear
+		where goods_swID = #{goods_swID}
+	</delete>
+
+  </mapper>

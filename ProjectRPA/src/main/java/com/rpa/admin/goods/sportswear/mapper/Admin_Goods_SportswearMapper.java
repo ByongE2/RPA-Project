@@ -9,20 +9,20 @@ import java.util.List;
 import java.util.Map;
 
 import com.rpa.goods.sportswear.domain.SportswearDto;
+import com.rpa.goods.sportswear.domain.SwCriteria;
 
 public interface Admin_Goods_SportswearMapper {
 	
+	//등록
 	int swInsert(SportswearDto swDto) throws Exception;
-//	int wsUpdate(SportswearDto swDto) throws Exception;
-//	int swIncreaseViewCnt(Long goods_swID) throws Exception;
-//	
-//	List<SportswearDto>swSelectAll() throws Exception;
-//	List<SportswearDto>swSelectPage(Map map) throws Exception;
-//	
-//	int swCount() throws Exception;
-//	int swDeleteAll() throws Exception;
-	
-//	int searchResultCnt(SearchCondition sc);
-//	List<SportswearDto> searchSelectPage(SearchCondition sc);
-	
+	//목록
+	List<SportswearDto> swGetList(SwCriteria cri) throws Exception;
+	//상품 총 갯수
+	int swGetTotal(SwCriteria cri) throws Exception;
+	//상세
+	SportswearDto swGetDetail(Long swID) throws Exception;
+	//수정
+	int swModify(SportswearDto swDto);
+	//삭제
+	int swRemove(Long swID) throws Exception;
 }

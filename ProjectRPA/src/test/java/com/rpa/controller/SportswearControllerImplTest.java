@@ -31,18 +31,66 @@ public class SportswearControllerImplTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 	
-	@Test
-	public void Admin_Goods_SportswearControllerInsertTest() throws Exception {
-		String resultPage = 
-				mockMvc.perform(MockMvcRequestBuilders.post("/admin/goods/sportswear/insert")
-				.param("goods_swName",	"컨"	)
-				.param("goods_swPrice", "5000")
-				.param("goods_swStock", "200")
-				.param("goods_swDetail", "insert컨트롤러 테스트"))
-				.andReturn()
-				.getModelAndView()
-				.getViewName();
-		log.info(resultPage);
-	}
+//	@Test
+//	public void swControllerInsertTest() throws Exception {
+//		String resultPage = 
+//				mockMvc.perform(MockMvcRequestBuilders.post("/admin/goods/sportswear/insert")
+//				.param("goods_swName",	"컨"	)
+//				.param("goods_swPrice", "5000")
+//				.param("goods_swStock", "200")
+//				.param("goods_swDetail", "insert컨트롤러 테스트"))
+//				.andReturn()
+//				.getModelAndView()
+//				.getViewName();
+//		log.info(resultPage);
+//	}
+	
+//	@Test
+//	public void swControllerGetListTest() throws Exception{
+//		log.info(
+//				mockMvc.perform(MockMvcRequestBuilders.get("/admin/goods/sportswear/list")
+//				.param("pageNum", "1")
+//				.param("amount", "10"))
+//				.andReturn()
+//				.getModelAndView()
+//				.getModelMap()
+//				);
+//	}
+//	@Test
+//	public void swControllerGetDetailTest() throws Exception {
+//		log.info(
+//				mockMvc.perform(MockMvcRequestBuilders.get("/admin/goods/sportswear/detail")
+//				.param("swID", "66")	)
+//				.andReturn()
+//				.getModelAndView()
+//				.getModelMap()
+//				);
+//	}
+//	@Test
+//	public void swControllerModifyTest() throws Exception{
+//		String resultPage = 
+//				mockMvc.perform(MockMvcRequestBuilders.post("/admin/goods/sportswear/modify")
+//						.param("goods_swID",  "71")
+//						.param("goods_swName",  "컨트롤러수정이름")
+//						.param("goods_swPrice", "7171")
+//						.param("goods_swStock", "71")
+//						.param("goods_swDetail", "71번 컨트롤러 수정 테스트")	
+//						)
+//				.andReturn()
+//				.getModelAndView()
+//				.getViewName();
+//		log.info(resultPage);
+//	}
+//	@Test
+//	public void testRemove() throws Exception {
+//		String resultPage = 
+//				mockMvc.perform(MockMvcRequestBuilders.post("/admin/goods/sportswear/remove")
+//				.param("swID", "83"))
+//				.andReturn()
+//				.getModelAndView()
+//				.getViewName();
+//		log.info(resultPage);
+//	}
+	
 	
 }
