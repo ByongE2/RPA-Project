@@ -1,4 +1,3 @@
--------------------------------------------------------------
 select * from PTproduct;
 select * from member;
 drop table member;
@@ -23,10 +22,11 @@ CREATE TABLE PTproduct (
   pt_name VARCHAR(45) NOT NULL,
   PT_content VARCHAR(1000) NOT NULL,
   PT_id VARCHAR(45) NOT NULL,
-  PT_Registration DATE NOT NULL,
-  PT_Price INT NOT NULL,
+  PT_Registration DATE NULL,
+  PT_Price varchar2(1000) NOT NULL,
   PT_code varchar2(1000)  NOT NULL,
   PT_title VARCHAR(45)not null,
+  PT_State varchar2(40)not null,
   PT_photourl VARCHAR(1000) NULL,
   Calendar_before VARCHAR(45) NULL,
   Calendar_after VARCHAR(45) NULL,
@@ -49,32 +49,33 @@ FOREIGN KEY (PT_code)
 REFERENCES PTproduct (pt_code),
 FOREIGN KEY (PT_id_basket)
 REFERENCES Member (id));
+
+
+
+
+
+
+
     
     
     
 create sequence no_seq increment by 1 start with 1 minvalue 1 maxvalue 9999;
 
 insert into member(id,pw,phone,address,Email,grade,name,todate)
-values('kkao45617','1234','010-1234-1234','°æ±âµµÈ­¼º½Ã º´Á¡µ¿','kkao45617@naver.com','2','ÀÌÀçÇö',sysdate);
+values('kkao45617','1234','010-1234-1234','ê²½ê¸°ë„í™”ì„±ì‹œ ë³‘ì ë™','kkao45617@naver.com','2','ì´ì¬í˜„',sysdate);
 
 insert into PTproduct(PT_no,PT_title,PT_content,pt_name,PT_Price,PT_photourl,Calendar_before,Calendar_after,PT_id,PT_Registration,PT_code) 
-values(no_seq.nextval,'´ç½ÅÀÇ ¸ÚÁø ¸öÀ» À§ÇØ','ÀÌ ³»¿ëÀ» Åä´ë·Î Àú´Â ÀÌ ÀÌ¹ÌÁö¿Í ±ÛÀ» ›§À¸¸ç ÀÌ°ÍÀ» È°¿ëÇØ ¿©·¯ºĞµµ Áñ°Üº¸¼¼¿ä','ÀÌÀçÇö',30000,'ÀÌ¹ÌÁö','³¯Â¥Àü','³¯Â¥ÈÄ','kkao45617',TO_DATE(sysdate,'yyyy-MM-dd'),1);
+values(no_seq.nextval,'ë‹¹ì‹ ì˜ ë©‹ì§„ ëª¸ì„ ìœ„í•´','ì´ ë‚´ìš©ì„ í† ëŒ€ë¡œ ì €ëŠ” ì´ ì´ë¯¸ì§€ì™€ ê¸€ì„ ì»ìœ¼ë©° ì´ê²ƒì„ í™œìš©í•´ ì—¬ëŸ¬ë¶„ë„ ì¦ê²¨ë³´ì„¸ìš”','ì´ì¬í˜„',30000,'ì´ë¯¸ì§€','ë‚ ì§œì „','ë‚ ì§œí›„','kkao45617',TO_DATE(sysdate,'yyyy-MM-dd'),1);
 
 
 insert into tbl_board(bno,title,content,writer)values(SEQ_BOARD.NEXTVAL, (SELECT DBMS_RANDOM.STRING('X', 20) STR FROM DUAL),'selse','ase');
 
 insert into PTproduct(PT_no,PT_title,PT_content,pt_name,PT_Price,PT_photourl,Calendar_before,Calendar_after,PT_id,PT_Registration,PT_code)
-values(no_seq.nextval,'º¹±ÙÀÖ´Â ¿©¸§À» Àß º¸³»±â','ÀÌ ³»¿ëÀº ¸»±×´ë·Î ³»¿ëÀÌ¸ç ±ÛÀÌ°í ¶ÇÇÑ ¾ç½ÄÀÔ´Ï´Ù','ÀÌÀçÇö',30000,'»çÁø1','Ä¶¸°´õ1','Ä¶¸°´õ2','kkao45617',TO_DATE(sysdate,'yyyy-MM-dd'),(SELECT DBMS_RANDOM.STRING('X', 20) STR FROM DUAL));
-
-
+values(no_seq.nextval,'ë³µê·¼ìˆëŠ” ì—¬ë¦„ì„ ì˜ ë³´ë‚´ê¸°','ì´ ë‚´ìš©ì€ ë§ê·¸ëŒ€ë¡œ ë‚´ìš©ì´ë©° ê¸€ì´ê³  ë˜í•œ ì–‘ì‹ì…ë‹ˆë‹¤','ì´ì¬í˜„',30000,'ì‚¬ì§„1','ìº˜ë¦°ë”1','ìº˜ë¦°ë”2','kkao45617',TO_DATE(sysdate,'yyyy-MM-dd'),(SELECT DBMS_RANDOM.STRING('X', 20) STR FROM DUAL));
 
 
 /*
 create sequence no_seq increment by 1 start with 1 minvalue 1 maxvalue 9999;
-
-
-
-
 
 
 
@@ -84,91 +85,67 @@ SELECT DBMS_RANDOM.STRING('X', 100) STR FROM DUAL
 
 */
 
-*/
-	·Òº¹
+*/ ë¡¬ë³µ
 
-		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.18.24</version>
-		    <scope>provided</scope>
-		</dependency>
-		<dependency>
-		
-		
-	ÀÌ¹ÌÁö ¾÷·Îµå
+	<dependency>
+	    <groupId>org.projectlombok</groupId>
+	    <artifactId>lombok</artifactId>
+	    <version>1.18.24</version>
+	    <scope>provided</scope>
+	</dependency>
+	<dependency>
 	
-			<dependency>
-              <groupId>commons-io</groupId>
-              <artifactId>commons-io</artifactId>
-              <version>2.6</version>
-          </dependency>
-		
-		
-          <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-          <!-- json º¯È¯ -->
-          <dependency>
-              <groupId>com.google.code.gson</groupId>
-              <artifactId>gson</artifactId>
-              <version>2.8.6</version>
-          </dependency>
+	
+ì´ë¯¸ì§€ ì—…ë¡œë“œ
 
-          <!-- commons-fileupload -->
-          <!-- multipartµîÀ» »ç¿ëÇÒ¼ö ÀÖÀ½ -->
-          <dependency>
-              <groupId>commons-fileupload</groupId>
-              <artifactId>commons-fileupload</artifactId>
-              <version>1.3.1</version>
-          </dependency>
-		
+		<dependency>
+          <groupId>commons-io</groupId>
+          <artifactId>commons-io</artifactId>
+          <version>2.6</version>
+      </dependency>
+	
+	
+      <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+      <!-- json ë³€í™˜ -->
+      <dependency>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+          <version>2.8.6</version>
+      </dependency>
 
-----------------------------------------------------------------------------------------
+      <!-- commons-fileupload -->
+      <!-- multipartë“±ì„ ì‚¬ìš©í• ìˆ˜ ìˆìŒ -->
+      <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+          <version>1.3.1</version>
+      </dependency>
 servlet-context.xml
 
-<?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-	
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
-	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+<beans:beans xmlns="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
+<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-		
-	</beans:bean>
+<!-- Enables the Spring MVC @Controller programming model -->
+<annotation-driven />
+
+<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+<resources mapping="/resources/**" location="/resources/" />
+
+<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<beans:property name="prefix" value="/WEB-INF/views/" />
+	<beans:property name="suffix" value=".jsp" />
 	
-	<context:component-scan base-package="com.rpa"></context:component-scan>
-	<!--  <context:component-scan base-package="com.rap.pt.controller"/>-->
-	
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="100000000"></beans:property>
-	</beans:bean>
+</beans:bean>
+
+<context:component-scan base-package="com.rpa"></context:component-scan>
+<!--  <context:component-scan base-package="com.rap.pt.controller"/>-->
+
+<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<beans:property name="maxUploadSize" value="100000000"></beans:property>
+</beans:bean>
 </beans:beans>
-----------------------------------------------------------------
-¾ÆÀÓÆ÷Æ®
-<repositories>
-  <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
-  </repository>
-</repositories>
+ì•„ì„í¬íŠ¸ jitpack.io https://jitpack.io
 
-<!-- dependencies ¾È¿¡ Ãß°¡ÇÕ´Ï´Ù -->
-<dependency>
-  <groupId>com.github.iamport</groupId>
-  <artifactId>iamport-rest-client-java</artifactId>
-  <version>0.2.14</version>
-</dependency>
-
+com.github.iamport iamport-rest-client-java 0.2.14
