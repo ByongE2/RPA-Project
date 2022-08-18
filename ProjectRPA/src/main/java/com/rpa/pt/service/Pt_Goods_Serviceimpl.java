@@ -48,9 +48,12 @@ public class Pt_Goods_Serviceimpl  implements Pt_Goods_Service{
 	}
 
 	@Override
-	public void ptupdate(int PT_no) {
-		mapper.ptupdate(PT_no);
+	public void ptupdate(Pt_Goods_DTO dto) {
+		mapper.ptupdate(dto);
 	}
+
+	
+	
 
 	
 

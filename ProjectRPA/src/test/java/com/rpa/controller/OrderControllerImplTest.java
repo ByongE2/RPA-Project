@@ -33,7 +33,7 @@ public class OrderControllerImplTest {
 		dto.setPT_title("타이틀");
 		dto.setPt_name("아무개");
 		dto.setPT_photourl(null);
-		dto.setPT_Price("1235235");
+		dto.setPT_Price("12345");
 		dto.setCalendar_before("달력전");
 		dto.setCalendar_after("달력 후");
 		log.info("---------------인설트");

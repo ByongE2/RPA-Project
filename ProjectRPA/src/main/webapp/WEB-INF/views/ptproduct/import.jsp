@@ -1,123 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<!-- ¾Æ·¡ Á¦ÀÌÄõ¸®´Â 1.0ÀÌ»óÀÌ¸é ¿øÇÏ´Â ¹öÀüÀ» »ç¿ëÇÏ¼Åµµ ¹«¹æÇÕ´Ï´Ù. -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 <script type="text/javascript">
-<script type="text/javascript">
-$(document).ready(function(){
-	   var pay = <%=bvo.getPay_coupon() %>;
-	   console.log(pay);
-	   	  
-		var IMP = window.IMP;
-		var code = "imp********"; //°¡¸ÍÁ¡ ½Äº°ÄÚµå
-		IMP.init(code);
-		
-		$("#check1").click(function(e){
-			//°áÁ¦¿äÃ»
-			IMP.request_pay({
-				//name°ú amout¸¸ÀÖ¾îµµ °áÁ¦ ÁøÇà°¡´É
-				//pg : 'kakao', //pg»ç ¼±ÅÃ (kakao, kakaopay µÑ´Ù °¡´É)
-				pay_method: 'card',
-				merchant_uid : 'merchant_' + new Date().getTime(),
-				name : '°áÁ¦Å×½ºÆ®', // »óÇ°¸í
-				amount : 1,
-				buyer_email : '<%=email%>',
-				buyer_name : '<%=mvo.getName()%>',
-				buyer_tel : '<%= mvo.getPhone()%>',  //ÇÊ¼öÇ×¸ñ
-				//°áÁ¦¿Ï·áÈÄ ÀÌµ¿ÇÒ ÆäÀÌÁö kko³ª kkopay´Â »ı·« °¡´É
-				//m_redirect_url : 'https://localhost:8080/payments/complete'
-			}, function(rsp){
-				if(rsp.success){//°áÁ¦ ¼º°ø½Ã
-					var msg = '°áÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù';
-					var result = {
-					"imp_uid" : rsp.imp_uid,
-					"merchant_uid" : rsp.merchant_uid,
-					"biz_email" : '<%=email%>',
-					"pay_date" : new Date().getTime(),
-					"amount" : rsp.paid_amount,
-					"card_no" : rsp.apply_num,
-					"refund" : 'payed'
-					}
-					console.log("°áÁ¦¼º°ø " + msg);
-					$.ajax({
-						url : '/samsam/insertPayCoupon.do', 
-				        type :'POST',
-				        data : JSON.stringify(result,
-				        		['imp_uid', 'merchant_uid', 'biz_email', 
-				        			'pay_date', 'amount', 'card_no', 'refund']),
-				        contentType:'application/json;charset=utf-8',
-				        dataType: 'json', //¼­¹ö¿¡¼­ º¸³»ÁÙ µ¥ÀÌÅÍ Å¸ÀÔ
-				        success: function(res){
-				        			        	
-				          if(res == 1){
-							 console.log("Ãß°¡¼º°ø");	
-							 pay += 5;
-							 $('#pay_coupon').html(pay);			           
-				          }else{
-				             console.log("Insert Fail!!!");
-				          }
-				        },
-				        error:function(){
-				          console.log("Insert ajax Åë½Å ½ÇÆĞ!!!");
-				        }
-					}) //ajax
-					
-				}
-				else{//°áÁ¦ ½ÇÆĞ½Ã
-					var msg = '°áÁ¦¿¡ ½ÇÆĞÇß½À´Ï´Ù';
-					msg += '¿¡·¯ : ' + rsp.error_msg
-				}
-				console.log(msg);
-			});//pay
-		}); //check1 Å¬¸¯ ÀÌº¥Æ®
-		 
-		$("#check2").click(function(e){
-		      console.log("³²ÀºÀÌ¿ë±Ç"+$('#pay_coupon').text());
-		      if($('#pay_coupon').text() >= 5){
-			$.ajax({
-					url: "/samsam/coupon_cancel.do",
-					type:"post",
-					//datatype:"json",
-					contentType : 'application/x-www-form-urlencoded; charset = utf-8',
-					data : {
-						"biz_email" : '<%=email%>' // ÁÖ¹®¹øÈ£
-						//"cancle_request_amount" : 2000, //È¯ºÒ±İ¾×
-						//"reason": "Å×½ºÆ® °áÁ¦ È¯ºÒ", //È¯ºÒ»çÀ¯
-						//"refund_holder": "È«±æµ¿", //[°¡»ó°èÁÂ È¯ºÒ½Ã ÇÊ¼öÀÔ·Â] È¯ºÒ °¡»ó°èÁÂ ¿¹±İÁÖ
-						//"refund_bank":"88", //[°¡»ó°èÁÂ È¯ºÒ½Ã ÇÊ¼öÀÔ·Â] È¯ºÒ °¡»ó°èÁÂ ÀºÇàÄÚµå(ex KgÀÌ´Ï½Ã½ºÀÇ °æ¿ì ½ÅÇÑÀºÇà 88)
-						//"refund_account": "56211105948400" // [°¡»ó°èÁÂ È¯ºÒ½Ã ÇÊ¼öÀÔ·Â] È¯ºÒ °¡»ó°èÁÂ ¹øÈ£
-					}
-				}).done(function(result){ //È¯ºÒ ¼º°ø
-					 pay -= 5;
-					 $('#pay_coupon').html(pay);	
-					console.log("È¯ºÒ ¼º°ø : "+ result);
-				}).fail(function(error){
-					console.log("È¯ºÒ ½ÇÆĞ : "+ error);
-				});//ajax
-			} else{
-				console.log("È¯ºÒ ½ÇÆĞ : ³²Àº °áÁ¦±Ç È¯ºÒ ºÒ°¡");
-			}
-		}); //check2 Å¬¸¯
-	}); //doc.ready
+		var IMP = window.IMP; // ìƒëµ ê°€ëŠ¥
+		IMP.init("imp56221238"); // ì˜ˆ: imp00000000
 </script>
 </head>
 <body>
-
-<table class = pay border="1">
-		<tr><td rowspan="2" class="pay_detail">ÀÌ¿ë±Ç</td><td>¿ù ±âº» Á¦°ø </td><td><%=bvo.getFree_coupon() %>/5</td></tr>
-		<tr><td>³²Àº ±¸¸Å ÀÌ¿ë±Ç È½¼ö</td><td id = "pay_coupon"><%=bvo.getPay_coupon() %> </td></tr>
-	</table>
-		
-	<div class ="btns">
-		<input type="button" id="check1" value="±¸¸Å">
-		<input type="button" id="check2" value="È¯ºÒ">
-	</div>
-
+    <button onclick="requestPay()">ê²°ì œí•˜ê¸°</button>
+    
+    
+    <script>
+    function requestPay() {
+      // IMP.request_pay(param, callback) ê²°ì œì°½ í˜¸ì¶œ
+      IMP.request_pay({ // param
+          pg: "html5_inicis",
+          pay_method: "card",
+          merchant_uid: "ORD20180131-0000011",
+          name: "ë…¸ë¥´ì›¨ì´ íšŒì „ ì˜ì",
+          amount: 64900,
+          buyer_email: "gildong@gmail.com",
+          buyer_name: "í™ê¸¸ë™",
+          buyer_tel: "010-4242-4242",
+          buyer_addr: "ì„œìš¸íŠ¹ë³„ì‹œ ê°•ë‚¨êµ¬ ì‹ ì‚¬ë™",
+          buyer_postcode: "01181"
+      }, function (rsp) { // callback
+          if (rsp.success) {
+              ...,
+              // ê²°ì œ ì„±ê³µ ì‹œ ë¡œì§,
+              ...
+          } else {
+              ...,
+              // ê²°ì œ ì‹¤íŒ¨ ì‹œ ë¡œì§,
+              ...
+          }
+      });
+    }
+  </script>
 </body>
 </html>

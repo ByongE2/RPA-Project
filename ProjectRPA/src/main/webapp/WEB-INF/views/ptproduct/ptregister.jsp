@@ -31,7 +31,7 @@
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			height : 300,
-			lang : 'ko-KR',
+			lang :"ko-KR",
 			placeholder : '내용을 입력하세요',
 			minHeight : 400,
 			focus:true,
@@ -60,6 +60,8 @@
 			}
 		});
 	}
+	
+	
 </script>
 </head>
 

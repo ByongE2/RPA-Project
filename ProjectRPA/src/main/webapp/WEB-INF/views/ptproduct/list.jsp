@@ -39,7 +39,7 @@ $(document).ready(function() {
 	<tr>
 		<th>번호</th>
 		<th>이름</th>
-		<th>내용</th>
+	
 		<th>아이디</th>
 		<th>생성날짜</th>
 		<th>금액</th>
@@ -48,24 +48,27 @@ $(document).ready(function() {
 		<th>사진</th>
 		<th>날짜1</th>
 		<th>날짜2</th>
-		<th> </th>
+
 	</tr>
 	<c:forEach items="${list }" var="pt">
 		<tr>
 			<td>${pt.PT_no }</td>
 			<td>${pt.pt_name} </td>
-			<td>${pt.PT_content}</td>
+			
 			<td>${pt.PT_id}</td>
-			<td><fmt:formatDate value="${pt.PT_Registration}" pattern="yyyy-MM-dd"/> </td>
-			<td>${pt.PT_Price}</td>
+			<td><fmt:formatDate value="${pt.PT_Registration}" pattern="yyyy-MM-dd"/></td>
+			<td> ${pt.PT_Price}</td>
 			<td>${pt.PT_code}</td>
 			<td><a href="/ptproduct/ptget?PT_no=${pt.PT_no }"> ${pt.PT_title}</a></td>
-			<td>${pt.PT_photourl}</td>
+			<td><img alt="이미지 없음"  src="/ProjectRPA/src/main/webapp/resources/ptimg/${pt.PT_photourl}"></td>
 			<td>${pt.calendar_before }</td>
 			<td>${pt. calendar_after}</td>
-			
 			<!-- pt_no값을 못가져옴 -->
-			<td><button onclick="location.href='/ptproduct/ptremove?pt_no=${pt_no.PT_no}'">삭제</button></td>
+			<td>
+			<button onclick="location.href='/ptproduct/ptmodify?pt_no=${pt.PT_no}'">수정</button>
+			<button onclick="location.href='/ptproduct/ptremove?pt_no=${pt.PT_no}'">삭제</button>
+			
+			</td>
 		</tr>
 	</c:forEach>
 </table>

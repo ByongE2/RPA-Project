@@ -23,5 +23,5 @@ public interface Pt_Goods_Service {
 	//관리자 글 삭제
 	public void ptdelete(int PT_no);
 	
-	public void ptupdate(int PT_no);
+	public void ptupdate(Pt_Goods_DTO dto);
 }
