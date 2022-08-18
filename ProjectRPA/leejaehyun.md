@@ -70,7 +70,6 @@ values(no_seq.nextval,'복근있는 여름을 잘 보내기','이 내용은 말그대로 내용이며 �
 
 
 /*
-
 create sequence no_seq increment by 1 start with 1 minvalue 1 maxvalue 9999;
 
 
@@ -157,4 +156,19 @@ servlet-context.xml
 		<beans:property name="maxUploadSize" value="100000000"></beans:property>
 	</beans:bean>
 </beans:beans>
+----------------------------------------------------------------
+아임포트
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+
+<!-- dependencies 안에 추가합니다 -->
+<dependency>
+  <groupId>com.github.iamport</groupId>
+  <artifactId>iamport-rest-client-java</artifactId>
+  <version>0.2.14</version>
+</dependency>
 
