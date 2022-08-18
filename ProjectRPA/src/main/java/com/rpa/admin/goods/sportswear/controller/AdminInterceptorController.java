@@ -1,4 +1,4 @@
-package com.rpa.controller;
+package com.rpa.admin.goods.sportswear.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

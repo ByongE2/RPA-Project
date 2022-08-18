@@ -1,26 +1,4 @@
-<<<<<<< HEAD
-
-
-jdk11
-sts tool(5.2.7)
-oracle 11g
-Encoding utf-8
-git ( https://github.com/ByongE2/RPA-Project.git )
-lombok-1.18.24.jar (  ) 
-
-DB
-
-
-mybatis
-
-
-
--------------------------------------------------------------
-ptµ¥ÀÌÅÍº£ÀÌ½º ±¸Á¶
--pt Å×ÀÌºí ±¸Á¶
-/* ³ªÁß¿¡ ¼öÁ¤¿ä¸Á
-=======
-
+í™˜ê²½
 
 *jdk11
 *sts tool(5.2.7)
@@ -28,8 +6,9 @@ ptµ¥ÀÌÅÍº£ÀÌ½º ±¸Á¶
 *Encoding utf-8
 *git ( https://github.com/ByongE2/RPA-Project.git )
 *lombok-1.18.24.jar 
+*mybatis 3.5.10
+*utf-8
 
 DB
-
-
+í…Œì´ë¸”
 
