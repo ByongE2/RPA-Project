@@ -35,8 +35,8 @@
 <div>
 	<label>상품내용</label>
 	 
-	<textarea rows="30" cols="10"  name="pt_content">${pt_no.PT_content }</textarea> 
-	<span class="text-dark mb-0" th:utext="${pt_no.PT_content }"></span>
+	
+		<div> ${pt_no.PT_content}</div>
 	
 </div>
 <div>
@@ -62,6 +62,7 @@
 </div>
 <div>
 	<label>상품 생성날짜</label><input name="PT_Registration" readonly="readonly" value="${pt_no.PT_Registration}">
+	
 </div>
 	
 		<button onclick="location.href='/ptproduct/ptmodify?pt_no=${pt_no.PT_no}'">수정하기</button>

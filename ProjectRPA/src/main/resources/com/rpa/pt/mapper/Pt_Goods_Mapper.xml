@@ -8,8 +8,8 @@
 	<selectKey keyProperty="PT_code" order="BEFORE" resultType="String">
 		SELECT DBMS_RANDOM.STRING('L', 20) STR FROM DUAL
 	</selectKey>
-insert into PTproduct(PT_no,PT_title,PT_content,pt_name,PT_Price,PT_photourl,Calendar_before,Calendar_after,PT_id,PT_Registration,PT_code)
-values(no_seq.nextval,#{PT_title},#{PT_content},#{pt_name},#{PT_Price},#{PT_photourl},null,null,#{PT_id},default,#{PT_code})
+insert into PTproduct(PT_no,PT_title,PT_content,pt_name,PT_Price,PT_photourl,Calendar_before,Calendar_after,PT_id,PT_Registration,PT_code,PT_state)
+values(no_seq.nextval,#{PT_title},#{PT_content},#{pt_name},#{PT_Price},#{PT_photourl},null,null,#{PT_id},default,#{PT_code},#{PT_State})
 
 </insert>
 
@@ -32,7 +32,6 @@ select * from PTproduct where PT_no=#{PT_no}
 </delete>
 
 <update id="ptupdate">
-	update set PT_title=#{PT_title}, pt_name=#{pt_name},PT_photourl=#{PT_photourl},PT_Price=#{PT_Price},PT_id=#{PT_id},PT_State=#{PT_State} ,PT_content=#{PT_content} where PT_no=#{PT_no}
-
+	update PTproduct set PT_title=#{PT_title}, pt_name=#{pt_name},PT_photourl=#{PT_photourl},PT_Price=#{PT_Price},PT_id=#{PT_id},PT_State=#{PT_State} ,PT_content=#{PT_content} where PT_no=#{PT_no}
 </update>
 </mapper>

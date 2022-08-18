@@ -1,7 +1,10 @@
 package com.rpa.pt.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -19,8 +22,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
@@ -41,13 +46,45 @@ import lombok.extern.log4j.Log4j;
 public class PT_Goods_Controller {
 	private Pt_Goods_Service service;
 	
+	
+	
 	//글쓰기
 	@PostMapping("/ptregister")
-	public String ptregister(Pt_Goods_DTO dto, RedirectAttributes rttr) {
-		log.info("관리자 글쓰기에 들어옴"+dto);
-		service.Ptregister(dto);
+	public String ptregister(MultipartHttpServletRequest request ,RedirectAttributes rttr) throws IOException {
+		Pt_Goods_DTO dto= new  Pt_Goods_DTO();
+		dto.setPt_name(request.getParameter("pt_name"));
+		dto.setPT_title(request.getParameter("PT_title"));
+		dto.setPT_Price(request.getParameter("PT_Price"));
+		dto.setPT_id(request.getParameter("PT_id"));
+		dto.setPT_content(request.getParameter("PT_content"));
+		dto.setPT_State(request.getParameter("PT_State"));
+		
+		
+		MultipartFile mf = request.getFile("PT_photourl");
+		
+		if(mf.getSize()!=0) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			Calendar calender = Calendar.getInstance();
+			String sysfilename=format.format(calender.getTime());
+			
+			sysfilename +=mf.getOriginalFilename();
+			dto.setPT_photourl(sysfilename);
+			
+			File savefile = new File("C:\\Users\\kkao4\\Desktop\\RPA-project\\jeahyun\\ProjectRPA\\src\\main\\webapp\\resources\\ptimg"+"/"+sysfilename);
+			try {
+				mf.transferTo(savefile);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}else {
+			dto.setPT_photourl("nan");
+		}
+		
+		System.out.println("글쓰기 들어옴"+dto);
 		rttr.addFlashAttribute("result",dto.getPT_no());
 		
+		service.Ptregister(dto);
 		int ptnum= service.PtViewGet();
 		return "redirect:/ptproduct/ptget?PT_no="+ptnum;
 	}
@@ -86,8 +123,11 @@ public class PT_Goods_Controller {
 	}
 	
 	@PostMapping("/ptmodify")
-	public String ptmodify() {
-		service.ptupdate(0);
+	public String ptmodify(Pt_Goods_DTO dto) {
+		System.out.println(dto);
+		
+		service.ptupdate(dto);
+		
 		return  "redirect:/ptproduct/list";
 	}
 	
@@ -106,8 +146,6 @@ public class PT_Goods_Controller {
 			FileUtils.copyInputStreamToFile(fileStream, targetfile);
 			jsonobject.addProperty("url", "/resources/upload/"+savedfilename);
 			jsonobject.addProperty("responseCode", "success");
-			
-			
 		}catch (Exception e) {
 			FileUtils.deleteQuietly(targetfile);
 			jsonobject.addProperty("responseCode", "error");
