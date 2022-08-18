@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.rpa.pt.domain.Pt_Goods_DTO;
+import com.rpa.pt.domain.Pt_Goods_basket_DTO;
 import com.rpa.pt.mapper.Pt_Goods_Mapper;
 
 import lombok.AllArgsConstructor;
@@ -22,9 +23,9 @@ public class Pt_Goods_Serviceimpl  implements Pt_Goods_Service{
 
 	@Override
 	public void Ptregister(Pt_Goods_DTO dto) {
-		log.info("µé¾î´Â ¿ÔÀ½");
+		log.info("ë“¤ì–´ëŠ” ì™”ìŒ");
 		mapper.ptinsert(dto);
-		log.info("pt °ü¸®ÀÚ ±Û¾²±â ¿Ï·á");
+		log.info("pt ê´€ë¦¬ì ê¸€ì“°ê¸° ì™„ë£Œ");
 	}
 
 	@Override
@@ -51,6 +52,24 @@ public class Pt_Goods_Serviceimpl  implements Pt_Goods_Service{
 	public void ptupdate(Pt_Goods_DTO dto) {
 		mapper.ptupdate(dto);
 	}
+
+	@Override
+	public void clientBasketinsert(Pt_Goods_basket_DTO dto) {
+		mapper.ClientBasketInsert(dto);
+	}
+
+	@Override
+	public void clientBasketDelete(String pt_code) {
+		mapper.ClientBasketDelete(pt_code);
+	}
+
+	@Override
+	public List<Pt_Goods_basket_DTO> clientBasketView(String pt_code) {
+		return mapper.ClientBasketView(pt_code);
+		
+	}
+
+
 
 	
 	

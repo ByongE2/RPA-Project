@@ -14,7 +14,7 @@ values(no_seq.nextval,#{PT_title},#{PT_content},#{pt_name},#{PT_Price},#{PT_phot
 </insert>
 
 <select id="getlist" resultType="com.rpa.pt.domain.Pt_Goods_DTO">
-select * from PTproduct
+ select * from PTproduct
 
 </select>
 
@@ -32,6 +32,22 @@ select * from PTproduct where PT_no=#{PT_no}
 </delete>
 
 <update id="ptupdate">
-	update PTproduct set PT_title=#{PT_title}, pt_name=#{pt_name},PT_photourl=#{PT_photourl},PT_Price=#{PT_Price},PT_id=#{PT_id},PT_State=#{PT_State} ,PT_content=#{PT_content} where PT_no=#{PT_no}
+	update PTproduct set PT_title=#{PT_title}, pt_name=#{pt_name},PT_photourl=#{PT_photourl},PT_Price=#{PT_Price},PT_id=#{PT_id},PT_State=#{PT_State} ,PT_content=#{PT_content},PT_code=#{PT_code} where PT_no=#{PT_no}
 </update>
+
+<insert id="ClientBasketInsert">
+insert into PTbasket(PT_id_basket,PT_title_basket,PT_price_basket,pt_photourl_basket,purchase_basket,pt_code,pt_date)
+values(#{PT_id_basket},#{PT_title_basket},#{PT_price_basket},#{pt_photourl_basket},#{purchase_basket},#{PT_code},null)
+
+</insert>
+
+<delete id="ClientBasketDelete">
+	delete from PTbasket where PT_CODE=#{pt_code}
+</delete>
+
+<select id="ClientBasketView" resultType="com.rpa.pt.domain.Pt_Goods_basket_DTO">
+select * from PTBASKET where PT_ID_BASKET=#{PT_id_basket}
+
+</select>
+
 </mapper>
