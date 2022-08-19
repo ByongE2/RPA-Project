@@ -48,7 +48,7 @@ public class SportswearServiceImplTest {
 //	@Test
 //	public void swServiceModifyTest() throws Exception{
 //		SportswearDto dto = new SportswearDto();
-//		dto.setGoods_swID(85L);
+//		dto.setGoods_swID(144L);
 //		dto.setGoods_swName("sw service test22222");
 //		dto.setGoods_swPrice(10000);
 //		dto.setGoods_swStock(250);

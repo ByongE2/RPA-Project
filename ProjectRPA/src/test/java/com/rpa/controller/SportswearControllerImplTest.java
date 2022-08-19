@@ -70,7 +70,7 @@ public class SportswearControllerImplTest {
 //	public void swControllerModifyTest() throws Exception{
 //		String resultPage = 
 //				mockMvc.perform(MockMvcRequestBuilders.post("/admin/goods/sportswear/modify")
-//						.param("goods_swID",  "71")
+//						.param("goods_swID",  "144")
 //						.param("goods_swName",  "컨트롤러수정이름")
 //						.param("goods_swPrice", "7171")
 //						.param("goods_swStock", "71")

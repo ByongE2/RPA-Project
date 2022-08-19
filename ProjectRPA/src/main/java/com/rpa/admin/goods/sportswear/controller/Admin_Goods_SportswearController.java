@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -71,7 +72,7 @@ public class Admin_Goods_SportswearController {
 		return "Goods/sportswear/swList";
 	}//swGetList
 	
-	@GetMapping({"/detail", "modify"})
+	@GetMapping({"/detail", "/modify"})
 	public String swGetDetail(Long swID, SwCriteria cri, Model model) throws Exception {
 		log.info("sw 상세 페이지" + swID);
 		//list 조건 정보
@@ -82,13 +83,19 @@ public class Admin_Goods_SportswearController {
 		return "Goods/sportswear/swDetail";
 	}
 	@PostMapping("/modify")
-	public String swModify(SportswearDto swDto, RedirectAttributes rttr) throws Exception {
+	public String swModify(SportswearDto swDto, RedirectAttributes rttr, @ModelAttribute("cri")SwCriteria cri) throws Exception {
 		log.info("sw 수정 페이지" + swDto);
 		
-		int result = swService.swModify(swDto);
+		if(swService.swModify(swDto) == 1) {
+			rttr.addAttribute("result", "수정되었습니다");
+		}
 		
-		rttr.addFlashAttribute("modify_result", result);
+		//redirect라 rttr에 정보담고, 수정 후 기존 list페이지로 가기위해
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
 		
+		rttr.addAttribute("keyword", cri.getKeyword());
+
 		return "redirect:/admin/goods/sportswear/list";
 	}
 	@PostMapping("/remove")
