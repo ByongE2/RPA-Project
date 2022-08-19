@@ -1,5 +1,6 @@
 select * from PTproduct;
 select * from member;
+select * from PTBASKET;
 drop table member;
 drop table PTproduct;
 drop table PTbasket;
@@ -50,14 +51,14 @@ REFERENCES PTproduct (pt_code),
 FOREIGN KEY (PT_id_basket)
 REFERENCES Member (id));
 
+insert into PTbasket(PT_id_basket,PT_title_basket,PT_price_basket,pt_photourl_basket,purchase_basket,pt_code,pt_date)
+values('kkao45617','헬스장이용','4123','사진','결제완료','cxazcxrvfgixufbijypx',null);
 
+delete from PTbasket where PT_CODE='gceosqvbugvjyycbyymd';
 
+select * from PTBASKET where PT_ID_BASKET='kkao45617';
 
-
-
-
-    
-    
+commit;
     
 create sequence no_seq increment by 1 start with 1 minvalue 1 maxvalue 9999;
 
@@ -74,8 +75,14 @@ insert into PTproduct(PT_no,PT_title,PT_content,pt_name,PT_Price,PT_photourl,Cal
 values(no_seq.nextval,'복근있는 여름을 잘 보내기','이 내용은 말그대로 내용이며 글이고 또한 양식입니다','이재현',30000,'사진1','캘린더1','캘린더2','kkao45617',TO_DATE(sysdate,'yyyy-MM-dd'),(SELECT DBMS_RANDOM.STRING('X', 20) STR FROM DUAL));
 
 
+
+
 /*
 create sequence no_seq increment by 1 start with 1 minvalue 1 maxvalue 9999;
+
+
+
+
 
 
 
