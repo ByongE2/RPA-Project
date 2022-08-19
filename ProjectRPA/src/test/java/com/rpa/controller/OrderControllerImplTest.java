@@ -29,14 +29,14 @@ public class OrderControllerImplTest {
 	public void testinsert() {
 		Pt_Goods_DTO dto= new Pt_Goods_DTO();
 		dto.setPT_id("kkao45617");
-		dto.setPT_content("³»¿ë");
-		dto.setPT_title("Å¸ÀÌÆ²");
-		dto.setPt_name("¾Æ¹«°³");
+		dto.setPT_content("ï¿½ï¿½ï¿½ï¿½");
+		dto.setPT_title("Å¸ï¿½ï¿½Æ²");
+		dto.setPt_name("ï¿½Æ¹ï¿½ï¿½ï¿½");
 		dto.setPT_photourl(null);
 		dto.setPT_Price("12345");
-		dto.setCalendar_before("´Þ·ÂÀü");
-		dto.setCalendar_after("´Þ·Â ÈÄ");
-		log.info("---------------ÀÎ¼³Æ®");
+		dto.setCalendar_before("ï¿½Þ·ï¿½ï¿½ï¿½");
+		dto.setCalendar_after("ï¿½Þ·ï¿½ ï¿½ï¿½");
+		log.info("---------------ï¿½Î¼ï¿½Æ®");
 		log.info("insert : "+mapper.ptinsert(dto));
 	}
 	
@@ -54,6 +54,11 @@ public class OrderControllerImplTest {
 	@Test
 	public void testlist() {
 		log.info(mapper.getlist());
+	}
+	
+	@Test
+	public void testbasketview() {
+		mapper.ClientBasketView("kkao45617");
 	}
 	
 }

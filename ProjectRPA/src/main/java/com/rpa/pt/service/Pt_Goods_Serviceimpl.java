@@ -59,8 +59,8 @@ public class Pt_Goods_Serviceimpl  implements Pt_Goods_Service{
 	}
 
 	@Override
-	public void clientBasketDelete(String pt_code) {
-		mapper.ClientBasketDelete(pt_code);
+	public void clientBasketDelete(String PT_code) {
+		mapper.ClientBasketDelete(PT_code);
 	}
 
 	@Override

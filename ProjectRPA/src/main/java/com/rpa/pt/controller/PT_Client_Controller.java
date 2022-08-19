@@ -31,20 +31,22 @@ public class PT_Client_Controller {
 		model.addAttribute("clinet_no",service.pt_get(client_no));
 	}
 	@GetMapping("/basket")
-	public void clientbasketview() {
-		service.clientBasketView("kkao45617");
-		
+	public void clientbasketview(String client_id,Model model) {
+		System.out.println("아이디 : "+client_id);
+		model.addAttribute("basket",service.clientBasketView(client_id));
 	}
 	
 	
 	@GetMapping("/basketinsert")
-	public void clientbasketinsert(Pt_Goods_basket_DTO dto) {
+	public String clientbasketinsert(Pt_Goods_basket_DTO dto,int client_no) {
 		service.clientBasketinsert(dto);
+		return "ptclient/clientget?client_no="+client_no;
 	}
 	
-	@GetMapping
-	public void clientbasketDelete(String pt_code) {
-		service.clientBasketDelete(pt_code);
+	@GetMapping("/basketdelete")
+	public String clientbasketDelete(String PT_code,String client_id) {
+		service.clientBasketDelete(PT_code);
+		return "redirect:/ptclient/basket?client_id="+client_id;
 	}
 	
 }
