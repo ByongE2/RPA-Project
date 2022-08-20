@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.rpa.controller">
+	<logger name="com.rpa">
 		<level value="info" />
 	</logger>
 	

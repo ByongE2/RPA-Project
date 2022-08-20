@@ -47,6 +47,16 @@
 				<input name="goods_swDiscount" type="hidden" value="0">	
 				<span class="step_val">할인 된 가격 : <span class="span_discount"></span></span>
 			</div>
+			<div class="form_section">
+       			<div class="form_section_title">
+       				<label>상품 이미지</label>
+       			</div>
+       			<div class="form_section_content">
+					<input type="file" id ="fileItem" name="uploadFile" style="height: 30px;">
+					<!-- 파일 여러개 올리고 싶으면 multiple-->
+					<!-- <input type="file" multiple> -->
+       			</div>
+      		</div>
 			<button type="submit" class="btn btn-default">등록</button>
 			<button type="reset" class="btn btn-default">리셋</button>
 		</form>
@@ -82,6 +92,60 @@ $("input[name='goods_swPrice']").on("change", function(){
 	        
 	$(".span_discount").html(discountPrice);
 });
+/* 이미지 업로드 */
+$('input[type="file"]').on("change", function(e){
+	let formData = new FormData();
+	let fileInput = $('input[name="uploadFile"]');
+	let fileList = fileInput[0].files;
+	let fileObj = fileList[0];
+	
+	if(!fileCheck(fileObj.name, fileObj.size)){
+		return false;
+	}
+	
+	formData.append("uploadFile", fileObj); //가상의 form태그 역할. key값있는상태에서 같은 key값 추가하면 배열 끝에 새로운 값 추가.(배열임)
+	
+	
+	$.ajax({
+		url: '/admin/goods/sportswear/uploadAjaxAction', //서버로 요청을 보낼 url
+		// processData, contentType 속성 값을 'false'로 해야만 첨부파일이 서버로 전송 됨.
+    	processData : false,  //서버로 전송할 데이터를 queryStirng 형태로 변환할지 여부
+    	contentType : false,  //서버로 전송되는 데이터의 content-type
+    	data : formData,	  //서버로 전송할 데이터
+    	type : 'POST',	 	  //서버 요청 타입(GET, POST)
+    	dataType : 'json'	  //서버로부터 반환받을 데이터 타입
+	});
+	
+	
+	/*
+	파일 여러개 업로드 하고 싶은 경우 + <input>태그에 multiple 속성
+	for(let i = 0; i < fileList.length; i++){
+	formData.append("uploadFile", fileList[i]);
+	}
+	*/
+
+	//alert("통과");
+	//console.log("fileObj : " + fileObj);
+	//console.log("fileList : " + fileList);
+	//console.log("fileName : " + fileObj.name);
+	//console.log("fileSize : " + fileObj.size);
+	//console.log("fileType(MimeType) : " + fileObj.type);
+});
+/* 업로드 제약 1MB 이하 and jsp, png */
+let regex = new RegExp("(.*?)\.(jpg|png)$"); //jsp,png파일만
+let maxSize = 1048576; //1MB	
+
+function fileCheck(fileName, fileSize){
+	if(fileSize >= maxSize){
+		alert("파일 사이즈 초과");
+		return false;
+	}
+	if(!regex.test(fileName)){
+		alert("해당 종류의 파일은 업로드할 수 없음.");
+		return false;
+	}
+	return true;		
+}
 
 </script>		
 			
