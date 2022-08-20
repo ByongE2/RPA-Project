@@ -41,9 +41,49 @@
 				<label>상품 재고</label>
 				<input class="form-control" name="goods_swStock">
 			</div>
+			<div class="form-group">
+				<label>상품 할인율</label>
+				<input id="discount_interface" maxlength="2" value="0">
+				<input name="goods_swDiscount" type="hidden" value="0">	
+				<span class="step_val">할인 된 가격 : <span class="span_discount"></span></span>
+			</div>
 			<button type="submit" class="btn btn-default">등록</button>
 			<button type="reset" class="btn btn-default">리셋</button>
 		</form>
+<script>
+/* 할인율 Input 설정 */
+$("#discount_interface").on("propertychange change keyup paste input", function(){
+	
+	let userInput = $("#discount_interface");
+	let discountInput = $("input[name='goods_swDiscount']");
+	//할인율을 정수로 넣으면 서버에서 소수로 바꿔주는..
+	//상품 가격 * (1 - (할인율/100))
+	let discountRate = userInput.val();				// 입력할 할인값
+	let sendDiscountRate = discountRate / 100;		// 서버에 전송할 할인값
+	let goodsPrice = $("input[name='goods_swPrice']").val();		// 원가
+	let discountPrice = goodsPrice * (1 - sendDiscountRate);		// 할인가격
+	        
+	$(".span_discount").html(discountPrice);
+	
+	discountInput.val(sendDiscountRate);	
+	
+});
+//상품가격 > 상품 할인율 순으로 입력했다가, 다시 상품 가격을 수정했을 때도 할인가격을 바로 볼 수 있도록.
+$("input[name='goods_swPrice']").on("change", function(){
+	
+	let userInput = $("#discount_interface");
+	let discountInput = $("input[name='goods_swDiscount']");
+	//할인율을 정수로 넣으면 서버에서 소수로 바꿔주는..
+	//상품 가격 * (1 - (할인율/100))
+	let discountRate = userInput.val();				// 입력할 할인값
+	let sendDiscountRate = discountRate / 100;		// 서버에 전송할 할인값
+	let goodsPrice = $("input[name='goods_swPrice']").val();		// 원가
+	let discountPrice = goodsPrice * (1 - sendDiscountRate);		// 할인가격
+	        
+	$(".span_discount").html(discountPrice);
+});
+
+</script>		
 			
 
 </body>

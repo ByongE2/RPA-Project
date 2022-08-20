@@ -77,20 +77,31 @@
 				</div>               
 				<div class="form_section">
 					<div class="form_section_title">
-						<label>상품 재고</label>
-					</div>
-					<div class="form_section_content">
-						<input name="goods_swStock" value='<c:out value="${swInfo.goods_swStock}"/>'>
-						<span class="ck_warn swStock_warn">상품 재고를 입력해주세요.</span>
-					</div>
-				</div>          
-				<div class="form_section">
-					<div class="form_section_title">
 						<label>상품 소개</label>
 					</div>
 					<div class="form_section_content bit">
 						<textarea name="goods_swDetail" id="swDetail_textarea">'<c:out value="${swInfo.goods_swDetail}"/>'</textarea>
 						<span class="ck_warn swDetail_warn">상품 소개를 입력해주세요.</span>
+					</div>
+				</div>  
+				<div class="form_section">
+					<div class="form_section_title">
+						<label>상품 할인율</label>
+					</div>
+					<div class="form_section_content">
+						<input name="goods_swDiscount" value='<c:out value="${swInfo.goods_swDiscount}"/>' readonly="readonly">
+						<input id="discount_interface" maxlength="2" value="0">
+						<input name="goods_swDiscount" type="hidden" value="0">	
+						<span class="step_val">할인 된 가격 : <span class="span_discount"></span></span>
+					</div>
+				</div>
+				<div class="form_section">
+					<div class="form_section_title">
+						<label>상품 재고</label>
+					</div>
+					<div class="form_section_content">
+						<input name="goods_swStock" value='<c:out value="${swInfo.goods_swStock}"/>'>
+						<span class="ck_warn swStock_warn">상품 재고를 입력해주세요.</span>
 					</div>
 				</div>        		
 			</form>
@@ -103,34 +114,78 @@
 		
 	</div>
 
-	<script type="text/javascript">
-		$(document).ready(function(){
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		var formObj = $("form");
+		
+		$('button').on("click", function(e){
+			e.preventDefault();
 			
-			var formObj = $("form");
+			var operation = $(this).data('oper');
+			console.log(operation);
 			
-			$('button').on("click", function(e){
-				e.preventDefault();
-				
-				var operation = $(this).data('oper');
-				console.log(operation);
-				
-				if(operation === 'remove'){
-					formObj.attr("action", "/admin/goods/sportswear/remove");
-				}else if(operation === 'list'){
-					formObj.attr("action", "/admin/goods/sportswear/list").attr("method","get");
-					var pageNumTag = $("input[name='pageNum']").clone();
-					var amountTag = $("input[name='amount']").clone(); 
-					// var typeTag = $("input[name='type']").clone(); 
-					var keywordTag = $("input[name='keyword']").clone(); 
-					formObj.empty();
-					formObj.append(pageNumTag);
-					formObj.append(amountTag); 
-					// formObj.append(typeTag); 
-					formObj.append(keywordTag); 
-				}
-				formObj.submit();
-			});
+			if(operation === 'remove'){
+				formObj.attr("action", "/admin/goods/sportswear/remove");
+			}else if(operation === 'list'){
+				formObj.attr("action", "/admin/goods/sportswear/list").attr("method","get");
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone(); 
+				// var typeTag = $("input[name='type']").clone(); 
+				var keywordTag = $("input[name='keyword']").clone(); 
+				formObj.empty();
+				formObj.append(pageNumTag);
+				formObj.append(amountTag); 
+				// formObj.append(typeTag); 
+				formObj.append(keywordTag); 
+			}
+			formObj.submit();
 		});
+		
+		/* 할인율 인터페이스 출력 */
+		let swPriceInput = $("input[name='goods_swPrice']");
+		let discountInput = $("input[name='goods_swDiscount']");
+		
+		let swPrice = swPriceInput.val();
+		let rawDiscountRate = discountInput.val();
+		let discountRate = rawDiscountRate * 100;
+		
+		
+		let discountPrice = swPrice * (1-rawDiscountRate);
+		$(".span_discount").html(discountPrice);
+		$("#discount_interface").val(discountRate);
+	});
+	/* 할인율 Input 설정 */
+	$("#discount_interface").on("propertychange change keyup paste input", function(){
+		
+		let userInput = $("#discount_interface");
+		let discountInput = $("input[name='goods_swDiscount']");
+		//할인율을 정수로 넣으면 서버에서 소수로 바꿔주는..
+		//상품 가격 * (1 - (할인율/100))
+		let discountRate = userInput.val();				// 입력할 할인값
+		let sendDiscountRate = discountRate / 100;		// 서버에 전송할 할인값
+		let goodsPrice = $("input[name='goods_swPrice']").val();		// 원가
+		let discountPrice = goodsPrice * (1 - sendDiscountRate);		// 할인가격
+		        
+		$(".span_discount").html(discountPrice);
+		
+		discountInput.val(sendDiscountRate);	
+		
+	});
+	//상품가격 > 상품 할인율 순으로 입력했다가, 다시 상품 가격을 수정했을 때도 할인가격을 바로 볼 수 있도록.
+	$("input[name='goods_swPrice']").on("change", function(){
+		
+		let userInput = $("#discount_interface");
+		let discountInput = $("input[name='goods_swDiscount']");
+		//할인율을 정수로 넣으면 서버에서 소수로 바꿔주는..
+		//상품 가격 * (1 - (할인율/100))
+		let discountRate = userInput.val();				// 입력할 할인값
+		let sendDiscountRate = discountRate / 100;		// 서버에 전송할 할인값
+		let goodsPrice = $("input[name='goods_swPrice']").val();		// 원가
+		let discountPrice = goodsPrice * (1 - sendDiscountRate);		// 할인가격
+		        
+		$(".span_discount").html(discountPrice);
+	});
 </script>           
 
 	<%-- <%@include file="../includes/admin/footer.jsp" %> --%>

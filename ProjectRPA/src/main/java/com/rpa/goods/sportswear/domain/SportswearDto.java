@@ -30,5 +30,6 @@ public class SportswearDto {
 	private int goods_swPrice, goods_swStock;
 	private String goods_swName, goods_swDetail;
 	private Date goods_swRegDate, goods_swUpdateDate;
-	
+	/* 상품 할인률(백분율) */
+	private double goods_swDiscount;
 }

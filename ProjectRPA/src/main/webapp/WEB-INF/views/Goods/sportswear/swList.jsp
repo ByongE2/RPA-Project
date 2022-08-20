@@ -34,9 +34,10 @@
 	       				<td class="th_column_2">상품 이름</td>
 	       				<td class="th_column_3">상품 가격</td>
 	       				<td class="th_column_4">상품 설명</td>
-	       				<td class="th_column_5">상품 재고</td>
-	       				<td class="th_column_6">등록 날짜</td>
-	       				<td class="th_column_7">수정 날짜</td>
+	       				<td class="th_column_5">상품 할인율</td>
+	       				<td class="th_column_6">상품 재고</td>
+	       				<td class="th_column_7">등록 날짜</td>
+	       				<td class="th_column_8">수정 날짜</td>
 	       			</tr>
 	       		</thead>
 	       		<c:forEach items="${list}" var="list">
@@ -49,6 +50,7 @@
 					</td>
 	       			<td><c:out value="${list.goods_swPrice}"></c:out> </td>
 	       			<td><c:out value="${list.goods_swDetail}"></c:out> </td>
+	       			<td><c:out value="${list.goods_swDiscount}"></c:out> </td>
 	       			<td><c:out value="${list.goods_swStock}"></c:out> </td>
 	       			<td><fmt:formatDate value="${list.goods_swRegDate}" pattern="yyyy-MM-dd"/></td>
 	       			<td><fmt:formatDate value="${list.goods_swUpdateDate}" pattern="yyyy-MM-dd"/></td>

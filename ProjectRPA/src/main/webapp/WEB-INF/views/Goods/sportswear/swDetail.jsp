@@ -61,20 +61,28 @@
 				</div>            
 				<div class="form_section">
 					<div class="form_section_title">
-						<label>상품 재고</label>
-					</div>
-					<div class="form_section_content">
-						<input name="swStock" value="<c:out value='${swInfo.goods_swStock}'/>" disabled>
-					</div>
-				</div>          
-				<div class="form_section">
-					<div class="form_section_title">
 						<label>상품 소개</label>
 					</div>
 					<div class="form_section_content bit">
 						<textarea name="swDetail" id="swDetail_textarea" disabled>${swInfo.goods_swDetail}</textarea>
 					</div>
 				</div>        		
+				<div class="form_section">
+					<div class="form_section_title">
+						<label>상품 할인율</label>
+					</div>
+					<div class="form_section_content bit">
+						<input id="swDiscount" name="swDiscount" readonly="readonly" value="<c:out value='${swInfo.goods_swDiscount}'/>">
+					</div>
+				</div>        		
+				<div class="form_section">
+					<div class="form_section_title">
+						<label>상품 재고</label>
+					</div>
+					<div class="form_section_content">
+						<input name="swStock" value="<c:out value='${swInfo.goods_swStock}'/>" disabled>
+					</div>
+				</div>          
 				<div class="btn btn-default">
 					<button data-oper='modify' class="btn btn-default">Modify</button>
 					<button data-oper='list'  class="btn btn-info" > List</button>
@@ -102,6 +110,12 @@ $("button[data-oper='list']").on("click", function(e){
 $("button[data-oper='modify']").on("click", function(e){
 	moveForm.attr("action", "/admin/goods/sportswear/modify").submit();
 });	
+
+$(document).ready(function(){
+/* 할인율 값 삽입 */
+let swDiscount = "<c:out value='${swInfo.goods_swDiscount}'/>" * 100;
+$("#swDiscount").attr("value", swDiscount);
+});
 </script>
 </body>
 </html>
