@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.rpa.goods.sportswear.mapper.Goods_SportswearMapper">
+
+	<!-- criteria(검색조건) -->
+	<!-- <sql id="criteria">
+
+	  	<trim prefix="(" suffix=") AND" prefixOverrides="AND">
+	  		<foreach item="type" collection="typeArr">
+	  			<trim prefix="AND">
+	  				<choose>
+	  				</choose>
+	  			</trim>
+	  		</foreach>
+	  	</trim>
+
+	</sql> -->
+
+	<!-- 목록 -->
+	<select id="swGetList" resultType="com.rpa.goods.sportswear.domain.SportswearDto">
+	    <![CDATA[
+	         select goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,goods_swDiscount,
+	                  goods_swRegDate, goods_swUpdateDate 
+	           from (
+	              select /* +INDEX_DESC(goods_sportswear idx_goods_sportswear) */ 
+	              rownum as rn, goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,goods_swDiscount,
+	              goods_swRegDate, goods_swUpdateDate
+	              from goods_sportswear 
+	            where
+	    ]]>         
+	            <if test="keyword != null">
+	                goods_swName like '%'||#{keyword}||'%' and
+	            </if>
+	    <![CDATA[        
+	             rownum <= #{pageNum} * #{amount} order by goods_swId desc
+	            )
+	        where rn > (#{pageNum} - 1) * #{amount}
+	    ]]>
+	      
+ 	</select>
+	
+	<!-- 상품 총 갯수 -->
+ 	<select id="swGetTotal" resultType="int">
+        select count(*) 
+        from goods_sportswear
+        <if test="keyword != null">
+           where goods_swName like '%' || #{keyword} || '%'
+        </if>
+    </select> 
+	
+	<!-- 상세조회 -->
+    <select id="swGetDetail" resultType="com.rpa.goods.sportswear.domain.SportswearDto">
+		select * 
+		from goods_sportswear 
+		where goods_swId = #{goods_swId}
+	</select>	
+	
+	<!-- 상품 id 조회 -->
+	<select id="getSwIdName" resultType="com.rpa.goods.sportswear.domain.SportswearDto">
+	
+		select goods_swID, goods_swName 
+		from goods_sportswear 
+		where goods_swID = #{goods_swID}
+	
+	
+	</select>	
+	
+  </mapper>

@@ -18,7 +18,6 @@ public class Admin_Goods_SportswearServiceImpl implements Admin_Goods_Sportswear
 	@Autowired
 	private Admin_Goods_SportswearMapper swMapper;
 	
-	//등록
 	@Override
 	public int swInsert(SportswearDto swDto) throws Exception {
 		log.info("service : swInsert");

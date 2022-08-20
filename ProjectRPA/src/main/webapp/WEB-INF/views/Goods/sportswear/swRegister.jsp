@@ -18,6 +18,36 @@
 		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
 		crossorigin="anonymous">
 </script>
+<style type="text/css">
+	#result_card img{
+		max-width: 100%;
+	    height: auto;
+	    display: block;
+	    padding: 5px;
+	    margin-top: 10px;
+	    margin: auto;	
+	}
+	#result_card {
+		position: relative;
+	}
+	.imgDeleteBtn{
+	    position: absolute;
+	    top: 0;
+	    right: 5%;
+	    background-color: #ef7d7d;
+	    color: wheat;
+	    font-weight: 900;
+	    width: 30px;
+	    height: 30px;
+	    border-radius: 50%;
+	    line-height: 26px;
+	    text-align: center;
+	    border: none;
+	    display: block;
+	    cursor: pointer;	
+	}
+	
+</style>
 </head>
 <body>
 	<div class="panel-heading">
@@ -55,6 +85,13 @@
 					<input type="file" id ="fileItem" name="uploadFile" style="height: 30px;">
 					<!-- 파일 여러개 올리고 싶으면 multiple-->
 					<!-- <input type="file" multiple> -->
+					<div id="uploadResult">
+						<!-- js로 동적으로 이미지 추가하게끔 하려함. -->
+						<!-- <div id="result_card">
+							<div class="imgDeleteBtn">x</div>
+							<img src="/resources/ptimg/2022081820210927_105642.jpg">
+						</div> -->
+					</div>
        			</div>
       		</div>
 			<button type="submit" class="btn btn-default">등록</button>
@@ -99,6 +136,7 @@ $('input[type="file"]').on("change", function(e){
 	let fileList = fileInput[0].files;
 	let fileObj = fileList[0];
 	
+	//이미지파일인지 js로 체크
 	if(!fileCheck(fileObj.name, fileObj.size)){
 		return false;
 	}
@@ -113,7 +151,14 @@ $('input[type="file"]').on("change", function(e){
     	contentType : false,  //서버로 전송되는 데이터의 content-type
     	data : formData,	  //서버로 전송할 데이터
     	type : 'POST',	 	  //서버 요청 타입(GET, POST)
-    	dataType : 'json'	  //서버로부터 반환받을 데이터 타입
+    	dataType : 'json',	  //서버로부터 반환받을 데이터 타입
+   		success : function(result){
+    		console.log(result);
+    		showUploadImage(result);
+    	},
+    	error : function(result){
+	    	alert("이미지 파일이 아님. 이미지 형식 파일 올려주세요~");
+    	}
 	});
 	
 	
@@ -130,7 +175,8 @@ $('input[type="file"]').on("change", function(e){
 	//console.log("fileName : " + fileObj.name);
 	//console.log("fileSize : " + fileObj.size);
 	//console.log("fileType(MimeType) : " + fileObj.type);
-});
+}); //imageUpload
+
 /* 업로드 제약 1MB 이하 and jsp, png */
 let regex = new RegExp("(.*?)\.(jpg|png)$"); //jsp,png파일만
 let maxSize = 1048576; //1MB	
@@ -145,6 +191,32 @@ function fileCheck(fileName, fileSize){
 		return false;
 	}
 	return true;		
+}//fileCheck
+
+/* 이미지 출력 */
+function showUploadImage(uploadResultArr){
+	//전달받은 데이터 검증
+	if(!uploadResultArr || uploadResultArr.length == 0){return}
+	
+    let uploadResult = $("#uploadResult");
+    //배열 첫번 째 데이터로 초기화
+    let obj = uploadResultArr[0];
+    
+    let str = "";
+    //미리보기에는 썸네일 이미지가 나오게
+    //let fileCallPath = obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName;  //('\' 을 '/' 로) 못바꿔줘서 에러
+    //let fileCallPath = obj.uploadPath.replace(/\\/g, '/') + "/s_" + obj.uuid + "_" + obj.fileName;
+    let fileCallPath = encodeURIComponent(obj.uploadPath.replace(/\\/g, '/') + "/s_" + obj.uuid + "_" + obj.fileName);
+    				   //encodeURIComponent() 메서드 :
+    				   //다음의 문자 A-Z a-z 0-9 - _ . ! ~ * ' ( )을 제외한 모든 문자를 UTF-8로 인코딩하여 이스케이프 문자로 변환
+    				   //혹시 파일 이름에 한글 문자를 UTF-8로 자동으로 바꿔주지 않는 브라우저가 있을 수도 있어서.(보통은 자동으로 변환해줌)
+    				   //+  '/'와 '\'문자 또한 인코딩을 하기 때문에 replace() 메서드를 사용 안 해도 된다.
+    str += "<div id='result_card'>";
+	str += "<img src='/display?fileName=" + fileCallPath +"'>";
+	str += "<div class='imgDeleteBtn'>x</div>";
+	str += "</div>";
+	
+	uploadResult.append(str);  // = uploadResult.html(str);  
 }
 
 </script>		

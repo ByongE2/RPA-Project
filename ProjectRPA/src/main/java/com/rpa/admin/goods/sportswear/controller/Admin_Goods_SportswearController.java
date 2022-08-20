@@ -4,13 +4,18 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpa.admin.goods.sportswear.service.Admin_Goods_SportswearService;
+import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
 import com.rpa.goods.sportswear.domain.SwPageDto;
@@ -151,10 +157,39 @@ public class Admin_Goods_SportswearController {
 		return "redirect:/admin/goods/sportswear/list";
 	}//swRemove
 	
-	/* 첨부 파일 업로드 */
-	@PostMapping("/uploadAjaxAction")
-	public void uploadAjaxActionPOST(MultipartFile[] uploadFile) {
+	//첨부 파일 업로드
+	/*과정 요약
+	 * 1. 이미지 파일 저장 
+	 * 2. 썸네일 이미지 파일 생성 및 저장
+	 * 3. 각 이미지 정보 List 객체에 저장
+	 * 4. ResponseEntity를 통해서 뷰(view)로 http 상태 코드가 200이고 http Body에 이미지 정보가 담긴 List 객체를 전송
+	 * */
+	@PostMapping(value="/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_VALUE) 
+	// produces : 서버에서 뷰로 전송되는 Response의 Content-type을 제어 할 수 있는 속성
+	// APPLICATION_JSON_UTF8_VALUE 는 depreciated됨. 한글깨짐 방지 역할.
+	public ResponseEntity<List<AttachImageVO>> uploadAjaxActionPOST(MultipartFile[] uploadFile) {
 		log.info("첨부 파일 업로드 ajaxㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+		
+		/* 이미지 파일 체크(MIME TYPE로 한번 더 유효성 체크) */
+		for(MultipartFile multipartFile: uploadFile) {
+			
+			File checkfile = new File(multipartFile.getOriginalFilename());
+			String type = null;
+			
+			try {
+				type = Files.probeContentType(checkfile.toPath());
+				log.info("MIME TYPE : " + type);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}// end of try-catch
+			
+			if(!type.startsWith("image")) { // MIME TYPE에서 첫 단어가 "image" 이면 image 파일임
+				List<AttachImageVO> list = null;
+				return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+			}
+			
+		}//end of for
 		
 		String uploadFolder = "C:\\upload";
 		
@@ -168,12 +203,21 @@ public class Admin_Goods_SportswearController {
 			uploadPath.mkdirs(); // mkdirs : 여러개 폴더 생성 , 한개는 mkdir()
 		}
 		
+		//이미저 정보 담는 객체 (여러 이미지로 맵핑해놔서 ArrayList)
+		List<AttachImageVO> list = new ArrayList<>();
+		
 		//향상된 for
 		for(MultipartFile multipartFile : uploadFile){
+			//이미지 정보 객체
+			AttachImageVO vo = new AttachImageVO();
+			
 			// 파일 이름
 			String uploadFileName = multipartFile.getOriginalFilename();
+			vo.setFileName(uploadFileName);
+			vo.setUploadPath(datePath);
 			//uuid (범용 고유 식별자) 적용 파일 이름
 			String uuid = UUID.randomUUID().toString();
+			vo.setUuid(uuid);
 			//uuid_파일이름 형태로 저장
 			uploadFileName = uuid + "_" + uploadFileName;
 			//파일 위치, 파일 이름을 합친 File 객체 
@@ -220,7 +264,15 @@ public class Admin_Goods_SportswearController {
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}//end of try-catch
+			
+			list.add(vo);
+			
 		}//end of 향상된 for
+		//Http body에 list 정보 담고 +  상태코드는 OK(200번) = result
+		ResponseEntity<List<AttachImageVO>> result = new ResponseEntity<List<AttachImageVO>>(list, HttpStatus.OK);
+		
+		return result;
+		
 	}//uploadAjaxActionPOST
 	
 	
