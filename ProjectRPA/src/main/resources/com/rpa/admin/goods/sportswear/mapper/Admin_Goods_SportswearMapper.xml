@@ -28,20 +28,20 @@
 	<!-- 목록 -->
 	<select id="swGetList" resultType="com.rpa.goods.sportswear.domain.SportswearDto">
 	    <![CDATA[
-	          select goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,
+	         select goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,
 	                  goods_swRegDate, goods_swUpdateDate 
 	           from (
 	              select /* +INDEX_DESC(goods_sportswear idx_goods_sportswear) */ 
-	                  rownum as rn, goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,
-	                  goods_swRegDate, goods_swUpdateDate
-	            from goods_sportswear 
+	              rownum as rn, goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,
+	              goods_swRegDate, goods_swUpdateDate
+	              from goods_sportswear 
 	            where
 	    ]]>         
 	            <if test="keyword != null">
 	                goods_swName like '%'||#{keyword}||'%' and
 	            </if>
 	    <![CDATA[        
-	             rownum <= #{pageNum} * #{amount}
+	             rownum <= #{pageNum} * #{amount} order by goods_swId desc
 	            )
 	        where rn > (#{pageNum} - 1) * #{amount}
 	    ]]>

@@ -34,23 +34,26 @@ public class Admin_Goods_SportswearController {
 	
 	@GetMapping("/insert")
 	public String swInsert() {
+		System.out.println("당연히 될거고~");
 		return "Goods/sportswear/swRegister";
 	}//swInsert(Get)
 	
 	@PostMapping("/insert")
 	public String swInsert(SportswearDto swDto, RedirectAttributes rttr, Model m) {
 		log.info("Admin_Goods_Sportswear insert : " + swDto);
+		System.out.println("swDto : " + swDto);
 		try {
 			swService.swInsert(swDto);
 			rttr.addFlashAttribute("insert_result", swDto.getGoods_swName()); //등록 후 알람창에 등록물품 뜨게 하려고.
 			
-			return "redirect:/admin/goods/sportswear/main";
+			System.out.println("swDto2 : " + swDto);
+			return "redirect:/admin/goods/sportswear/list";
 		} catch (Exception e) {
 			e.printStackTrace();
 //			m.addAttribute(swDto);
 //			m.addAttribute("msg", "INSERT_ERR");
 			
-			return "redirect:/admin/goods/sportswear/main"; //보류
+			return "redirect:/admin/goods/sportswear/list"; //보류
 		}//catch
 	}//swInsert(POST)
 	
@@ -72,20 +75,42 @@ public class Admin_Goods_SportswearController {
 		return "Goods/sportswear/swList";
 	}//swGetList
 	
-	@GetMapping({"/detail", "/modify"})
-	public String swGetDetail(Long swID, SwCriteria cri, Model model) throws Exception {
+	@GetMapping("/detail")
+	public String swGetDetail(Long swID, @ModelAttribute("cri")SwCriteria cri, Model model) throws Exception {
 		log.info("sw 상세 페이지" + swID);
+		System.out.println("???안뜨냐" + swID);
+		System.out.println("???안뜨냐cc" + cri);
+		System.out.println("???안뜨냐mm" + model);
 		//list 조건 정보
 		model.addAttribute("cri", cri);
 		//상세 페이지 정보
 		model.addAttribute("swInfo", swService.swGetDetail(swID));
 		
 		return "Goods/sportswear/swDetail";
+		
+	}
+	@GetMapping("/modify")
+	public String swGetModify(Long swID, @ModelAttribute("cri")SwCriteria cri, Model model) throws Exception {
+		log.info("sw 상세 페이지" + swID);
+		System.out.println("???안뜨냐" + swID);
+		System.out.println("???안뜨냐cc" + cri);
+		System.out.println("???안뜨냐mm" + model);
+		//list 조건 정보
+		model.addAttribute("cri", cri);
+		//상세 페이지 정보
+		model.addAttribute("swInfo", swService.swGetDetail(swID));
+		
+		return "Goods/sportswear/swModify";
+		
 	}
 	@PostMapping("/modify")
 	public String swModify(SportswearDto swDto, RedirectAttributes rttr, @ModelAttribute("cri")SwCriteria cri) throws Exception {
 		log.info("sw 수정 페이지" + swDto);
 		
+		swService.swModify(swDto);
+		
+		System.out.println("???안뜨냐" + swDto);
+		System.out.println("???안뜨냐cc" + cri);
 		if(swService.swModify(swDto) == 1) {
 			rttr.addAttribute("result", "수정되었습니다");
 		}
@@ -99,12 +124,19 @@ public class Admin_Goods_SportswearController {
 		return "redirect:/admin/goods/sportswear/list";
 	}
 	@PostMapping("/remove")
-	public String swRemove(Long swID, RedirectAttributes rttr) throws Exception{
-		log.info("sw 삭제 페이지" + swID);
-		
-		int result = swService.swRemove(swID);
-		rttr.addFlashAttribute("remove_result", result);	
-		
+	public String swRemove(Long goods_swID, @ModelAttribute("cri") SwCriteria cri, RedirectAttributes rttr) throws Exception{
+		log.info("sw 삭제 페이지" + goods_swID);
+		System.out.println("swID : " + goods_swID);
+		System.out.println("cri : " + cri);
+		int result = swService.swRemove(goods_swID);
+		if(swService.swRemove(goods_swID) ==1) {
+			rttr.addFlashAttribute("result", "삭제 성공");
+		}
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+//		rttr.addAttribute("type", cri.getType()); 
+		rttr.addAttribute("keyword", cri.getKeyword());
+
 		return "redirect:/admin/goods/sportswear/list";
 	}
 	

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,20 +26,18 @@
 	<div class="admin_content_wrap">
 		<div class="admin_content_subject"><span>상품 수정</span></div>
 		<div class="admin_content_main">
-			<form action="/admin/goods/sportswear/modify" method="post" id="modifyForm">
+			<form role="form" action="/admin/goods/sportswear/modify" method="post">
 				
 				<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
 				<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
 				<input type="hidden" name="keyword" value='<c:out value="${cri.keyword}"/>'>
-				<input type="hidden" name='swID' value='<c:out value="${cri.goods_swID}"/>'>
-
 
 				<div class="form_section">
 					<div class="form_section_title">
 						<label>상품 ID</label>
 					</div>
 					<div class="form_section_content">
-						<input class="form-control" name="swID" value="${swInfo.goods_swID}" readonly="readonly"  value='<c:out value="${swInfo.goods_swName}"/>'>
+						<input class="form-control" name="goods_swID" value='<c:out value="${swInfo.goods_swID}"/>' readonly="readonly">
 					</div>
 				</div>
 
@@ -46,7 +46,7 @@
 						<label>상품 이름</label>
 					</div>
 					<div class="form_section_content">
-						<input name="swName" value="${swInfo.goods_swName}">
+						<input name="goods_swName" value='<c:out value="${swInfo.goods_swName}"/>'>
 						<span class="ck_warn swName_warn">상품 이름 입력하세요.</span>
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 						<label>등록 날짜</label>
 					</div>
 					<div class="form_section_content">
-						<input value="<fmt:formatDate value='${swInfo.goods_swRegDate}' pattern='yyyy-MM-dd'/>" disabled>
+						<input value="<fmt:formatDate value='${swInfo.goods_swRegDate}' pattern='yyyy-MM-dd'/>" readonly="readonly">
 					</div>
 					</div>
 					<div class="form_section">
@@ -63,7 +63,7 @@
 						<label>최근 수정 날짜</label>
 					</div>
 					<div class="form_section_content">
-						<input value="<fmt:formatDate value='${swInfo.goods_swUpdateDate}' pattern='yyyy-MM-dd'/>" disabled>
+						<input value="<fmt:formatDate value='${swInfo.goods_swUpdateDate}' pattern='yyyy-MM-dd'/>" readonly="readonly">
 					</div>
 				</div>            
 				<div class="form_section">
@@ -71,7 +71,7 @@
 						<label>상품 가격</label>
 					</div>
 					<div class="form_section_content">
-						<input name="swPrice" value="${swInfo.goods_swPrice}">
+						<input name="goods_swPrice" value='<c:out value="${swInfo.goods_swPrice}"/>'>
 						<span class="ck_warn swPrice_warn">상품 가격을 입력해주세요.</span>
 					</div>
 				</div>               
@@ -80,7 +80,7 @@
 						<label>상품 재고</label>
 					</div>
 					<div class="form_section_content">
-						<input name="swStock" value="${swInfo.goods_swStock}">
+						<input name="goods_swStock" value='<c:out value="${swInfo.goods_swStock}"/>'>
 						<span class="ck_warn swStock_warn">상품 재고를 입력해주세요.</span>
 					</div>
 				</div>          
@@ -89,103 +89,48 @@
 						<label>상품 소개</label>
 					</div>
 					<div class="form_section_content bit">
-						<textarea name="swDetail" id="swDetail_textarea">${swInfo.goods_swDetail}</textarea>
+						<textarea name="goods_swDetail" id="swDetail_textarea">'<c:out value="${swInfo.goods_swDetail}"/>'</textarea>
 						<span class="ck_warn swDetail_warn">상품 소개를 입력해주세요.</span>
 					</div>
 				</div>        		
-				<input type="hidden" name='swID' value="${swInfo.goods_swID}">
 			</form>
 				<div class="btn_section">
-				<button id="cancelBtn" class="btn">취 소</button>
-				<button id="modifyBtn" class="btn modify_btn">수 정</button>
-				<button id="deleteBtn" class="btn delete_btn">삭 제</button>
+					<button type="submit"  data-oper='modify' class="btn btn-default">Modify</button>		
+					<button type="submit"  data-oper='remove' class="btn btn-danger">Remove</button>										    
+					<button type="submit"  data-oper='list' class="btn btn-info">List</button>
 			</div> 
 		</div>  
-		<form id="moveForm" action="/admin/goods/sportswear/detail" method="get" >
-			<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
-			<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
-			<input type="hidden" name="keyword" value='<c:out value="${cri.keyword}"/>'>
-			<input type="hidden" name='swID' value='<c:out value="${cri.goods_swID}"/>'>
-		</form>                     
+		
 	</div>
-<script>
-/* 취소 버튼 */
-$("#cancelBtn").on("click", function(e){
-	e.preventDefault();
-	$("#moveForm").submit();
-});
-/* 삭제 버튼 */
-$("#deleteBtn").on("click", function(e){
-	e.preventDefault();
-	let moveForm = $("#moveForm");
-	moveForm.find("input").remove();
-	moveForm.append('<input type="hidden" name="swID" value="${swInfo.goods_swID}">');
-	moveForm.attr("action", "/admin/goods/sportswear/remove");
-	moveForm.attr("method", "post");
-	moveForm.submit();
-});
-/* 수정 버튼 */
-$("#modifyBtn").on("click",function(e){
-	
-	e.preventDefault();
-	
-	/* 체크 변수 */
-	let swName = false;
-	let swPrice = false;
-	let swStock = false;
-	let swDetail = false;
-	
-	/* 체크 대상 변수 */
-	let swName = $("input[name='swName']").val();
-	let swPrice = $("input[name='swPrice']").val();
-	let swStock = $("input[name='swStock']").val();
-	let swDetail = $("input[name='swDetail']").val();
-	
-	//let intro = $(".bit p").html();
-	//let Contents = $(".bct p").html();	
-	
-	/* 공란 체크 */
-	if(bookName){
-		$(".swName").css('display','none');
-		bookNameCk = true;
-	} else {
-		$(".swName").css('display','block');
-		bookNameCk = false;
-	}
-	
-	if(authorId){
-		$(".swPrice_warn").css('display','none');
-		authorIdCk = true;
-	} else {
-		$(".swPrice_warn").css('display','block');
-		authorIdCk = false;
-	}
-	
-	if(publeYear){
-		$(".swStock_warn").css('display','none');
-		publeYearCk = true;
-	} else {
-		$(".swStock_warn").css('display','block');
-		publeYearCk = false;
-	}	
-	
-	if(publisher){
-		$(".swDetail_warn").css('display','none');
-		publisherCk = true;
-	} else {
-		$(".swDetail_warn").css('display','block');
-		publisherCk = false;
-	}
-	
-	/* 최종 확인 */
-	if(swName && swPrice && swStock && swDetail){
-		//alert('통과');
-		$("#modifyForm").submit();
-	} else {
-		return false;
-	}
-});
 
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			var formObj = $("form");
+			
+			$('button').on("click", function(e){
+				e.preventDefault();
+				
+				var operation = $(this).data('oper');
+				console.log(operation);
+				
+				if(operation === 'remove'){
+					formObj.attr("action", "/admin/goods/sportswear/remove");
+				}else if(operation === 'list'){
+					formObj.attr("action", "/admin/goods/sportswear/list").attr("method","get");
+					var pageNumTag = $("input[name='pageNum']").clone();
+					var amountTag = $("input[name='amount']").clone(); 
+					// var typeTag = $("input[name='type']").clone(); 
+					var keywordTag = $("input[name='keyword']").clone(); 
+					formObj.empty();
+					formObj.append(pageNumTag);
+					formObj.append(amountTag); 
+					// formObj.append(typeTag); 
+					formObj.append(keywordTag); 
+				}
+				formObj.submit();
+			});
+		});
 </script>           
 
 	<%-- <%@include file="../includes/admin/footer.jsp" %> --%>

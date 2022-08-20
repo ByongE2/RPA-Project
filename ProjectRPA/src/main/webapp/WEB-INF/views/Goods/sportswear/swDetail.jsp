@@ -75,15 +75,14 @@
 						<textarea name="swDetail" id="swDetail_textarea" disabled>${swInfo.goods_swDetail}</textarea>
 					</div>
 				</div>        		
-				
-					<div class="btn btn-default">
-						<button id="cancelBtn" class="btn btn-info">상품 목록</button>
-					<button id="modifyBtn" class="btn btn-default">수정 </button>
+				<div class="btn btn-default">
+					<button data-oper='modify' class="btn btn-default">Modify</button>
+					<button data-oper='list'  class="btn btn-info" > List</button>
 				</div> 
 			</div>      
 
-	<form id="moveForm" action="/admin/goods/sportswear/list" method="get" >
-		<input type="hidden" id="swID" name="swID" value='<c:out value="${list.goods_swID}"/>'>
+	<form id="moveForm" action="/admin/goods/sportswear/modify" method="get" >
+		<input type="hidden" id="swID" name="swID" value='<c:out value="${swInfo.goods_swID}"/>'>
 		<input type="hidden" name="pageNum" value="${cri.pageNum}">
 		<input type="hidden" name="amount" value="${cri.amount}">
 		<input type="hidden" name="keyword" value="${cri.keyword}">
@@ -95,20 +94,13 @@
 <script>
 let moveForm = $("#moveForm");	
 /* 목록 이동 버튼 */
-$("#cancelBtn").on("click", function(e){
-	e.preventDefault();
+$("button[data-oper='list']").on("click", function(e){
 	moveForm.find("#swID").remove();
-	moveForm.attr("action", "/admin/goods/sportswear/list");
-	moveForm.submit();
+	moveForm.attr("action", "/admin/goods/sportswear/list").submit();
 });	
-
 /* 수정 페이지 이동 */
-$("#modifyBtn").on("click", function(e){
-	e.preventDefault();
-	let addInput = '<input type="hidden" name="goods_swID" value="${swInfo.goods_swID}">';
-	$("#moveForm").append(addInput);
-	$("#moveForm").attr("action", "/admin/goods/sportswear/modify");
-	$("#moveForm").submit();
+$("button[data-oper='modify']").on("click", function(e){
+	moveForm.attr("action", "/admin/goods/sportswear/modify").submit();
 });	
 </script>
 </body>
