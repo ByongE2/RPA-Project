@@ -202,7 +202,7 @@
 		</dependency>
 
 		<!-- Servlet -->
-		<!-- 서블릿 버전 변경 : MockUp테스트 하기위해서. -->
+		<!-- 서블릿 버전 변경 : MockUp테스트 + 이미지파일(첨부파일) 처리하기위해서. -->
 		<!-- <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
