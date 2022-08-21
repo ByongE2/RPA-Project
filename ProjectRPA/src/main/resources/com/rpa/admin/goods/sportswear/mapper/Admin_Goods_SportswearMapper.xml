@@ -5,18 +5,6 @@
   
   <mapper namespace="com.rpa.admin.goods.sportswear.mapper.Admin_Goods_SportswearMapper">
 	
-	<!-- <select id="count" resultType="int">
-        SELECT count(*) FROM goods_sportswear
-    </select>
-	
-	<delete id="deleteAll">
-        DELETE FROM goods_sportswear
-    </delete>
-	
-	<delete id="delete" parameterType="map">
-        DELETE FROM goods_sportswear WHERE goods_swId = #{goods_swId} and writer = #{writer}
-    </delete> -->
-	
 	<!-- 등록 -->
 	<insert id="swInsert">
 		<selectKey resultType="Long" keyProperty="goods_swID" order="AFTER">
@@ -94,6 +82,11 @@
 		values 
 		(#{goods_swID}, #{fileName}, #{uploadPath} ,#{uuid})
 	</insert>
+	
+	<!-- 지정 상품 이미지 전체 삭제 --> 
+	<delete id="deleteImageAll">
+		delete FROM RPA_image where goods_swID = #{goods_swID}
+	</delete>
 	
 
   </mapper>

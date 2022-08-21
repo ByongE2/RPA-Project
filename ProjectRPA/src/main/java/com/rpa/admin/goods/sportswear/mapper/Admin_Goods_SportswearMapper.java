@@ -28,6 +28,8 @@ public interface Admin_Goods_SportswearMapper {
 	int swRemove(Long swID) throws Exception;
 	//이미지 등록
 	public void imageEnroll(AttachImageVO vo);
+	//지정 상품 이미지 전체 삭제 
+	public void deleteImageAll(Long swID);
 	//지정 상품 이미지 정보 얻기 
 	public List<AttachImageVO> getAttachInfo(Long swID);
 	

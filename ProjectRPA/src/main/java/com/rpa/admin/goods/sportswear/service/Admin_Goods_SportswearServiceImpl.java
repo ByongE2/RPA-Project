@@ -52,11 +52,26 @@ public class Admin_Goods_SportswearServiceImpl implements Admin_Goods_Sportswear
 		log.info("service: swGetDetailㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		return swAdminMapper.swGetDetail(swID);
 	}
+	
+	@Transactional //쿼리 2개이상 요청하기 때문에
 	@Override
 	public int swModify(SportswearDto swDto) throws Exception {
 		log.info("service: swModifyㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-		return swAdminMapper.swModify(swDto);
-	}
+		
+		int result = swAdminMapper.swModify(swDto);
+		//상품이 수정 되고 && 이미지 정보 존재 할때만
+		if(result == 1 && swDto.getImageList() != null && swDto.getImageList().size() > 0) {
+			//이미지 정보 모두 삭제
+			swAdminMapper.deleteImageAll(swDto.getGoods_swID());
+			
+			swDto.getImageList().forEach(attach -> {
+				
+				attach.setGoods_swID(swDto.getGoods_swID());
+				swAdminMapper.imageEnroll(attach);
+			});
+		}//if
+		return result;
+	}//swModify
 	@Override
 	public int swRemove(Long swID) throws Exception {
 		log.info("service: swRemoveㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");

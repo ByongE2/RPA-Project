@@ -156,6 +156,12 @@ public class SportswearMapperTest {
 //		assertTrue(mapper2.swRemove(81L) == 1); 
 //	}	
 //	
+	/* 지정 상품 이미지 삭제 */
+	@Test
+	public void deleteImageAllTest() {
+		Long swID = 260L;
+		mapper.deleteImageAll(swID);
+	}
 	
 	
 }
