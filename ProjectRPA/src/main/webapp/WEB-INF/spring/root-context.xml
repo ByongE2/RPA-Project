@@ -21,7 +21,7 @@
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
 		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/> -->
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="book1"/>
+		<property name="username" value="kbh"/>
 		<property name="password" value="1234"/>
 	</bean>
 	
@@ -35,9 +35,20 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
+	<!-- Tx -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<tx:annotation-driven/>
+
+	<mybatis-spring:scan base-package="com.rpa.admin.goods.sportswear.mapper" />
+	<mybatis-spring:scan base-package="com.rpa.goods.sportswear.mapper" />
+	
 	<mybatis-spring:scan base-package="com.rpa.user.mapper"/>
+	
 	<mybatis-spring:scan base-package="com.rpa.pt.mapper"/>
-	<context:component-scan base-package="com.rpa">
-	</context:component-scan>
+
+	<context:component-scan	base-package="com.rpa"></context:component-scan>
+	
 
 </beans>

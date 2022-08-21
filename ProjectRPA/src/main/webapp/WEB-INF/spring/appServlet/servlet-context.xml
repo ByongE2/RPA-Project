@@ -23,10 +23,23 @@
 	
 	<context:component-scan base-package="com.rpa" />
 	
+	<!-- 인터셉터 적용 : /admin 경로가 붙는 모든 url -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/**"></mapping>
+			<beans:bean id="AdminInterceptor" class="com.rpa.interceptor.AdminInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <beans:property name="maxUploadSize" value="100000000"></beans:property>
         <beans:property name="maxInMemorySize" value="100000000"></beans:property>
     </beans:bean>
+    
+    <!-- 업로드 관련 빈 : ServletMultipartResolver-->
+	<!-- <beans:bean id="multipartResolver" 
+				class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	</beans:bean> -->
 	
 	
 </beans:beans>
