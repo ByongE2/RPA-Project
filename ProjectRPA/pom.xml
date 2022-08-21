@@ -241,7 +241,7 @@
 		<dependency>
 		    <groupId>net.coobird</groupId>
 		    <artifactId>thumbnailator</artifactId>
-		    <version>0.4.13</version>
+		    <version>0.4.17</version>
 		</dependency>	
 		
 		<!-- Jackson Databind : json데이터 주고받기위해 -->
