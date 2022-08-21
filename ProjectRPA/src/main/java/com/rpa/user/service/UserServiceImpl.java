@@ -28,4 +28,19 @@ public class UserServiceImpl implements UserService {
 		return mapper.userLogin(user);
 	}
 
+	@Override
+	public UserDTO findId(UserDTO user) throws Exception {
+		return mapper.findId(user);
+	}
+
+	@Override
+	public UserDTO findPw(UserDTO user) throws Exception {
+		return mapper.findPw(user);
+	}
+
+	@Override
+	public UserDTO updatePw(UserDTO user) throws Exception {
+		return mapper.updatePw(user);
+	}
+
 }

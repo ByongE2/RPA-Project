@@ -10,5 +10,16 @@ public interface UserMapper {
 	//id 중복확인	
 	public int userIDCheck(String id);
 	
+	// 로그인
 	public UserDTO userLogin(UserDTO user);
+	
+	//id찾기
+	public UserDTO findId(UserDTO user);
+	
+	//pw찾기
+	public UserDTO findPw(UserDTO user);
+	
+	//pw 바꾸기
+	public UserDTO updatePw(UserDTO user);
+	
 }
