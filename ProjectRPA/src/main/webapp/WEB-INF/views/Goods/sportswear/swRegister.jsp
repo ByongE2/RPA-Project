@@ -131,6 +131,12 @@ $("input[name='goods_swPrice']").on("change", function(){
 });
 /* 이미지 업로드 */
 $('input[type="file"]').on("change", function(e){
+	
+	//이미지 이미 존재하면 삭제하고 업로드 요청하게 끔 = 미리보기 태그가 존재하는지 안하는지로 판단.
+	if($(".imgDeleteBtn").length > 0){
+		deleteFile();
+	}
+	
 	let formData = new FormData();
 	let fileInput = $('input[name="uploadFile"]');
 	let fileList = fileInput[0].files;
@@ -212,11 +218,45 @@ function showUploadImage(uploadResultArr){
     				   //혹시 파일 이름에 한글 문자를 UTF-8로 자동으로 바꿔주지 않는 브라우저가 있을 수도 있어서.(보통은 자동으로 변환해줌)
     				   //+  '/'와 '\'문자 또한 인코딩을 하기 때문에 replace() 메서드를 사용 안 해도 된다.
     str += "<div id='result_card'>";
-	str += "<img src='/display?fileName=" + fileCallPath +"'>";
-	str += "<div class='imgDeleteBtn'>x</div>";
+	str += "<img src='/goods/sportswear/display?fileName=" + fileCallPath +"'>";
+	str += "<div class='imgDeleteBtn' data-file='" + fileCallPath + "'>x</div>"; 
 	str += "</div>";
 	
 	uploadResult.append(str);  // = uploadResult.html(str);  
+}
+
+/* 이미지 삭제 버튼 동작 */
+$("#uploadResult").on("click", ".imgDeleteBtn", function(e){ // $("#uploadResult")가 먼저 렌더링 되어있음. 그래서 ~.on()으로
+	
+	deleteFile();
+	
+});
+
+/* 파일 삭제 메서드 */
+function deleteFile(){
+	
+	let targetFile = $(".imgDeleteBtn").data("file");
+	
+	let targetDiv = $("#result_card");
+	
+	$.ajax({
+		url: '/admin/goods/sportswear/deleteFile',
+		data : {fileName : targetFile},
+		dataType : 'text',
+		type : 'POST',
+		success : function(result){
+			console.log(result);
+			
+			targetDiv.remove();
+			$("input[type='file']").val("");
+			
+		},
+		error : function(result){
+			console.log(result);
+			
+			alert("파일 삭제 실패~")
+		}
+	});
 }
 
 </script>		

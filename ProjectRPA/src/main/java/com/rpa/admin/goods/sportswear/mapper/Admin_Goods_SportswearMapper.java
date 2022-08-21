@@ -8,6 +8,7 @@ package com.rpa.admin.goods.sportswear.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
 
@@ -25,4 +26,7 @@ public interface Admin_Goods_SportswearMapper {
 	int swModify(SportswearDto swDto);
 	//삭제
 	int swRemove(Long swID) throws Exception;
+	//지정 상품 이미지 정보 얻기 
+	public List<AttachImageVO> getAttachInfo(Long swID);
+	
 }

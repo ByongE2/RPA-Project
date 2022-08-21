@@ -11,21 +11,26 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.rpa.admin.goods.sportswear.mapper.Admin_Goods_SportswearMapper;
+import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
+import com.rpa.goods.sportswear.mapper.AttachMapper;
 import com.rpa.goods.sportswear.mapper.Goods_SportswearMapper;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class SportswearMapperTest {
-
+	
 	@Autowired
 	private Admin_Goods_SportswearMapper mapper;
-	@Autowired 
+	@Autowired
 	private Goods_SportswearMapper mapper2;
+	@Autowired
+	private AttachMapper mapper3;
 	
 //	@Test
 //	public void testMapper() {
@@ -136,8 +141,13 @@ public class SportswearMapperTest {
 //	public void swRemoveTest() throws Exception{
 //		assertTrue(mapper2.swRemove(81L) == 1); 
 //	}	
+//	
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAttachMapper test mapper3	
 	
-	
+//	@Test
+//	public void getAttachListTest() throws Exception{
+//		log.info(mapper3.getAttachList(226L)); 
+//	}
 	
 	
 }

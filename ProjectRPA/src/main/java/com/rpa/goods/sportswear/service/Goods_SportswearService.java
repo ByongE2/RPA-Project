@@ -7,15 +7,15 @@ import com.rpa.goods.sportswear.domain.SwCriteria;
 
 public interface Goods_SportswearService {
 
-	// 상품 목록(검색) 
-	public List<SportswearDto> swGetList(SwCriteria cri);
+	// 상품 목록(검색 페이징) 
+	List<SportswearDto> swGetList(SwCriteria cri);
 	
 	//상품 정보
-	public SportswearDto swGetDetail(Long swID);	
+	SportswearDto swGetDetail(Long swID);	
 	
 	//상품 총 갯수
-	public int swGetTotal(SwCriteria cri);		
+	int swGetTotal(SwCriteria cri);		
 	
 	//상품 id 이름
-	public SportswearDto getSwIdName(Long swID);	
+	SportswearDto getSwIdName(Long swID);	
 }

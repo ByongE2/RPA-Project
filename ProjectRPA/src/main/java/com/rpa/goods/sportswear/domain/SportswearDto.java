@@ -20,6 +20,7 @@
 package com.rpa.goods.sportswear.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -32,4 +33,6 @@ public class SportswearDto {
 	private Date goods_swRegDate, goods_swUpdateDate;
 	/* 상품 할인률(백분율) */
 	private double goods_swDiscount;
+	/* 이미지 정보 */
+	private List<AttachImageVO> imageList;
 }

@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.rpa.admin.goods.sportswear.service.Admin_Goods_SportswearService;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
+import com.rpa.goods.sportswear.service.AttachService;
+import com.rpa.goods.sportswear.service.Goods_SportswearService;
 import com.rpa.mapper.SportswearMapperTest;
 
 import lombok.extern.log4j.Log4j;
@@ -22,6 +24,10 @@ public class SportswearServiceImplTest {
 	
 	@Autowired
 	private Admin_Goods_SportswearService service;
+	@Autowired
+	private Goods_SportswearService service2;
+	@Autowired
+	private AttachService service3;
 	
 //	@Test
 //	public void admin_goods_swServiceInsertTest() throws Exception{
@@ -41,10 +47,20 @@ public class SportswearServiceImplTest {
 //	public void swServiceGetTotalTest() throws Exception{
 //		log.info(service.swGetTotal(new SwCriteria()));
 //	}
-//	@Test
-//	public void swServiceGetDetailTest() throws Exception{
-//		log.info(service.swGetDetail(145L));
-//	}
+	@Test
+	public void swServiceGetDetailTest() throws Exception{
+		
+		long swID = 226L;
+		SportswearDto sw = service2.swGetDetail(swID);
+		
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ전체 : " + sw);
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡsw ID : " + swID);
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ이미지 정보 : " + sw.getImageList().isEmpty());
+		
+		//image 테이블 만든 뒤 다시.
+		
+	}
 //	@Test
 //	public void swServiceModifyTest() throws Exception{
 //		SportswearDto dto = new SportswearDto();
@@ -59,5 +75,6 @@ public class SportswearServiceImplTest {
 //	public void swServiceRemoveTest() throws Exception{
 //		assertTrue(service.swRemove(82L) == 1);
 //	}
+	
 
 }
