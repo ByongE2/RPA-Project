@@ -29,8 +29,6 @@ public class SportswearMapperTest {
 	private Admin_Goods_SportswearMapper mapper;
 	@Autowired
 	private Goods_SportswearMapper mapper2;
-	@Autowired
-	private AttachMapper mapper3;
 	
 //	@Test
 //	public void testMapper() {
@@ -158,14 +156,6 @@ public class SportswearMapperTest {
 //		assertTrue(mapper2.swRemove(81L) == 1); 
 //	}	
 //	
-// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAttachMapper test mapper3	
-	
-//	@Test
-//	public void getAttachListTest() throws Exception{
-//		log.info(mapper3.getAttachList(226L)); 
-//	}
-	
-	
 	
 	
 }
