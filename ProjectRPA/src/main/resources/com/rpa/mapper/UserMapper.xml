@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trip.mapper.UserMapper">
+
+	<!-- 전체 데이터 출력 -->
+	<select id="getList" resultType="com.trip.domain.UserVO">
+		select * from users where
+		usernum>0 order by usernum desc
+	</select>
+
+	<!-- 로그인 회원정보 확인 -->
+	<select id="read" resultType="com.trip.domain.UserVO">
+		select * from users where userid =
+		#{userId} and userpass= #{userPass}
+	</select>
+	
+	<!-- 회원정보 확인 -->
+	<select id="get" resultType="com.trip.domain.UserVO">
+		select * from users where usernum = #{userNum}
+	</select>
+	
+	<!-- 회원 중복용 닉네임 확인 -->
+	<select id="getNickName" resultType="com.trip.domain.UserVO">
+		select * from users where nickname = #{nickName}
+	</select>
+	
+	<!-- 회원 중복용 아이디 확인 -->
+	<select id="getId" resultType="com.trip.domain.UserVO">
+		select * from users where userid = #{userId}
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="getFindId" resultType="com.trip.domain.UserVO">
+		select * from users where username = #{userName}
+		and email = #{email} and birth = #{birth}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="getPw" resultType="com.trip.domain.UserVO">
+		select * from users where userid = #{userId} and
+		question = #{question} and answer = #{answer}
+	</select>
+   
+   <!-- 회원 추가 -->
+	<insert id="insert">
+		insert into users (usernum, userid, nickname, username,
+		userpass, phone, birth, gender, email, admin,
+		question, answer)
+		values(users_seq.nextval,
+		#{userId}, #{nickName}, #{userName}, #{userPass},
+		#{phone}, #{birth}, #{gender}, #{email}, 1,
+		#{question}, #{answer})
+	</insert>
+	
+   <!-- 카카오 로그인 회원가입 -->
+	<insert id="kakaoInsert">
+		insert into users (usernum, userid, nickname, username,
+		userpass, gender, email, admin)
+		values(users_seq.nextval,
+		#{userId}, #{nickName}, #{userName}, #{userPass},
+		#{gender}, #{email}, 1)
+	</insert>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="delete">
+		delete from users where usernum=#{userNum}
+	</delete>
+
+	<!-- 회원 정보 수정 -->
+	<update id="update">
+		update users
+		set nickname=#{nickName},
+		userpass =#{userPass},
+		phone = #{phone},
+		email = #{email}
+		where usernum = #{userNum}
+	</update>
+	
+</mapper>

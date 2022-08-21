@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.mapper.noticeMapper">
+
+   <sql id="criterial">
+      <trim prefix="(" suffix=") and">
+         <foreach collection="typeArr" item="type" separator="or">
+            <if test="type=='T'.toString()">
+               title like '%'|| #{keyword} ||'%'
+            </if>
+            <if test="type=='C'.toString()">
+               content like '%'|| #{keyword} ||'%'
+            </if>
+            <if test="type=='W'.toString()">
+               writer like '%'|| #{keyword} ||'%'
+            </if>
+         </foreach>
+      </trim>
+   </sql>
+
+   <select id="getList" resultType="com.rpa.domain.noticeVO">
+      select * from notice where
+      board_num>0
+   </select>
+   
+   <!-- 게시글 상세보기 -->
+   <select id="get" resultType="com.rpa.domain.noticeVO">
+      select * 
+      from notice
+      where
+         board_num = #{boardNum}  
+   </select>
+   
+      <insert id="insertSelectKey">
+
+      insert into notice (
+         num, title, 
+         content, 
+         hits, 
+         notice_like, 
+         usernum
+      )
+      values(
+         board_seq.nextval,
+         #{title}, 
+         #{content}, 
+         0, 
+         0, 
+         #{usernum}
+      )
+   </insert>
+   <select id="getListWithPagging"
+      resultType="com.rpa.domain.noticeVO">
+      <![CDATA[
+         select num, title, content, notice_date, hits, image, notice_like, userNum
+      from(d
+         select /*+ index_desc(tbl_board pk_board) */
+         rownum rn, num, title, content, notice_date, hits, image, notice_like, userNum
+         from board
+      where
+      ]]>
+      
+      <include refid="criterial"></include>
+      
+      <![CDATA[
+      ROWNUM <= #{pageNum}*#{amount})
+      where
+      rn > (#{pageNum}-1)*#{amount}
+      ]]>
+   </select>
+   
+   <select id="getTotalCount" resultType="int">
+      select count(*) from board where
+      <include refid="criterial"></include>
+      board_num > 0
+   </select>
+     <!-- 게시글 삭제 -->
+   <delete id="delete">
+      delete from notice where num = #{num}
+   </delete>
+   <!-- 검색조건 -->
+   <select id="searchTest" resultType="com.rpa.domain.noticeVO">
+   <![CDATA[
+   select * from board
+   where
+   ]]>
+      <trim suffix="and">
+         <foreach collection="map" index="key" item="val"
+            separator="or" open="(" close=")">
+            <if test="key == 'T'.toString()">
+               title like #{val}
+            </if>
+            <if test="key == 'C'.toString()">
+               content like #{val}
+            </if>
+            <if test="key == 'W'.toString()">
+               writer like #{val}
+            </if>
+         </foreach>
+      </trim>
+      <![CDATA[
+   rownum<10
+      ]]>
+   </select>
+
+</mapper>
