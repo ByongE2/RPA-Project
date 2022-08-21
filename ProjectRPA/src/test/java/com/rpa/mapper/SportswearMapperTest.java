@@ -38,14 +38,30 @@ public class SportswearMapperTest {
 //	}
 //	
 //	@Test
-//	public void admin_goods_swMapperInsertTest() throws Exception {
-//		SportswearDto dto = new SportswearDto();
-//		dto.setGoods_swName("sw insert2 test");
-//		dto.setGoods_swPrice(10004);
-//		dto.setGoods_swStock(302);
-//		dto.setGoods_swDetail("sw insert2 test detail");
-//		assertTrue(mapper.swInsert(dto)==1);
+//	public void imageEnrollTest() {
+//		AttachImageVO vo = new AttachImageVO();
+//		
+//		vo.setGoods_swID(182L);
+//		vo.setFileName("이미지이름");
+//		vo.setUploadPath("이미지 경로");
+//		vo.setUuid("이미지 고유식별자");
+//		
+//		mapper.imageEnroll(vo);
 //	}
+	
+	@Test
+	public void admin_goods_swMapperInsertTest() throws Exception {
+		SportswearDto dto = new SportswearDto();
+		dto.setGoods_swName("sw inseset test 상품이미지 담긴거33");
+		dto.setGoods_swPrice(10004);
+		dto.setGoods_swStock(302);
+		dto.setGoods_swDetail("sw insert2 test detail");
+		dto.setGoods_swDiscount(0.1);
+		System.out.println("Before SportswearDto :" + dto);
+		mapper.swInsert(dto);
+		
+		System.out.println("After SportswearDto :" + dto);
+	}
 //	
 //	@Test
 //	public void swGetListTest() throws Exception{
@@ -148,6 +164,8 @@ public class SportswearMapperTest {
 //	public void getAttachListTest() throws Exception{
 //		log.info(mapper3.getAttachList(226L)); 
 //	}
+	
+	
 	
 	
 }

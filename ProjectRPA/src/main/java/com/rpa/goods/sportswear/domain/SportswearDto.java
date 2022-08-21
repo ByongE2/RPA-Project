@@ -27,10 +27,10 @@ import lombok.Data;
 @Data
 public class SportswearDto {
 
-	private Long goods_swID;
-	private int goods_swPrice, goods_swStock;
-	private String goods_swName, goods_swDetail;
-	private Date goods_swRegDate, goods_swUpdateDate;
+	private Long goods_swID; //ID
+	private int goods_swPrice, goods_swStock; // 가격, 재고
+	private String goods_swName, goods_swDetail; // 상품명, 상품 상세 정보
+	private Date goods_swRegDate, goods_swUpdateDate; // 등록일, 수정일
 	/* 상품 할인률(백분율) */
 	private double goods_swDiscount;
 	/* 이미지 정보 */

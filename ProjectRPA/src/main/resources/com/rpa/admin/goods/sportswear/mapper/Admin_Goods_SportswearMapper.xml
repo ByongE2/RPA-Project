@@ -19,6 +19,12 @@
 	
 	<!-- 등록 -->
 	<insert id="swInsert">
+		<selectKey resultType="Long" keyProperty="goods_swID" order="AFTER">
+  			select
+  			seq_Goods_sportsWear.currval
+  			from dual
+  		</selectKey>
+  		
 		insert into goods_sportsWear
 		(goods_swID, goods_swName, goods_swPrice, goods_swStock, goods_swDetail, goods_swDiscount)
 		values
@@ -28,14 +34,16 @@
 	<!-- 목록 -->
 	<select id="swGetList" resultType="com.rpa.goods.sportswear.domain.SportswearDto">
 	    <![CDATA[
-	         select goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,goods_swDiscount,
-	                  goods_swRegDate, goods_swUpdateDate 
+	         select * 
 	           from (
-	              select /* +INDEX_DESC(goods_sportswear idx_goods_sportswear) */ 
-	              rownum as rn, goods_swId, goods_swName, goods_swPrice, goods_swStock, goods_swDetail,goods_swDiscount,
+	              select /*+INDEX_DESC(goods_sportswear idx_goods_sportswear)*/ 
+	              rownum as rn, 
+	              goods_swId, goods_swName, 
+	              goods_swPrice, goods_swStock, 
+	              goods_swDetail,goods_swDiscount,
 	              goods_swRegDate, goods_swUpdateDate
 	              from goods_sportswear 
-	            where
+	            where 
 	    ]]>         
 	            <if test="keyword != null">
 	                goods_swName like '%'||#{keyword}||'%' and
@@ -43,7 +51,7 @@
 	    <![CDATA[        
 	             rownum <= #{pageNum} * #{amount} order by goods_swId desc
 	            )
-	        where rn > (#{pageNum} - 1) * #{amount}
+	        where rn > (#{pageNum} - 1) * #{amount} 
 	    ]]>
 	      
  	</select>
@@ -79,5 +87,13 @@
 		delete from goods_sportswear
 		where goods_swID = #{goods_swID}
 	</delete>
+	
+	<!-- 이미지 등록 -->
+	<insert id="imageEnroll">
+		insert into RPA_image(goods_swID, fileName, uploadPath, uuid) 
+		values 
+		(#{goods_swID}, #{fileName}, #{uploadPath} ,#{uuid})
+	</insert>
+	
 
   </mapper>

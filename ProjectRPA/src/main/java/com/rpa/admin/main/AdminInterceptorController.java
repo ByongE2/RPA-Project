@@ -12,8 +12,8 @@ import lombok.extern.log4j.Log4j;
 public class AdminInterceptorController {
 	
 	@GetMapping("/main")
-	public void adminMain() throws Exception{
+	public String adminMain() throws Exception{
 		log.info("관리자 메인페이지로 이동");
+		return "admin/main";
 	}
-
 }

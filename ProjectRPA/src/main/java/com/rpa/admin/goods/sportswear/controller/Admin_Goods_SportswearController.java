@@ -51,14 +51,12 @@ public class Admin_Goods_SportswearController {
 	
 	@GetMapping("/insert")
 	public String swInsert() {
-		System.out.println("당연히 될거고~");
 		return "Goods/sportswear/swRegister";
 	}//swInsert(Get)
 	
 	@PostMapping("/insert")
 	public String swInsert(SportswearDto swDto, RedirectAttributes rttr, Model m) {
 		log.info("Admin_Goods_Sportswear insert : " + swDto);
-		System.out.println("swDto : " + swDto);
 		try {
 			swService.swInsert(swDto);
 			rttr.addFlashAttribute("insert_result", swDto.getGoods_swName()); //등록 후 알람창에 등록물품 뜨게 하려고.

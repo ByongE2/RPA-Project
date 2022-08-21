@@ -219,7 +219,11 @@ function showUploadImage(uploadResultArr){
     				   //+  '/'와 '\'문자 또한 인코딩을 하기 때문에 replace() 메서드를 사용 안 해도 된다.
     str += "<div id='result_card'>";
 	str += "<img src='/goods/sportswear/display?fileName=" + fileCallPath +"'>";
-	str += "<div class='imgDeleteBtn' data-file='" + fileCallPath + "'>x</div>"; 
+	str += "<div class='imgDeleteBtn' data-file='" + fileCallPath + "'>x</div>";
+	//이미지 정보 input태그 적용시점 : 이미지 여러개 등록이면 등록버튼 눌렀을 때 되도록하는게 더낫다. 지금은 안함.
+	str += "<input type='hidden' name='imageList[0].fileName' value='"+ obj.fileName +"'>"; 
+	str += "<input type='hidden' name='imageList[0].uuid' value='"+ obj.uuid +"'>";
+	str += "<input type='hidden' name='imageList[0].uploadPath' value='"+ obj.uploadPath +"'>";
 	str += "</div>";
 	
 	uploadResult.append(str);  // = uploadResult.html(str);  

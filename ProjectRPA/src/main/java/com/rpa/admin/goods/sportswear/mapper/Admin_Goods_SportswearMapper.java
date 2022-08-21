@@ -15,7 +15,7 @@ import com.rpa.goods.sportswear.domain.SwCriteria;
 public interface Admin_Goods_SportswearMapper {
 	
 	//등록
-	int swInsert(SportswearDto swDto) throws Exception;
+	void swInsert(SportswearDto swDto) throws Exception;
 	//목록
 	List<SportswearDto> swGetList(SwCriteria cri) throws Exception;
 	//상품 총 갯수
@@ -26,6 +26,8 @@ public interface Admin_Goods_SportswearMapper {
 	int swModify(SportswearDto swDto);
 	//삭제
 	int swRemove(Long swID) throws Exception;
+	//이미지 등록
+	public void imageEnroll(AttachImageVO vo);
 	//지정 상품 이미지 정보 얻기 
 	public List<AttachImageVO> getAttachInfo(Long swID);
 	
