@@ -11,7 +11,11 @@
 	</appender>
 	
 	<!-- Application Loggers -->
+<<<<<<< HEAD
 	<logger name="com.trip.app">
+=======
+	<logger name="com.rpa.controller">
+>>>>>>> 848002901f295726d8c60e9a7930677703bdd10c
 		<level value="info" />
 	</logger>
 	
@@ -32,6 +36,10 @@
 		<level value="info" />
 	</logger>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 848002901f295726d8c60e9a7930677703bdd10c
 	<!-- Root Logger -->
 	<root>
 		<priority value="info" />
