@@ -157,10 +157,29 @@ public class SportswearMapperTest {
 //	}	
 //	
 	/* 지정 상품 이미지 삭제 */
+//	@Test
+//	public void deleteImageAllTest() {
+//		Long swID = 260L;
+//		mapper.deleteImageAll(swID);
+//	}
+	
+	/* 어제자 날짜 이미지 리스트 */
+//	@Test
+//	public void checkImageListTest() {
+//		
+//		mapper.checkFileList();
+//		
+//	}
+	
+	/* 지정 상품 이미지 정보 얻기 */
 	@Test
-	public void deleteImageAllTest() {
-		Long swID = 260L;
-		mapper.deleteImageAll(swID);
+	public void getAttachInfoTest() {
+		
+		Long swID = 261L;
+		
+		List<AttachImageVO> list = mapper.getAttachInfo(swID);
+		
+		System.out.println("list : " + list);
 	}
 	
 	

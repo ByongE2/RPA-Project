@@ -8,6 +8,7 @@
 *lombok-1.18.24.jar 
 *mybatis 3.5.10
 *utf-8
+*Quartz(batch program)
 
 DB
 테이블

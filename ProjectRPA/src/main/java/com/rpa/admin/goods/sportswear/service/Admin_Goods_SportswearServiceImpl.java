@@ -20,6 +20,7 @@ public class Admin_Goods_SportswearServiceImpl implements Admin_Goods_Sportswear
 	@Autowired
 	private Admin_Goods_SportswearMapper swAdminMapper;
 	
+	//등록
 	@Transactional
 	@Override
 	public void swInsert(SportswearDto swDto) throws Exception {
@@ -37,22 +38,29 @@ public class Admin_Goods_SportswearServiceImpl implements Admin_Goods_Sportswear
 			swAdminMapper.imageEnroll(attach);
 		});
 	}
+	
+	//상품 리스트
 	@Override
 	public List<SportswearDto> swGetList(SwCriteria cri) throws Exception {
 		log.info("service : swGetListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		return swAdminMapper.swGetList(cri);
 	}
+	
+	//상품 총 갯수
 	@Override
 	public int swGetTotal(SwCriteria cri) throws Exception {
 		log.info("service: swGetTotalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		return swAdminMapper.swGetTotal(cri);
 	}
+	
+	//상품 상세 정보
 	@Override
 	public SportswearDto swGetDetail(Long swID) throws Exception {
 		log.info("service: swGetDetailㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		return swAdminMapper.swGetDetail(swID);
 	}
 	
+	//상품 수정
 	@Transactional //쿼리 2개이상 요청하기 때문에
 	@Override
 	public int swModify(SportswearDto swDto) throws Exception {
@@ -72,9 +80,25 @@ public class Admin_Goods_SportswearServiceImpl implements Admin_Goods_Sportswear
 		}//if
 		return result;
 	}//swModify
+	
+	//상품 삭제
 	@Override
+	@Transactional
 	public int swRemove(Long swID) throws Exception {
 		log.info("service: swRemoveㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+		
+		//상품정보 삭제 전에, DB image테이블에 있는 정보부터 삭제.(외래키때문에 그냥삭제 안됨)
+		swAdminMapper.deleteImageAll(swID);
+		
 		return swAdminMapper.swRemove(swID);
+	}
+	
+	/* 지정 상품 이미지 정보 얻기 */
+	@Override
+	public List<AttachImageVO> getAttachInfo(Long swID) {
+		
+		log.info("service: getAttachInfoㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+		
+		return swAdminMapper.getAttachInfo(swID);
 	}
 }

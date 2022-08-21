@@ -259,10 +259,23 @@
           <artifactId>jackson-dataformat-xml</artifactId>
           <version>2.13.3</version>
       </dependency>
-      
-      
-      
-      
+	
+	<!-- quartz 배치 프로그램 : 이미지 서버에서 일괄처리 하기 위해  -->
+	<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+	<dependency>
+		<groupId>org.quartz-scheduler</groupId>
+		<artifactId>quartz</artifactId>
+		<version>2.3.2</version>
+	</dependency>
+	
+	<!-- quartz 배치 프로그램 : 이미지 서버에서 일괄처리 하기 위해  -->
+	<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz-jobs -->
+	<dependency>
+		<groupId>org.quartz-scheduler</groupId>
+		<artifactId>quartz-jobs</artifactId>
+		<version>2.3.2</version>
+	</dependency>
+	
    </dependencies>
    <build>
       <plugins>
