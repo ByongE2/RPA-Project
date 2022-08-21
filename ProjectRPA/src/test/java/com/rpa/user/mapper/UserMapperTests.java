@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.rpa.pt.service.Pt_Goods_Service;
 import com.rpa.user.domain.UserDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -14,6 +15,8 @@ public class UserMapperTests {
 
 	@Autowired
 	private UserMapper mapper;
+	
+
 	
 	@Test
 	public void testJoin() {
@@ -36,4 +39,6 @@ public class UserMapperTests {
 		mapper.userIDCheck(id);
 		mapper.userIDCheck(id2);
 	}
+	
+	
 }

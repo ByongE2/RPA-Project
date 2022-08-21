@@ -48,7 +48,7 @@ public class PT_Goods_Controller {
 	
 	
 	
-	//±Û¾²±â
+	//ê¸€ì“°ê¸°
 	@PostMapping("/ptregister")
 	public String ptregister(MultipartHttpServletRequest request ,RedirectAttributes rttr) throws IOException {
 		Pt_Goods_DTO dto= new  Pt_Goods_DTO();
@@ -70,7 +70,7 @@ public class PT_Goods_Controller {
 			sysfilename +=mf.getOriginalFilename();
 			dto.setPT_photourl(sysfilename);
 			
-			File savefile = new File("C:\\Users\\kkao4\\Desktop\\RPA-project\\jeahyun\\ProjectRPA\\src\\main\\webapp\\resources\\ptimg"+"/"+sysfilename);
+			File savefile = new File("*/ProjectRPA/src/main/webapp/resources/ptimg"+"/"+sysfilename);
 			try {
 				mf.transferTo(savefile);
 			}catch (Exception e) {
@@ -81,7 +81,7 @@ public class PT_Goods_Controller {
 			dto.setPT_photourl("nan");
 		}
 		
-		System.out.println("±Û¾²±â µé¾î¿È"+dto);
+		System.out.println("ê¸€ì“°ê¸° ë“¤ì–´ì˜´"+dto);
 		rttr.addFlashAttribute("result",dto.getPT_no());
 		
 		service.Ptregister(dto);
@@ -91,8 +91,8 @@ public class PT_Goods_Controller {
 	
 	@GetMapping("/ptget")
 	public void ptget(int PT_no, Model model) {
-		log.info(PT_no+" ¹ø Â° »ó¼¼º¸±â");
-		System.out.println("( "+PT_no+" ) ¹øÂ° »óÇ°"+service.pt_get(PT_no));
+		log.info(PT_no+" ë²ˆ ì§¸ ìƒì„¸ë³´ê¸°");
+		System.out.println("( "+PT_no+" ) ë²ˆì§¸ ìƒí’ˆ"+service.pt_get(PT_no));
 		model.addAttribute("pt_no", service.pt_get(PT_no));
 	}
 	
@@ -105,31 +105,61 @@ public class PT_Goods_Controller {
 	
 	@GetMapping("/list")
 	public void list(Model model) {
-		log.info("list·Î ³Ñ¾î¿È");
+		log.info("listë¡œ ë„˜ì–´ì˜´");
 		model.addAttribute("list",service.getlist());
 	}
 	
 	@GetMapping("/ptremove")
 	public String ptdelete(int pt_no) {
-		log.info(pt_no+" ¹øÂ°°¡ »èÁ¦ µÇ¾ú½À´Ï´Ù");
+		log.info(pt_no+" ë²ˆì§¸ê°€ ì‚­ì œ ë˜ì—ˆìŠµë‹ˆë‹¤");
 		service.ptdelete(pt_no);
 		return  "redirect:/ptproduct/list";
 	}
 	
 	@GetMapping("/ptmodify")
 	public void ptmodify(int pt_no,Model model) {
-		log.info("¼öÁ¤ÇÒ µ¥ÀÌÅÍ : "+pt_no);
+		log.info("ìˆ˜ì •í•  ë°ì´í„° : "+pt_no);
 		model.addAttribute("ptlist",service.pt_get(pt_no));
 	}
 	
 	@PostMapping("/ptmodify")
-	public String ptmodify(Pt_Goods_DTO dto) {
-		System.out.println(dto);
+	public String ptmodify(MultipartHttpServletRequest request,RedirectAttributes rttr) {
+		Pt_Goods_DTO dto= new  Pt_Goods_DTO();
+		dto.setPt_name(request.getParameter("pt_name"));
+		dto.setPT_title(request.getParameter("PT_title"));
+		dto.setPT_Price(request.getParameter("PT_Price"));
+		dto.setPT_id(request.getParameter("PT_id"));
+		dto.setPT_content(request.getParameter("PT_content"));
+		dto.setPT_State(request.getParameter("PT_State"));
+		MultipartFile mf = request.getFile("PT_photourl");
+		
+		if(mf.getSize()!=0) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			Calendar calender = Calendar.getInstance();
+			String sysfilename=format.format(calender.getTime());
+			
+			sysfilename +=mf.getOriginalFilename();
+			dto.setPT_photourl(sysfilename);
+			
+			File savefile = new File("C:\\Users\\kkao4\\Desktop\\RPA-project\\jeahyun\\ProjectRPA\\src\\main\\webapp\\resources\\ptimg"+"/"+sysfilename);
+			try {
+				mf.transferTo(savefile);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}else {
+			dto.setPT_photourl("nan");
+		}
+		
+		System.out.println("ì—…ë°ì´íŠ¸ : "+dto);
 		
 		service.ptupdate(dto);
 		
-		return  "redirect:/ptproduct/list";
+		int ptnum= service.PtViewGet();
+		return "redirect:/ptproduct/ptget?PT_no="+ptnum;
 	}
+	
 	
 	@RequestMapping(value = "/summernoteImage",produces = "application/json; charset=utf-8")
 	@ResponseBody

@@ -72,7 +72,7 @@
 
 
 	<div style="width: 60%; margin: auto;">
-		<form id="articleForm" role="form" method="post" action="/ptproduct/ptmodify">
+		<form id="articleForm" role="form" method="post" enctype="multipart/form-data" action="/ptproduct/ptmodify">
 			<label>상품 제목 : </label><input type="text" value="${ptlist.PT_title}" name="PT_title" style="width: 40%;"><br>
 			 <label>작성자 : </label><input type="text" name="pt_name" value="${ptlist.pt_name}"><br> 
 			 <label>썸네일 : </label><input type="file" value="${ptlist.PT_photourl}" name="PT_photourl"><br>
