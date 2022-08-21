@@ -15,7 +15,7 @@
 <body>
 <div class="wrapper">
 	<div class="content">
-		<h1>회원가입</h1>
+		<h1><a href="/mainTEST">Register</a></h1>
 	<form id="join" method="post" name="frm">
 		<div>
 			<h3 class="title">
