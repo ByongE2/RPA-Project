@@ -28,7 +28,8 @@
 </head>
 <body>
 <h1>클라이언트 리스트로 들어옴</h1>
-<button onclick="location.href='/ptclient/basket?client_id=kkao45617'">장바구니</button>
+
+<button onclick="location.href='/ptclient/basket?client_id=${user.id}'">장바구니</button>
 <table border="1">
 	<tr>
 		<th>번호</th>
