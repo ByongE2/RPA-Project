@@ -49,7 +49,7 @@
                             <a href="goods/sportswear/list" class="admin_list_01">상품 sw 관리</a>
                         </li>
                         <li>
-                            <a class="admin_list_02">pt 관리</a>
+                            <a class="admin_list_02" href="/ptproduct/list">pt 관리</a>
                         </li>
                         <li>
                             <a class="admin_list_05">회원 관리</a>                            

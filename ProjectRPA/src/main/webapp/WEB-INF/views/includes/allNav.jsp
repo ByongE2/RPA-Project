@@ -182,7 +182,7 @@
                 </ul>
             </li>
             
-            <li class="title"><a href="#">PT예약</a>
+            <li class="title"><a href="/ptclient/clientlist">PT예약</a>
                 <ul class="sub">
                   <li class="subtitle"><a href="#">시험메뉴</a></li>
                   <li class="subtitle"><a href="#">시험메뉴</a></li>
@@ -196,7 +196,7 @@
                 </ul>
             </li>
             
-            <li class="title"><a href="#">상 품</a>
+            <li class="title"><a href="/ptproduct/">상 품</a>
                 <ul class="sub">
                   <li class="subtitle"><a href="#">시험메뉴</a></li>
                   <li class="subtitle"><a href="#">시험메뉴</a></li>
@@ -217,7 +217,7 @@
 <nav id="right_nav">
     <div class="right_menu">
         <ul class="right">
-            <li><a href="#">전체보기</a></li>
+            <li><a href="/ptclient/basket">장바구니</a></li>
             <li><c:if test="${user == null}"><a href="/user/login">로그인</a></c:if></li>
             <li><c:if test="${user != null}"><a href="/user/logout">로그아웃</a></c:if></li>
             <li><c:if test="${user != null}"><p>${user.id}님 안녕하세요.</p></c:if></li>
@@ -234,9 +234,9 @@
 	    <li><a href="#">1:1 문 의</a></li>
 </div>
 
-<div id="rightbar">
-		<li><a href="#">장바구니</a></li>
-</div>
+<!-- <div id="rightbar">
+		<li><a href="/ptclient/basket">장바구니</a></li>
+</div> -->
 
 </body>
 </html>

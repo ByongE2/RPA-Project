@@ -94,6 +94,10 @@ public class UserController {
 		if(login == null) {
 			session.setAttribute("user", null);
 			rttr.addFlashAttribute("msg", false);
+		}else if(login.getGrade() == 1){
+			session.setAttribute("user", login);
+			return "redirect:/admin/main";
+			
 		}else {
 			session.setAttribute("user", login);
 		}
@@ -167,10 +171,6 @@ public class UserController {
 			}
 		}
 	
-	
-	
-	
-	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) throws Exception {
 		
@@ -180,37 +180,37 @@ public class UserController {
 		return "redirect:/mainTEST";
 	}
 	
-	@RequestMapping(value="/user/kakaologin")
-    public String kakaoLogin() {
-        StringBuffer loginUrl = new StringBuffer();
-        loginUrl.append("https://kauth.kakao.com/oauth/authorize?client_id=");
-        loginUrl.append("413e8a35b4572f164e0f426232a72f19"); 
-        loginUrl.append("&redirect_uri=");
-        loginUrl.append("http://localhost:8080/user/kakaologin"); 
-        loginUrl.append("&response_type=code");
-        
-        return "redirect:"+loginUrl.toString();
-    }
-	
-	 @RequestMapping(value = "/kakao_callback", method = RequestMethod.GET)
-	    public String redirectkakao(@RequestParam String code, HttpSession session) throws IOException {
-	            System.out.println(code);
-	            
-	            //접속토큰 get
-	            String kakaoToken = kakaoService.getReturnAccessToken(code);
-	            
-	            //접속자 정보 get
-	            Map<String,Object> result = kakaoService.getUserInfo(kakaoToken);
-	            System.out.println("컨트롤러 출력"+result.get("nickname")+result.get("profile_image"));
-	            SessionConfigVO configVO =new SessionConfigVO();
-	            configVO.setUser_name((String)result.get("nickname"));
-	            configVO.setProfile_img((String)result.get("profile_image"));
-	            
-	            session.setAttribute("sessionConfigVO", configVO);
-	            /*로그아웃 처리 시, 사용할 토큰 값*/
-	            session.setAttribute("kakaoToken", kakaoToken);
-	        return "redirect:/";
-	    }
+//	@RequestMapping(value="/user/kakaologin")
+//    public String kakaoLogin() {
+//        StringBuffer loginUrl = new StringBuffer();
+//        loginUrl.append("https://kauth.kakao.com/oauth/authorize?client_id=");
+//        loginUrl.append("413e8a35b4572f164e0f426232a72f19"); 
+//        loginUrl.append("&redirect_uri=");
+//        loginUrl.append("http://localhost:8080/user/kakaologin"); 
+//        loginUrl.append("&response_type=code");
+//        
+//        return "redirect:"+loginUrl.toString();
+//    }
+//	
+//	 @RequestMapping(value = "/kakao_callback", method = RequestMethod.GET)
+//	    public String redirectkakao(@RequestParam String code, HttpSession session) throws IOException {
+//	            System.out.println(code);
+//	            
+//	            //접속토큰 get
+//	            String kakaoToken = kakaoService.getReturnAccessToken(code);
+//	            
+//	            //접속자 정보 get
+//	            Map<String,Object> result = kakaoService.getUserInfo(kakaoToken);
+//	            System.out.println("컨트롤러 출력"+result.get("nickname")+result.get("profile_image"));
+//	            SessionConfigVO configVO =new SessionConfigVO();
+//	            configVO.setUser_name((String)result.get("nickname"));
+//	            configVO.setProfile_img((String)result.get("profile_image"));
+//	            
+//	            session.setAttribute("sessionConfigVO", configVO);
+//	            /*로그아웃 처리 시, 사용할 토큰 값*/
+//	            session.setAttribute("kakaoToken", kakaoToken);
+//	        return "redirect:/";
+//	    }
 
 	
 	
