@@ -31,4 +31,6 @@ public interface Pt_Goods_Service {
 	public void clientBasketDelete(String pt_code);
 	
 	public List<Pt_Goods_basket_DTO> clientBasketView(String pt_code);
+	
+	public Pt_Goods_basket_DTO basketExistence(String pt_code);
 }

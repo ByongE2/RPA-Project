@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.manager.util.SessionUtils;
+
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -180,18 +180,18 @@ public class UserController {
 		return "redirect:/mainTEST";
 	}
 	
-//	@RequestMapping(value="/user/kakaologin")
-//    public String kakaoLogin() {
-//        StringBuffer loginUrl = new StringBuffer();
-//        loginUrl.append("https://kauth.kakao.com/oauth/authorize?client_id=");
-//        loginUrl.append("413e8a35b4572f164e0f426232a72f19"); 
-//        loginUrl.append("&redirect_uri=");
-//        loginUrl.append("http://localhost:8080/user/kakaologin"); 
-//        loginUrl.append("&response_type=code");
-//        
-//        return "redirect:"+loginUrl.toString();
-//    }
-//	
+	@RequestMapping(value="/user/kakaologin")
+    public String kakaoLogin() {
+        StringBuffer loginUrl = new StringBuffer();
+        loginUrl.append("https://kauth.kakao.com/oauth/authorize?client_id=");
+        loginUrl.append("413e8a35b4572f164e0f426232a72f19"); 
+        loginUrl.append("&redirect_uri=");
+        loginUrl.append("http://localhost:8080/user/kakaologin"); 
+		loginUrl.append("&response_type=code");
+        
+        return "redirect:"+loginUrl.toString();
+    }
+	
 //	 @RequestMapping(value = "/kakao_callback", method = RequestMethod.GET)
 //	    public String redirectkakao(@RequestParam String code, HttpSession session) throws IOException {
 //	            System.out.println(code);

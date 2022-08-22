@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rpa.pt.domain.Pt_Goods_DTO;
 import com.rpa.pt.domain.Pt_Goods_basket_DTO;
@@ -37,9 +39,13 @@ public class PT_Client_Controller {
 	}
 	
 	@GetMapping("/clientget")
-	public void clientget(int client_no,Model model) {
+	public void clientget(int client_no,Model model,String pt_code) {
 		log.info(client_no+"번 쨰 클라이언트 상품");
+		log.info("pt 코드 : "+pt_code);
+		
+		model.addAttribute("pt_code",service.basketExistence(pt_code));
 		model.addAttribute("clinet_no",service.pt_get(client_no));
+		System.out.println(service.pt_get(client_no));
 	}
 	
 	
@@ -58,8 +64,11 @@ public class PT_Client_Controller {
 	      
 	
 	
-	@GetMapping("/basketinsert")
-	public String clientbasketinsert(Pt_Goods_basket_DTO dto,int client_no) {
+	@RequestMapping(value = "/basketinsert",method = {RequestMethod.GET})
+	public String clientbasketinsert(Pt_Goods_basket_DTO dto,int client_no,
+			@RequestParam("title")String title
+			) {
+		System.out.println("물건 제목 : "+title);
 		service.clientBasketinsert(dto);
 		return "ptclient/clientget?client_no="+client_no;
 	}

@@ -34,7 +34,6 @@
 	<tr>
 		<th>번호</th>
 		<th>이름</th>
-	
 		<th>아이디</th>
 		<th>생성날짜</th>
 		<th>금액</th>
@@ -54,7 +53,7 @@
 			<td><fmt:formatDate value="${client.PT_Registration}" pattern="yyyy-MM-dd"/></td>
 			<td> ${client.PT_Price}</td>
 			<td>${client.PT_code}</td>
-			<td><a href="/ptclient/clientget?client_no=${client.PT_no }"> ${client.PT_title}</a></td>
+			<td><a href="/ptclient/clientget?client_no=${client.PT_no }&&pt_code=${client.PT_code}"> ${client.PT_title}</a></td>
 			<td><img alt="이미지 없음"  src="/ProjectRPA/src/main/webapp/resources/ptimg/${client.PT_photourl}"></td>
 			<td>${client.calendar_before }</td>
 			<td>${client. calendar_after}</td>
