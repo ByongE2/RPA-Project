@@ -10,34 +10,52 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.mapper.AttachMapper;
 import com.rpa.goods.sportswear.service.AttachService;
+import com.rpa.goods.sportswear.service.Goods_SportswearService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@Log4j
+@RequestMapping
 @AllArgsConstructor
+@Log4j
 public class Goods_SportswearController {
 
+	private Goods_SportswearService swService;
 	
 	private AttachService attachService;
 	
-	
-//	private swService swService;
 	
 //		@Autowired
 //		private ReplyService replyService;
 	
 	@GetMapping("/main")
-	public void mainPageGet() {
+	public String mainPageGet() {
 		log.info("메인 페이지로 이동");
+		return "mainTEST";
 	}//mainPageGet
+	
+	
+	/* 상품 상세 정보*/
+	@GetMapping("/goods/sportswear/detail/{goods_swID}")
+	public String swDetailGet(@PathVariable("goods_swID")Long swID, Model model) {
+		
+		log.info("상품 사용자 상세 페이지..........");
+		
+		model.addAttribute("swInfo", swService.swGetDetail(swID));
+		
+		return "/Goods/sportswear/swClientDetail";
+	}
+	
 	
 	/* 이미지 출력 */
 	@GetMapping("/goods/sportswear/display")
@@ -74,7 +92,6 @@ public class Goods_SportswearController {
 		log.info("getAttachList..........swID : " + swID);
 		
 		return new ResponseEntity<List<AttachImageVO>>(attachService.getAttachList(swID), HttpStatus.OK);
-		
-	}
+	}//getAttachList
 	
 }//Goods_SportswearController
