@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.rpa.goods.sportswear.domain.AttachImageVO;
+import com.rpa.goods.sportswear.domain.SportswearDto;
+import com.rpa.goods.sportswear.domain.SwCriteria;
+import com.rpa.goods.sportswear.domain.SwPageDto;
 import com.rpa.goods.sportswear.mapper.AttachMapper;
 import com.rpa.goods.sportswear.service.AttachService;
 import com.rpa.goods.sportswear.service.Goods_SportswearService;
@@ -43,6 +46,24 @@ public class Goods_SportswearController {
 		log.info("메인 페이지로 이동");
 		return "mainTEST";
 	}//mainPageGet
+	
+	@GetMapping("/goods/sportswear/list")
+	public String swListGet(SwCriteria cri, Model model) throws Exception{
+		log.info("sw 목록 페이지" + cri);
+		//getList
+		List<SportswearDto> list = swService.swGetList(cri);
+		if(!list.isEmpty()) {
+			model.addAttribute("list",list); //검색결과 존재
+		} else {
+			model.addAttribute("listCheck", "empty");	// 검색결과 존재하지 않을 경우
+		}
+		//페이징
+		int total = swService.swGetTotal(cri);
+		SwPageDto pageMaker = new SwPageDto(cri, total);
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return "Goods/sportswear/swClientList";
+	}//swGetList
 	
 	
 	/* 상품 상세 정보*/

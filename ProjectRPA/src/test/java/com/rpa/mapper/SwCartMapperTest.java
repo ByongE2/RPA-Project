@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.rpa.goods.sportswear.domain.SwCartDto;
-import com.rpa.goods.sportswear.mapper.swCartMapper;
+import com.rpa.goods.sportswear.mapper.SwCartMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -19,11 +19,11 @@ import lombok.extern.log4j.Log4j;
 public class SwCartMapperTest {
 
 	@Autowired
-	private swCartMapper mapper;
+	private SwCartMapper mapper;
 	
 	//카트 추가
 //	@Test
-//	public void addCart() {
+//	public void addCart() throws Exception {
 //		String id = "user";
 //		Long swID = 260L;
 //		int count = 200;
@@ -40,7 +40,7 @@ public class SwCartMapperTest {
 //	}	
 	/* 카트 삭제 */
 //	@Test
-//	public void deleteCartTest() {
+//	public void deleteCartTest() throws Exception {
 //		Long goods_cartId = 5L;
 //		
 //		mapper.deleteCart(goods_cartId);
@@ -49,7 +49,7 @@ public class SwCartMapperTest {
 //	/* 카트 수량 수정 */
 //
 //	@Test
-//	public void modifyCartTest() {
+//	public void modifyCartTest() throws Exception {
 //		Long cartId = 4L;
 //		int count = 5;
 //		
@@ -65,7 +65,7 @@ public class SwCartMapperTest {
 //	/* 카트 목록 */ 
 //
 //	@Test
-//	public void getCartTest() {
+//	public void getCartTest() throws Exception {
 //		String memberId = "user";
 //		
 //		List<SwCartDto> list = mapper.getCart(memberId);
@@ -78,17 +78,17 @@ public class SwCartMapperTest {
 //	*/		
 //	/* 카트 확인 */
 //
-//	@Test
-//	public void checkCartTest() {
-//		
-//		String memberId = "user";
-//		Long swID = 262L;
-//		
-//		SwCartDto cart = new SwCartDto();
-//		cart.setId(memberId);
-//		cart.setGoods_swId(swID);
-//		SwCartDto resutlCart = mapper.checkCart(cart);
-//		System.out.println("결과 : " + resutlCart);
-//	}
+	@Test
+	public void checkCartTest() throws Exception {
+		
+		String memberId = "user";
+		Long swID = 262L;
+		
+		SwCartDto cart = new SwCartDto();
+		cart.setId(memberId);
+		cart.setGoods_swId(swID);
+		SwCartDto resutlCart = mapper.checkCart(cart);
+		System.out.println("결과 : " + resutlCart);
+	}
 //	
 }

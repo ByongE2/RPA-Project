@@ -23,13 +23,22 @@
 	
 	<context:component-scan base-package="com.rpa" />
 	
-	<!-- 인터셉터 적용 : /admin 경로가 붙는 모든 url -->
+	<!-- 인터셉터 적용 :  -->
 	<interceptors>
+		<!-- /admin 경로가 붙는 모든 url -->
 		<interceptor>
 			<mapping path="/admin/**"></mapping>
 			<beans:bean id="AdminInterceptor" class="com.rpa.interceptor.AdminInterceptor"></beans:bean>
 		</interceptor>
+		<!-- "/cart" url을 타는 모든 url -->
+		<interceptor>
+			<mapping path="/cart/**"/>
+			<exclude-mapping path="/cart/add"/> <!-- 예외 설정 -->
+			<beans:bean id="CartIntreceptor" class="com.rpa.interceptor.CartInterceptor"></beans:bean>
+		</interceptor>
 	</interceptors>
+	
+	
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <beans:property name="maxUploadSize" value="100000000"></beans:property>

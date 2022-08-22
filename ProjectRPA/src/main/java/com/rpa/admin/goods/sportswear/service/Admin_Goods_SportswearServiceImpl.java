@@ -10,6 +10,7 @@ import com.rpa.admin.goods.sportswear.mapper.Admin_Goods_SportswearMapper;
 import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
+import com.rpa.goods.sportswear.mapper.AttachMapper;
 
 import lombok.extern.log4j.Log4j;
 

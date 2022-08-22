@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome</title>
-<link rel="stylesheet" href="/resources/CSS/swClientDetail.css">
+<link rel="stylesheet" href="/resources/CSS/goods/sportswear/swClientDetail.css">
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -91,7 +91,7 @@
 				
 			</div>
 			<!-- 주문 form -->
-			<form action="/order/${member.memberId}" method="get" class="order_form">
+			<form action="/order/${user.memberId}" method="get" class="order_form">
 				<input type="hidden" name="orders[0].bookId" value="${swInfo.goods_swID}">
 				<input type="hidden" name="orders[0].bookCount" value="">
 			</form>	
@@ -156,6 +156,46 @@ $(document).ready(function(){
 	}
 });	
 
+// 장바구니 수량 버튼 조작
+let quantity = $(".quantity_input").val();
+$(".plus_btn").on("click", function(){
+	$(".quantity_input").val(++quantity);
+});
+$(".minus_btn").on("click", function(){
+	if(quantity > 1){
+		$(".quantity_input").val(--quantity);	
+	}
+});// 장바구니 수량 버튼 조작 끝
+// 장바구니 서버로 전송할 데이터
+const form = {
+		id : '${user.memberId}',
+		swID : '${swInfo.goods_swID}',
+		bookCount : ''
+}// // 장바구니 서버로 전송할 데이터 끝
+//장바구니 추가 버튼
+$(".btn_cart").on("click", function(e){
+	form.bookCount = $(".quantity_input").val();
+	$.ajax({
+		url: '/cart/add',
+		type: 'POST',
+		data: form,
+		success: function(result){
+			cartAlert(result);
+		}
+	})
+});//장바구니 추가 버튼 end
+// 장바구니 추가 시 알람 메서드
+function cartAlert(result){
+	if(result == '0'){
+		alert("장바구니에 추가를 하지 못하였습니다.");
+	} else if(result == '1'){
+		alert("장바구니에 추가되었습니다.");
+	} else if(result == '2'){
+		alert("장바구니에 이미 추가되어져 있습니다.");
+	} else if(result == '5'){
+		alert("로그인이 필요합니다.");	
+	}
+}// 장바구니 추가 시 알람 메서드
 </script>
 
 
