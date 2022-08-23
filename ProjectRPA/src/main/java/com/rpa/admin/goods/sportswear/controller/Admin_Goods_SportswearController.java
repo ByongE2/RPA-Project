@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -142,6 +144,27 @@ public class Admin_Goods_SportswearController {
 	@PostMapping("/remove")
 	public String swRemove(Long goods_swID, @ModelAttribute("cri") SwCriteria cri, RedirectAttributes rttr) throws Exception{
 		log.info("sw 삭제 페이지" + goods_swID);
+		
+		//이미지 없는 상품정보 삭제 할 때, 외래키 걸려있어서 서버이미지,DB이미지,DB상품정보 삭제. 다른방법으로 외래키에 CSCADE 제약조건 걸어도됨. 
+		//서버(디렉토리) 이미지 삭제
+		List<AttachImageVO> fileList = swService.getAttachInfo(goods_swID);
+
+		if (fileList != null) {
+			List<Path> pathList = new ArrayList();
+			fileList.forEach(vo -> {
+				// 원본 이미지
+				Path path = Paths.get("C:\\upload", vo.getUploadPath(), vo.getUuid() + "_" + vo.getFileName());
+				pathList.add(path);
+				// 섬네일 이미지
+				path = Paths.get("C:\\upload", vo.getUploadPath(), "s_" + vo.getUuid() + "_" + vo.getFileName());
+				pathList.add(path);
+			});
+			pathList.forEach(path -> {
+				path.toFile().delete();
+			});
+
+		}//if
+		
 		System.out.println("swID : " + goods_swID);
 		System.out.println("cri : " + cri);
 		int result = swService.swRemove(goods_swID);

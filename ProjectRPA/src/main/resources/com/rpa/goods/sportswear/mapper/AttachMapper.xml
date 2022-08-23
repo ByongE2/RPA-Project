@@ -5,9 +5,11 @@
   <mapper namespace="com.rpa.goods.sportswear.mapper.AttachMapper">
 
 	<select id="getAttachList" resultType="com.rpa.goods.sportswear.domain.AttachImageVO">
-	
-		select * from goods_sportswear where goods_swId = #{goods_swId}
-	
+		select 
+			* 
+		from 
+			RPA_image 
+		where 
+			goods_swId = #{goods_swId}
 	</select>
-
   </mapper>

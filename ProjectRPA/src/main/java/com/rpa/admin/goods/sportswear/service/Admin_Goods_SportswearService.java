@@ -20,4 +20,6 @@ public interface Admin_Goods_SportswearService {
 	int swModify(SportswearDto swDto) throws Exception;
 	//삭제
 	int swRemove(Long swID) throws Exception;
+	//지정 상품 이미지 정보 얻기
+	List<AttachImageVO> getAttachInfo(Long swID);
 }
