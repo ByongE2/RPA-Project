@@ -22,22 +22,22 @@ public class SwCartMapperTest {
 	private SwCartMapper mapper;
 	
 	//카트 추가
-//	@Test
-//	public void addCart() throws Exception {
-//		String id = "user";
-//		Long swID = 260L;
-//		int count = 200;
-//		
-//		SwCartDto cart = new SwCartDto();
-//		cart.setId(id);
-//		cart.setGoods_swId(swID);
-//		cart.setGoods_sw_Count(count);
-//		
-//		int result = 0;
-//		result = mapper.addCart(cart);
-//		
-//		System.out.println("결과 : " + result);
-//	}	
+	@Test
+	public void addCart() throws Exception {
+		String id = "user";
+		Long swID = 259L;
+		int count = 50;
+		
+		SwCartDto cart = new SwCartDto();
+		cart.setId(id);
+		cart.setGoods_swID(swID);
+		cart.setGoods_sw_Count(count);
+		
+		int result = 0;
+		result = mapper.addCart(cart);
+		
+		System.out.println("결과 : " + result);
+	}	
 	/* 카트 삭제 */
 //	@Test
 //	public void deleteCartTest() throws Exception {
@@ -86,7 +86,7 @@ public class SwCartMapperTest {
 		
 		SwCartDto cart = new SwCartDto();
 		cart.setId(memberId);
-		cart.setGoods_swId(swID);
+		cart.setGoods_swID(swID);
 		SwCartDto resutlCart = mapper.checkCart(cart);
 		System.out.println("결과 : " + resutlCart);
 	}

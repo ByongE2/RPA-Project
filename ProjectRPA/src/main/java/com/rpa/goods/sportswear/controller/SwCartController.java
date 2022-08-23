@@ -31,10 +31,16 @@ public class SwCartController {
 		// 로그인 체크
 		HttpSession session = request.getSession();
 		UserDTO uDto = (UserDTO)session.getAttribute("user");
+		System.out.println("dDto ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ비포:" + uDto);
 		if(uDto == null) {
 			return "5";
 		}
 		// 카트 등록
+		System.out.println("dDto ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ:에프터" + uDto);
+		System.out.println("cart ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ:에프터" + cart);
+		System.out.println("cart 아이디ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ:에프터" + cart.getId());
+		System.out.println("cart 상품아이디ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ:에프터" + cart.getGoods_swID());
+		System.out.println("cart 상품 갯수ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ:에프터" + cart.getGoods_sw_Count());
 		int result = cartService.addCart(cart);
 		
 		return result + "";

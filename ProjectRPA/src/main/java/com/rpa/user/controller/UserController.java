@@ -100,9 +100,9 @@ public class UserController {
          
       }else {
          session.setAttribute("user", login);
+         return "redirect: /mainTEST";
       }
-      return "redirect:/mainTEST";
-//      return "redirect:/";
+      return "redirect:/";
    }
    
    //아이디 찾기 페이지 이동

@@ -91,7 +91,7 @@
 				
 			</div>
 			<!-- 주문 form -->
-			<form action="/order/${user.memberId}" method="get" class="order_form">
+			<form action="/order/${user.id}" method="get" class="order_form">
 				<input type="hidden" name="orders[0].bookId" value="${swInfo.goods_swID}">
 				<input type="hidden" name="orders[0].bookCount" value="">
 			</form>	
@@ -168,13 +168,14 @@ $(".minus_btn").on("click", function(){
 });// 장바구니 수량 버튼 조작 끝
 // 장바구니 서버로 전송할 데이터
 const form = {
-		id : '${user.memberId}',
-		swID : '${swInfo.goods_swID}',
-		bookCount : ''
-}// // 장바구니 서버로 전송할 데이터 끝
+		id : '${user.id}',
+		goods_swID : '${swInfo.goods_swID}',
+		goods_sw_Count : '5'
+};// // 장바구니 서버로 전송할 데이터 끝
+console.log(form);
 //장바구니 추가 버튼
 $(".btn_cart").on("click", function(e){
-	form.bookCount = $(".quantity_input").val();
+	form.swDiscount = $(".quantity_input").val();
 	$.ajax({
 		url: '/cart/add',
 		type: 'POST',
@@ -196,6 +197,7 @@ function cartAlert(result){
 		alert("로그인이 필요합니다.");	
 	}
 }// 장바구니 추가 시 알람 메서드
+
 </script>
 
 

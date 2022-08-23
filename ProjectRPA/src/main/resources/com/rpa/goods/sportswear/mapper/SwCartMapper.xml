@@ -5,11 +5,11 @@
   <mapper namespace="com.rpa.goods.sportswear.mapper.SwCartMapper">
   	
   	<!-- 카트 추가 -->
-	<insert id="addCart">
+	<insert id="addCart" >
 		insert into 
-			goods_cart(goods_cartId, id, goods_swId, goods_sw_Count)
+			goods_cart(goods_cartId, id, goods_swID, goods_sw_Count)
 		values
-			(seq_goods_cart.nextval, #{id}, #{goods_swId}, #{goods_sw_Count}) 
+			(seq_goods_cart.nextval, #{id}, ${goods_swID}, #{goods_sw_Count}) 
 	</insert>
 	
 	<!-- 카트 삭제 -->
@@ -33,13 +33,13 @@
 	<!-- 카트 목록 -->
 	<select id="getCart" resultType="com.rpa.goods.sportswear.domain.SwCartDto">
 		select 
-			a.goods_cartId, a.id, a.goods_swId, a.goods_sw_Count, b.goods_swName, b.goods_swPrice, b.goods_swDiscount
+			a.goods_cartId, a.id, a.goods_swID, a.goods_sw_Count, b.goods_swName, b.goods_swPrice, b.goods_swDiscount
 		from 
 			goods_cart a
 		left outer join 
 			goods_sportsWear b 
 		on 
-			a.goods_swId = b.goods_swId
+			a.goods_swID = b.goods_swID
 		where 
 			id = #{id}	
 	</select>
@@ -53,7 +53,7 @@
 		where 
 			id = #{id} 
 		and 
-			goods_swId = #{goods_swId}
+			goods_swID = #{goods_swID}
 	</select>
 	
   </mapper>

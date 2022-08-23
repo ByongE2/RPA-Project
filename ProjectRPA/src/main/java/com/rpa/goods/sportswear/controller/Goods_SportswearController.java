@@ -62,6 +62,8 @@ public class Goods_SportswearController {
 		SwPageDto pageMaker = new SwPageDto(cri, total);
 		model.addAttribute("pageMaker", pageMaker);
 		
+		
+		log.info("목록 리스트 정보 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ:" + list);
 		return "Goods/sportswear/swClientList";
 	}//swGetList
 	
