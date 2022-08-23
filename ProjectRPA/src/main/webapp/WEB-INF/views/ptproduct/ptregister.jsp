@@ -78,7 +78,7 @@
 			 <label>작성자 : </label><input type="text" name="pt_name"><br> 
 			 <label>썸네일 : </label><input type="file" name="PT_photourl"><br>
 			  <label>금액 : </label><input type="number" name="PT_Price">원<br> 
-			  <label>아이디 : </label><input type="hidden" name="PT_id" value="${user.id}"><br> 
+			 <!-- 아이디 부분 --><input type="hidden" name="PT_id" value="${user.id}"><br> 
 			  <label>상품상태</label>
 			  
 			  <select ty name="PT_State" >
