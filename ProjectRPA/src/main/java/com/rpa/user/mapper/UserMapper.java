@@ -22,4 +22,9 @@ public interface UserMapper {
 	//pw 바꾸기
 	public UserDTO updatePw(UserDTO user);
 	
+	// 회원정보 수정
+	public int updateInfo(UserDTO user);
+	
+	public UserDTO get(String id);
+	
 }

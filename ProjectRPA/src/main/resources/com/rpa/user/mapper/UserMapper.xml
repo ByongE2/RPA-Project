@@ -13,13 +13,13 @@
   
   <!-- id중복검사 -->
   <select id="userIDCheck" resultType="int">
-  	select count(*) from member where id=#{id,jdbcType=VARCHAR}
+  	select count(*) from member where id = #{id}
   </select>
   
   <select id="userLogin" resultType="com.rpa.user.domain.UserDTO">
-  	select id, name, phone, address, email, grade
+  	select id, name, phone, address, email, grade, regDate
   	from member
-  	where id=#{id,jdbcType=VARCHAR} and pw=#{pw,jdbcType=VARCHAR}
+  	where id = #{id} and pw = #{pw}
   </select>
   
   <select id="findId" resultType="com.rpa.user.domain.UserDTO">
@@ -33,4 +33,12 @@
   <update id="updatePw">
   	update member set pw=#{pw} where id=#{id}
   </update>
+  
+  <update id="updateInfo">
+  	update member set pw=#{pw},phone=#{phone},email=#{email},address=#{address} where id=#{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="get" resultType="com.rpa.user.domain.UserDTO">
+  	select * from member where id=#{id,jdbcType=VARCHAR}
+  </select>
 </mapper>

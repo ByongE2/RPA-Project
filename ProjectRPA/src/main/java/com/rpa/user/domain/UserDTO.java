@@ -1,5 +1,7 @@
 package com.rpa.user.domain;
 
+import java.sql.Date;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +28,6 @@ public class UserDTO {
 	
 	// 관리자 권한 구분(0:일반, 1:관리자)
 	private int grade;
+	
+	private Date regDate;
 }

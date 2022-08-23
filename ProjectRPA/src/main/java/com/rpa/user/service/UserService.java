@@ -19,4 +19,8 @@ public interface UserService {
 	//pw 바꾸기
 	public UserDTO updatePw(UserDTO user) throws Exception;
 	
+	public int updateInfo(UserDTO user) throws Exception;
+	
+	public UserDTO get(String id) throws Exception;
+	
 }

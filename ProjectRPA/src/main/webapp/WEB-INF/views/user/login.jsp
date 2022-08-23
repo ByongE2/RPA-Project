@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link  rel="stylesheet" href="/resources/CSS/login.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -20,7 +21,7 @@
 			<span><a href="/mainTEST">Login</a></span>
 		</div>
 		
-		<form id="login_form" method="post" action="/user/login" name="">
+		<form id="login_form" method="post">
 		<c:if test="${user == null}">
 			<div>
 				<h3 class="title">
@@ -37,6 +38,10 @@
 			</div>
 			<br>
 			
+			<c:if test = "${result == 0 }">
+                <div class ="login_warn">사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.</div>
+            </c:if>
+			
 			<div class="find">
 				<ul>
 					<li><a href="javascript:void(0)" onclick="findId()">아아디 찾기</a></li>
@@ -46,22 +51,23 @@
 			
 			<div class="login_button_wrap">
 				<!-- <button type="submit"></button> -->
-				<button type="submit" class="login_button">로그인</button>
+				<button type="button" class="login_button">로그인</button>
 				<button type="button" class="register_button" onclick="location='/user/register'">회원가입</button>
 			</div>
 			<br>
 			<div class="kakao">
 				<!-- 카카오 로그인 -->
-				<a class="p-2" href="/user/kakaologin" id="btn-kakao-login">
+				<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=413e8a35b4572f164e0f426232a72f19&redirect_uri=http://localhost:8080/user/kakaologin&response_type=code">
+				<!-- <a class="p-2" href="/user/kakaologin" id="btn-kakao-login"> -->
 				<!-- <a class="p-2" onclick="loginWithKakao();"> -->
 				<!-- REST_API키 및 REDIRECT_URi는 본인걸로 수정 -->
 				
 					<img src="/resources/kakaoicon/kakao_login_medium_narrow.png" style="height:40px;">
 			      		<!-- 이미지는 카카오 개발자센터에서 제공하는 login 이미지를 사용 -->
 				</a>
-				<input type="hidden" name="kakaoemail" id="kakaoemail" />
+				<!-- <input type="hidden" name="kakaoemail" id="kakaoemail" />
 				<input type="hidden" name="kakaoname" id="kakaoname" />
-			</div>
+ -->			</div>
 		</c:if>
 		<c:if test="${user != null }">
 			<div>
@@ -86,7 +92,18 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <script type='text/javascript'>
-$(document).ready(function(){
+
+	/* 로그인 버튼 클릭 메서드 */
+	$(".login_button").click(function(){
+		
+	    /* alert("로그인 버튼 작동"); */
+	    
+		/* 로그인 메서드 서버 요청 */
+        $("#login_form").attr("action", "/user/login");
+        $("#login_form").submit();
+    
+	});
+/* $(document).ready(function(){
     Kakao.init('2341e4170b6971da0753e52d72ba4fe2');
     Kakao.isInitialized();
 });
@@ -95,7 +112,7 @@ function loginWithKakao() {
     Kakao.Auth.authorize({ 
     redirectUri: 'http://localhost:8080/user/kakaologin' 
     }); // 등록한 리다이렉트uri 입력
-}
+} */
 
 /* Kakao.init('2341e4170b6971da0753e52d72ba4fe2');
 

@@ -13,7 +13,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.manager.util.SessionUtils;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +32,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.rpa.user.domain.UserDTO;
 import com.rpa.user.service.UserService;
+import com.rpa.user.service.kakaoService;
 
 import lombok.AllArgsConstructor;
 
@@ -45,7 +45,28 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+	private kakaoService kakaoService;
 	
+	
+	@RequestMapping("/mypage")
+	public String mypage(Model model) {
+		log.info("-------- mypage -----------");
+		return "user/mypage";
+	}
+	
+	@GetMapping("/modify")
+	public String modifyPage() {
+		log.info("------ modifyPage ------");
+		return "user/modify";
+	}
+	
+	@PostMapping("/modify")
+	public String modify(UserDTO user, HttpSession session) throws Exception {
+		service.updateInfo(user);
+		UserDTO userDTO = service.get(user.getId());
+		session.setAttribute("user", userDTO);
+		return "user/mypage";
+	}
 	
 	@GetMapping("/register")
 	public void register() throws Exception {
@@ -86,14 +107,19 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(HttpServletRequest request, UserDTO user, RedirectAttributes rttr) throws Exception {
 		
-		log.info("로그인처리 + user : " + user);
+		log.info("로그인처리"+user);
 		
 		HttpSession session = request.getSession();
 		UserDTO login = service.userLogin(user);
+		log.info("login: " + login);
 		
 		if(login == null) {
+			int result = 0;
 			session.setAttribute("user", null);
-			rttr.addFlashAttribute("msg", false);
+			rttr.addFlashAttribute("result", result);
+			
+			return "redirect:/user/login";
+			
 		}else if(login.getGrade() == 1){
 			session.setAttribute("user", login);
 			return "redirect:/admin/main";
@@ -102,7 +128,6 @@ public class UserController {
 			session.setAttribute("user", login);
 		}
 		return "redirect:/mainTEST";
-//		return "redirect:/";
 	}
 	
 	//아이디 찾기 페이지 이동
@@ -162,7 +187,7 @@ public class UserController {
 	    // 비밀번호 바꾸기할 경우 성공 페이지 이동
 		@RequestMapping(value="check_password_view")
 		public String checkPasswordForModify(HttpSession session, Model model) {
-			UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+			UserDTO loginUser = (UserDTO) session.getAttribute("user");
 			
 			if(loginUser == null) {
 				return "user/login";
@@ -172,13 +197,35 @@ public class UserController {
 		}
 	
 	@GetMapping("/logout")
-	public String logout(HttpSession session) throws Exception {
+	public String logout(HttpServletRequest request) throws Exception {
 		
 		log.info("로그아웃 처리");
+		HttpSession session = request.getSession();
 		session.invalidate();
 		
 		return "redirect:/mainTEST";
 	}
+	
+	@RequestMapping(value="/kakaologin", method=RequestMethod.GET)
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code) throws Exception {
+		System.out.println("#########" + code);
+		String access_Token = kakaoService.getAccessToken(code);
+        
+		// 위에서 만든 코드 아래에 코드 추가
+		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_Token);
+		System.out.println("###access_Token#### : " + access_Token);
+		System.out.println("###nickname#### : " + userInfo.get("nickname"));
+		System.out.println("###email#### : " + userInfo.get("email"));
+				
+		return "redirect:/mainTEST";
+		/*
+		 * 리턴값의 testPage는 아무 페이지로 대체해도 괜찮습니다.
+		 * 없는 페이지를 넣어도 무방합니다.
+		 * 404가 떠도 제일 중요한건 #########인증코드 가 잘 출력이 되는지가 중요하므로 너무 신경 안쓰셔도 됩니다.
+		 */
+    	}
+	
+}
 	
 //	@RequestMapping(value="/user/kakaologin")
 //    public String kakaoLogin() {
@@ -191,7 +238,8 @@ public class UserController {
 //        
 //        return "redirect:"+loginUrl.toString();
 //    }
-//	
+//}
+	
 //	 @RequestMapping(value = "/kakao_callback", method = RequestMethod.GET)
 //	    public String redirectkakao(@RequestParam String code, HttpSession session) throws IOException {
 //	            System.out.println(code);
@@ -211,7 +259,7 @@ public class UserController {
 //	            session.setAttribute("kakaoToken", kakaoToken);
 //	        return "redirect:/";
 //	    }
-
+//
 	
 	
 	
@@ -354,4 +402,4 @@ public class UserController {
 //
 //	        return userInfo;
 //	    }
- }
+ 

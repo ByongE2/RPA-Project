@@ -33,6 +33,17 @@ public class UserMapperTests {
 	}
 	
 	@Test
+	public void userLoginTEST() throws Exception{
+		UserDTO user = new UserDTO();
+		
+		user.setId("test333");
+		user.setPw("1234");
+		
+		mapper.userLogin(user);
+		System.out.println("결과 값 : " + mapper.userLogin(user));
+	}
+	
+	@Test
 	public void testIDcheck() {
 		String id = "test222";
 		String id2 = "tkfka";

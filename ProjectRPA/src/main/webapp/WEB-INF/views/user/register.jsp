@@ -7,37 +7,39 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/CSS/register.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.4.1.js"
+<script src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script> -->
+  crossorigin="anonymous"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <div class="wrapper">
 	<div class="content">
 		<h1><a href="/mainTEST">Register</a></h1>
-	<form id="join" method="post" name="frm">
+	<form id="join_form" method="post" name="frm">
 		<div>
 			<h3 class="title">
 				<label for="id">아이디</label>
 			</h3>
 			<div class="box_id">
-				<input type="text" id="id" name="id" maxlength="20" class="p">
+				<input type="text" id="id_input" name="id" maxlength="20" class="p">
 				<!-- <input type="hidden" name="reid" size="20"> -->
 				<!-- <button type="button" id="btnCheck" class="btn btn-default">중복확인</button> -->
 				<span id="result"></span>
 			</div>
-				<span class="id_check_1">사용 가능한 아이디입니다.</span>
-				<span class="id_check_2">아이디가 이미 존재합니다.</span>
-		</div>	
+					<span class="id_check_1">사용 가능한 아이디입니다.</span>
+					<span class="id_check_2">아이디가 이미 존재합니다.</span>
+				<span class="final_id_ck">아이디를 입력해주세요.</span>	
+			</div>		
 		
 		<div>
 			<h3 class="title">
 				<label for="pwd">비밀번호</label>
 			</h3>
 			<div class="box_pass">
-				<input type="password" id="pw" name="pw" maxlength="20" class="p">
+				<input type="password" id="pw_input" name="pw" maxlength="20" class="p">
 			</div>
+			<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
 		</div>
 		
 		<div>
@@ -45,8 +47,11 @@
 				<label id="pwd_check">비밀번호 재확인</label>
 			</h3>
 			<div class="box_passCheck">
-				<input type="password" id="pw2" name="pw2" maxlength="20" class="p">
+				<input type="password" id="pwck_input" name="pw2" maxlength="20" class="p">
 			</div>
+			<span class="final_pwck_ck">비밀번호 확인을 입력해주세요.</span>
+			<span class="pwck_input_re_1">비밀번호가 일치합니다.</span>
+            <span class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
 		</div>
 		
 		<div>
@@ -54,8 +59,9 @@
 				<label for="name">이름</label>
 			</h3>
 			<div class="box_name">
-				<input type="text" id="name" name="name" maxlength="20" class="p">
+				<input type="text" id="name_input" name="name" maxlength="20" class="p">
 			</div>
+			<span class="final_name_ck">이름을 입력해주세요.</span>
 		</div>
 		
 		<div>
@@ -63,8 +69,9 @@
 				<label for="phone">휴대전화</label>
 			</h3>
 			<div class="box_phone">
-				<input type="text" id="phone" name="phone" maxlength="13" placeholder="-까지 입력해주세요." class="p">
+				<input type="text" id="phone_input" name="phone" maxlength="13" placeholder="-까지 입력해주세요." class="p">
 			</div>
+			<span class="final_phone_ck">휴대전화 번호를 입력해주세요.</span>
 		</div>
 		
 		<div>
@@ -74,22 +81,25 @@
 			</h3>
 			<div class="box_address">
 				<input type="text" id="address1" name="address" required="required" readonly="readonly" class="p">
-				<input type="text" id="address2" name="address" required="required" readonly="readonly" class="p">
+				<input type="text" id="address2"  required="required" readonly="readonly" class="p">
 			</div>
+			<span class="final_addr_ck">주소를 입력해주세요.</span>
 		</div>
 		
 		<div>
 			<h3 class="title">
-				<label for="email">본인확인 이메일</label>
+				<label for="email">이메일</label>
 			</h3>
 			<div class="box_email">
-				<input type="text" id="email" name="email" maxlength="30" class="p">
+				<input type="text" id="email_input" name="email" maxlength="30" class="p">
 			</div>
+			<span class="final_email_ck">이메일을 입력해주세요.</span>
 		</div>
 		
 		<br><br>
 		<div class="join" align="center">
-			<button type="button" id="register" class="submit" onclick="joinform_check()">가입하기</button>
+			<!-- <button type="button" id="register" class="submit">가입하기</button> -->
+			<input type="button" id="register" class="submit" value="가입하기">
 			<!-- <input type="submit" id="register" class="submit" value="가입하기"> -->
 		</div>
 	</form>
@@ -102,32 +112,125 @@
 
 
 <script type="text/javascript">
+
+/* 유효성 검사 통과유무 변수 */
+var idCheck = false;            // 아이디
+var idckCheck = false;            // 아이디 중복 검사
+var pwCheck = false;            // 비번
+var pwckCheck = false;            // 비번 확인
+var pwckcorCheck = false;        // 비번 확인 일치 확인
+var nameCheck = false;            // 이름
+var phoneCheck = false;            // 전화번호
+var emailCheck = false;            // 이메일
+var addressCheck = false         // 주소
+
 $(document).ready(function(){
 	//회원가입 버튼(회원가입 기능 작동)
 	$(".submit").click(function(){
-		$("#join").attr("action","/user/register");
-		$("#join").submit();
+		
+		/* 입력값 변수 */
+        var id = $('#id_input').val();                // id 입력란
+        var pw = $('#pw_input').val();                // 비밀번호 입력란
+        var pwck = $('#pwck_input').val();            // 비밀번호 확인 입력란
+        var name = $('#name_input').val();            // 이름 입력란
+        var phone = $('#phone_input').val();          // 이메일 입력란
+        var email = $('#email_input').val();          // 이메일 입력란
+        var addr = $('#address1').val();        	  // 주소 입력란
+        
+        /* 아이디 유효성검사 */
+        if(id == ""){
+            $('.final_id_ck').css('display','block');
+            idCheck = false;
+        }else{
+            $('.final_id_ck').css('display', 'none');
+            idCheck = true;
+        }
+        
+        /* 비밀번호 유효성 검사 */
+        if(pw == ""){
+            $('.final_pw_ck').css('display','block');
+            pwCheck = false;
+        }else{
+            $('.final_pw_ck').css('display', 'none');
+            pwCheck = true;
+        }
+        
+        /* 비밀번호 확인 유효성 검사 */
+        if(pwck == ""){
+            $('.final_pwck_ck').css('display','block');
+            pwckCheck = false;
+        }else{
+            $('.final_pwck_ck').css('display', 'none');
+            pwckCheck = true;
+        }
+        
+        /* 이름 유효성 검사 */
+        if(name == ""){
+            $('.final_name_ck').css('display','block');
+            nameCheck = false;
+        }else{
+            $('.final_name_ck').css('display', 'none');
+            nameCheck = true;
+        }
+        
+        /* 휴대전화 유효성 검사 */
+        if(phone == ""){
+            $('.final_phone_ck').css('display','block');
+            phoneCheck = false;
+        }else{
+            $('.final_phone_ck').css('display', 'none');
+            phoneCheck = true;
+        }
+        
+        /* 이메일 유효성 검사 */
+        if(email == ""){
+            $('.final_email_ck').css('display','block');
+            emailCheck = false;
+        }else{
+            $('.final_email_ck').css('display', 'none');
+            emailCheck = true;
+        }
+        
+        /* 주소 유효성 검사 */
+        if(addr == ""){
+            $('.final_addr_ck').css('display','block');
+            addressCheck = false;
+        }else{
+            $('.final_addr_ck').css('display', 'none');
+            addressCheck = true;
+        }
+        
+        /* 최종 유효성 검사 */
+        if(idCheck&&idckCheck&&pwCheck&&pwckCheck&&pwckcorCheck&&nameCheck&&phoneCheck&&emailCheck&&addressCheck ){
+ 
+			$("#join_form").attr("action","/user/register");
+			$("#join_form").submit();
+        }
+        return false;
+		
 	});
 });
 
-$('#id').on("propertychange change keyup paste input", function(){
+$('#id_input').on("propertychange change keyup paste input", function(){
 	console.log("test")
 	
-	var memberId = $('#id').val();			// .id_input에 입력되는 값
-	var data = {Id : memberId}				// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
+	var id = $('#id_input').val();			// .id_input에 입력되는 값
+	var data = {id : id}				// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
 	
 	$.ajax({
-		type : "POST",
+		type : "post",
 		url : "/user/registerIdChk",
 		data : data,
 		success : function(result){
 			console.log("성공여부 : " + result);
-			if(result!='fail'){
-				$('.id_check_1').css("display","inline-block");
-				$('.id_check_2').css("display","none");				
+			if(result != 'fail'){
+				$('.id_check_1').css("display", "inline-block");
+				$('.id_check_2').css("display", "none");
+				idckCheck = true;
 			}else{
-				$('.id_check_2').css("display","inline-block");
-				$('.id_check_1').css("display","none");				
+				$('.id_check_2').css("display", "inline-block");
+				$('.id_check_1').css("display", "none");
+				idckCheck = false;
 			}
 		}// success
 		
@@ -135,31 +238,23 @@ $('#id').on("propertychange change keyup paste input", function(){
 	
 });
 
-//아이디 중복검사
-/* $('#btnCheck').click(function(){
+$('#pwck_input').on("propertychange change keyup paste input", function(){
+	 var pw = $('#pw_input').val();
+     var pwck = $('#pwck_input').val();
+     $('.final_pwck_ck').css('display', 'none');
+     
+     if(pw == pwck){
+         $('.pwck_input_re_1').css('display','block');
+         $('.pwck_input_re_2').css('display','none');
+         pwckcorCheck = true;
+     }else{
+         $('.pwck_input_re_1').css('display','none');
+         $('.pwck_input_re_2').css('display','block');
+         pwckcorCheck = false;
+     }        
+    
+});
 
-	if($('#id').val() != ''){
-		$.ajax({
-			type:'post',
-			url:'/user/register/idCheck',
-			data:'id='+$('#id').val(),
-			dataType:'json',
-			success: function(result){
-				if(result=='0'){
-					$('#result').text('사용 가능한 아이디입니다.');
-				}else{
-					$('#result').text('이미 사용중인 아이디입니다.');
-				}
-			},
-			error:function(a,b,c){
-				console.log(a,b,c);
-			}
-		});
-	}else{
-		alert('아이디를 입력하세요.');
-		$('#id').focus();
-	}
-}); */
 
 /* 다음 주소 연동 */
 function execution_daum_address(){
@@ -217,24 +312,7 @@ function execution_daum_address(){
     }).open();
 }
 	
-/*  	var id = $('#id_input').val();	// .id_input에 입력되는 값
-	var data = {id : id}			// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
-	
-	$.ajax({
-		type : "post",
-		url : "/user/idCheck",
-		data : data,
-		success : function(result){
-			if(result != 'fail'){
-				$('.id_check_1').css("display","inline-block");
-				$('.id_check_2').css("display","none");
-			}else{
-				$('.id_check_2').css("display","inline-block");
-				$('.id_check_1').css("display","inline-block");
-			}
-		}
-	});
-});// function 종료 */
+
 </script>
 
 </body>
