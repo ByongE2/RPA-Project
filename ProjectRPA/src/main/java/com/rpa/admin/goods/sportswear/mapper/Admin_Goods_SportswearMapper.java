@@ -35,4 +35,6 @@ public interface Admin_Goods_SportswearMapper {
 	//지정 상품 이미지 정보 얻기 
 	List<AttachImageVO> getAttachInfo(Long swID);
 	
+	//지정 상품 카트 전체 삭제
+	
 }

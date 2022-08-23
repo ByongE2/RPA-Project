@@ -100,7 +100,7 @@ public class UserController {
          
       }else {
          session.setAttribute("user", login);
-         return "redirect: /mainTEST";
+         return "redirect:/mainTEST";
       }
       return "redirect:/";
    }

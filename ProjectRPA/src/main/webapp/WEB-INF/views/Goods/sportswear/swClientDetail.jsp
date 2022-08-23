@@ -92,8 +92,8 @@
 			</div>
 			<!-- 주문 form -->
 			<form action="/order/${user.id}" method="get" class="order_form">
-				<input type="hidden" name="orders[0].bookId" value="${swInfo.goods_swID}">
-				<input type="hidden" name="orders[0].bookCount" value="">
+				<input type="hidden" name="orders[0].goods_swID" value="${swInfo.goods_swID}">
+				<input type="hidden" name="orders[0].goods_sw_Count" value="">
 			</form>	
 		</div>
 		
@@ -153,8 +153,16 @@ $(document).ready(function(){
 		bobj.find("img").attr('src', '/goods/sportswear/display?fileName=' + fileCallPath);
 	} else {
 		bobj.find("img").attr('src', '/resources/goods/no Image.png');
-	}
-});	
+	}//이미지 삽입 끝
+	
+	/* 포인트 삽입 */
+	let salePrice = "${swInfo.goods_swPrice - (swInfo.goods_swPrice * swInfo.goods_swDiscount)}"
+	let point = salePrice*0.05; //할인된 판매가격에 0.05% = 포인트
+	point = Math.floor(point); 
+	$(".point_span").text(point);
+	//포인트 삽입 끝
+	
+});//$(document).ready(function()	
 
 // 장바구니 수량 버튼 조작
 let quantity = $(".quantity_input").val();
@@ -172,12 +180,12 @@ const form = {
 		goods_swID : '${swInfo.goods_swID}',
 		goods_sw_Count : '5'
 };// // 장바구니 서버로 전송할 데이터 끝
-console.log(form);
+
 //장바구니 추가 버튼
 $(".btn_cart").on("click", function(e){
 	form.swDiscount = $(".quantity_input").val();
 	$.ajax({
-		url: '/cart/add',
+		url: '/goods/sportswear/cart/add',
 		type: 'POST',
 		data: form,
 		success: function(result){
@@ -197,6 +205,13 @@ function cartAlert(result){
 		alert("로그인이 필요합니다.");	
 	}
 }// 장바구니 추가 시 알람 메서드
+
+/* 바로구매 버튼 */
+$(".btn_buy").on("click", function(){
+	let goods_sw_Count = $(".quantity_input").val();
+	$(".order_form").find("input[name='orders[0].goods_sw_Count']").val(goods_sw_Count);
+	$(".order_form").submit();
+});
 
 </script>
 

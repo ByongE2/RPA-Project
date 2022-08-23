@@ -11,13 +11,13 @@ public interface SwCartMapper {
 	public int addCart(SwCartDto cart) throws Exception;
 	
 	/* 카트 삭제 */
-	public int deleteCart(Long cartId) throws Exception;
+	public int deleteCart(Long cartId);
 	
 	/* 카트 수량 수정 */
-	public int modifyCount(SwCartDto cart) throws Exception;
+	public int modifyCount(SwCartDto cart);
 	
 	/* 카트 목록 */
-	public List<SwCartDto> getCart(String memberId) throws Exception;	
+	public List<SwCartDto> getCart(String id);	
 	
 	/* 카트 확인 */
 	public SwCartDto checkCart(SwCartDto cart);

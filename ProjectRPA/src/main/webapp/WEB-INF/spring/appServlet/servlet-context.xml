@@ -32,8 +32,8 @@
 		</interceptor>
 		<!-- "/cart" url을 타는 모든 url -->
 		<interceptor>
-			<mapping path="/cart/**"/>
-			<exclude-mapping path="/cart/add"/> <!-- 예외 설정 -->
+			<mapping path="/**/cart/**"/>
+			<exclude-mapping path="/**/cart/add"/> <!-- 예외 설정 -->
 			<beans:bean id="CartIntreceptor" class="com.rpa.interceptor.CartInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>

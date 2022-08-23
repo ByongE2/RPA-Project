@@ -87,9 +87,10 @@ public class Admin_Goods_SportswearServiceImpl implements Admin_Goods_Sportswear
 	@Transactional
 	public int swRemove(Long swID) throws Exception {
 		log.info("service: swRemoveㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-		
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ삭제전 여기들어오냐?111111");
 		//상품정보 삭제 전에, DB image테이블에 있는 정보부터 삭제.(외래키때문에 그냥삭제 안됨)
-		swAdminMapper.deleteImageAll(swID);
+			swAdminMapper.deleteImageAll(swID);
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ삭제전 여기들어오냐? + 이미지 삭제는 다했냐 ????111111");
 		
 		return swAdminMapper.swRemove(swID);
 	}
