@@ -12,15 +12,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/order")
 @AllArgsConstructor
 @Log4j
 public class OrderController {
 
-	@GetMapping("/{id}")
-	public void orderPgaeGET(@PathVariable("Id") String id, OrderPageDto opd, Model model) {
+	@GetMapping("/order/{id}")
+	public void orderPgaeGET(@PathVariable("id") String id, OrderPageDto opd, Model model) {
 		
-		System.out.println("memberId : " + id);
+		System.out.println("userID : " + id);
 		System.out.println("orders : " + opd.getOrders());
 		
 	}

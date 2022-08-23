@@ -6,8 +6,10 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
@@ -41,14 +43,21 @@
 	</bean>
 	<tx:annotation-driven/>
 
+	<!-- quartz 스케쥴링, 배치 프로그램 -->
+	<task:annotation-driven/>
+	
+
 	<mybatis-spring:scan base-package="com.rpa.admin.goods.sportswear.mapper" />
 	<mybatis-spring:scan base-package="com.rpa.goods.sportswear.mapper" />
-	
 	<mybatis-spring:scan base-package="com.rpa.user.mapper"/>
-	
 	<mybatis-spring:scan base-package="com.rpa.pt.mapper"/>
 
 	<context:component-scan	base-package="com.rpa"></context:component-scan>
 	
 
+<<<<<<< HEAD
 </beans>
+=======
+
+</beans>
+>>>>>>> cbc6dbbd510e8bf3ef152cc5825c8286f457cffa

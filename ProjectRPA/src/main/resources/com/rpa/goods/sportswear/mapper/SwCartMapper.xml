@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.rpa.goods.sportswear.mapper.SwCartMapper">
+  	
+  	<!-- 카트 추가 -->
+	<insert id="addCart" >
+		insert into 
+			goods_cart(goods_cartId, id, goods_swID, goods_sw_Count)
+		values
+			(seq_goods_cart.nextval, #{id}, ${goods_swID}, #{goods_sw_Count}) 
+	</insert>
+	
+	<!-- 카트 삭제 -->
+	<delete id="deleteCart">
+		delete from 
+			goods_cart 
+		where 
+			goods_cartId = #{goods_cartId}
+	</delete>
+	
+	<!-- 카트 수량 수정 -->
+	<update id="modifyCount">
+		update 
+			goods_cart 
+		set 
+			goods_sw_Count = #{goods_sw_Count} 
+		where 
+			goods_cartId = #{goods_cartId}
+	</update>
+	
+	<!-- 카트 목록 -->
+	<select id="getCart" resultType="com.rpa.goods.sportswear.domain.SwCartDto">
+		select 
+			a.goods_cartId, a.id, a.goods_swID, a.goods_sw_Count, b.goods_swName, b.goods_swPrice, b.goods_swDiscount
+		from 
+			goods_cart a
+		left outer join 
+			goods_sportsWear b 
+		on 
+			a.goods_swID = b.goods_swID
+		where 
+			id = #{id}	
+	</select>
+	
+	<!-- 카트 확인 -->
+	<select id="checkCart" resultType="com.rpa.goods.sportswear.domain.SwCartDto">
+		select 
+			* 
+		from 
+			goods_cart 
+		where 
+			id = #{id} 
+		and 
+			goods_swID = #{goods_swID}
+	</select>
+	
+  </mapper>

@@ -1,29 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>          
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- <link rel="stylesheet" href="../resources/css/admin/goods/sportswear/sw.css"> -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" 
-		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
-		crossorigin="anonymous">
-</script>
+<title>Welcome</title>
+<link rel="stylesheet" href="/resources/CSS/goods/sportswear/swClientList.css">
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
 </head>
 <body>
 
 	<div class="container">
-		<div class="admin_content_subject"><span>상품 목록&관리</span></div>
-		<button id="regBtn"  type="button" class="btn btn-xs pull-right">상품 등록</button>
+		<div class="admin_content_subject"><span>상품 목록</span></div>
 		<div class="table table-striped">
 		<!-- 게시물 있을 때 -->
 		<c:if test="${listCheck != 'empty' }">
@@ -42,9 +35,18 @@
 	       		</thead>
 	       		<c:forEach items="${list}" var="list">
 	       		<tr>
+					<td class="image">
+						<div class="image_wrap" 
+						data-swid ="${list.imageList[0].goods_swID}" 
+						data-path="${list.imageList[0].uploadPath}" 
+						data-uuid="${list.imageList[0].uuid}" 
+						data-filename="${list.imageList[0].fileName}">
+							<img>
+						</div>				
+					</td>
 	       			<td><c:out value="${list.goods_swID}"></c:out> </td>
 	       			<td>
-		       			<a class="move" href='<c:out value="${list.goods_swID}"/>'>
+		       			<a href="/goods/sportswear/detail/${list.goods_swID}">
 						<c:out value="${list.goods_swName}"></c:out>
 						</a>
 					</td>
@@ -67,7 +69,7 @@
            </div>
         <!-- 검색 시작 -->
         <div class="search_wrap">
-	       	<form id="searchForm" action="/admin/goods/sportswear/list" method="get">
+	       	<form id="searchForm" action="/goods/sportswear/list" method="get">
 	       		<div class="search_input">
 	       			<input type="text" name="keyword" value="${pageMaker.cri.keyword}">
 	       			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
@@ -102,7 +104,7 @@
         </div>       
     	<!-- 페이징 인터페이스 끝 -->
 
-    	<form id="moveForm" action="/admin/goods/sportswear/list" method="get">
+    	<form id="moveForm" action="/goods/sportswear/list" method="get">
 			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 			<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 			<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
@@ -133,64 +135,60 @@
 	</div>
 
 <script>
-	$(document).ready(function() {
+$(document).ready(function() {
 
-		var result = '<c:out value="${result}"/>';
-			checkModal(result);
-			//뒤로가기 모달창 문제 해결
-			history.replaceState({},null,null);
-			function checkModal(result){
-				if(result === '' || history.state){
-					return ;				
-				}
-				if(parseInt(result) > 0){
-					$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.");
-				}
-				$("#myModal").modal("show");
-			}//function checkModal(result)
-			//등록버튼
-			$("#regBtn").on("click",function(){
-				self.location = "/admin/goods/sportswear/insert";
-			});
-
-		let moveForm = $('#moveForm');
-		let searchForm = $('#searchForm');
-		//페이지 이동 버튼
-		$(".paginate_button a").on("click", function(e){
-				e.preventDefault();
-				moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-				moveForm.submit();
-		});	//$(".paginate_button a").on("click", function(e)	
-		//상품 검색 버튼 동작
-		$("#searchForm button").on("click", function(e){
+	let moveForm = $('#moveForm');
+	let searchForm = $('#searchForm');
+	//페이지 이동 버튼
+	$(".paginate_button a").on("click", function(e){
 			e.preventDefault();
-			//검색 키워드 유효성 검사
-			if(!searchForm.find("input[name='keyword']").val()){
-				alert("키워드를 입력하십시오");
-				return false;
-			}
-			searchForm.find("input[name='pageNum']").val("1");
-			searchForm.submit();
-		});//$("#searchForm button").on("click", function(e)
-		//
-		$(".move").on("click", function(e){
-			e.preventDefault();
-			moveForm.append("<input type='hidden' name='swID' value='"+$(this).attr("href") + "'>");
-			moveForm.attr("action", "/admin/goods/sportswear/detail");
+			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
 			moveForm.submit();
-		});//$(".move").on("click", function(e)
+	});	//$(".paginate_button a").on("click", function(e)	
+	//상품 검색 버튼 동작
+	$("#searchForm button").on("click", function(e){
+		e.preventDefault();
+		//검색 키워드 유효성 검사
+		if(!searchForm.find("input[name='keyword']").val()){
+			alert("키워드를 입력하십시오");
+			return false;
+		}
+		searchForm.find("input[name='pageNum']").val("1");
+		searchForm.submit();
+	});//$("#searchForm button").on("click", function(e)
 
-	});//$(document).ready(function()
-	
-	//뒤로가기 했을 때 새로고침 되게.
-	window.onpageshow = function(e) {
-        if (e.persisted || (window.performance && window.performance.navigation.type == 2)) { //뒤로가기 감지
-           location.reload(); //현재 페이지 새로고침
-        }
-     }//window.onpageshow = function(e)
-	
-</script>	
+	/* 이미지 삽입 */
+	$(".image_wrap").each(function(i, obj){
 		
+		const bobj = $(obj);
+		
+		if(bobj.data("swid")){
+			const uploadPath = bobj.data("path");
+			const uuid = bobj.data("uuid");
+			const fileName = bobj.data("filename");
+			
+			const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
+			
+			$(this).find("img").attr('src', '/goods/sportswear/display?fileName=' + fileCallPath);
+			
+		} else {
+			
+			$(this).find("img").attr('src', '/resources/goods/no Image.png');
+			
+		}
+		
+	});	
+	
+});//$(document).ready(function()
+		
+//뒤로가기 했을 때 새로고침 되게.
+window.onpageshow = function(e) {
+		if (e.persisted || (window.performance && window.performance.navigation.type == 2)) { //뒤로가기 감지
+			 location.reload(); //현재 페이지 새로고침
+		}
+ }//window.onpageshow = function(e)
+	
+</script>
 
 </body>
 </html>

@@ -63,7 +63,7 @@ public class Goods_SportswearServiceImpl implements Goods_SportswearService{
 	
 	@Override
 	public SportswearDto getSwIdName(Long swID) {
-		return null;
+		return swMapper.getSwIdName(swID);
 	}
 	
 	

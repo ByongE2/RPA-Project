@@ -1,15 +1,22 @@
 package com.rpa.pt.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
 import com.rpa.pt.domain.Pt_Goods_DTO;
 import com.rpa.pt.domain.Pt_Goods_basket_DTO;
 import com.rpa.pt.service.Pt_Goods_Service;
@@ -63,14 +70,26 @@ public class PT_Client_Controller {
 		}
 	      
 	
-	
+	@ResponseBody
 	@RequestMapping(value = "/basketinsert",method = {RequestMethod.GET})
-	public String clientbasketinsert(Pt_Goods_basket_DTO dto,int client_no,
-			@RequestParam("title")String title
+	//@GetMapping("/basketinsert")
+	public void clientbasketinsert( Pt_Goods_basket_DTO dto,
+			@RequestParam(value = "title", required=false)String title,
+			@RequestParam(value = "price",required = false)String price,
+			@RequestParam(value = "id",required = false)String id,
+			@RequestParam(value = "pt_code",required = false)String pt_code
 			) {
-		System.out.println("물건 제목 : "+title);
+		
+		System.out.println("타이틀"+title);
+		System.out.println("금액"+price);
+		System.out.println("코드"+pt_code);
+		
+		dto.setPT_code(pt_code);
+		dto.setPT_title_basket(title);
+		dto.setPT_price_basket(price);
+		dto.setPT_id_basket(id);
+		dto.setPt_photourl_basket("사진");
 		service.clientBasketinsert(dto);
-		return "ptclient/clientget?client_no="+client_no;
 	}
 	
 	@GetMapping("/basketdelete")

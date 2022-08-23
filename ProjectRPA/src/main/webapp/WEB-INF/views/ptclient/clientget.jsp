@@ -63,7 +63,7 @@
 		<div>${clinet_no.PT_content}</div>
 	</div>
 	<div>
-		<label>등록 아이디</label><input name="PT_id" readonly="readonly"
+		<label>등록 아이디</label><input class="id" name="PT_id" readonly="readonly"
 			value="${clinet_no.PT_id}">
 	</div>
 	<div>
@@ -71,27 +71,26 @@
 			value="${clinet_no.PT_State}">
 	</div>
 	<div>
-		<label>상품 제목</label><input name="PT_title" readonly="readonly"
+		<label>상품 제목</label><input class="title" name="PT_title" readonly="readonly"
 			value="${clinet_no.PT_title}">
 	</div>
 	<div>
-		<label>상품 가격</label><input name="PT_price" readonly="readonly"
+		<label>상품 가격</label><input class="price" name="PT_price" readonly="readonly"
 			value="${clinet_no.PT_Price}">
 	</div>
 	<div>
-		<label>상품 사진</label><input name="PT_photourl" readonly="readonly"
-			value="${clinet_no.PT_photourl}">
+		<label>상품 사진</label><input name="PT_photourl" readonly="readonly" value="${clinet_no.PT_photourl}">
 	</div>
 
 	<div>
-		<label>캘린더 앞</label><input name="Calendar_before" readonly="readonly"
-			value="${clinet_no.calendar_before}">
+		<label>캘린더 앞</label><input name="Calendar_before" readonly="readonly" value="${clinet_no.calendar_before}">
 	</div>
 	<div>
-		<label>캘린더 뒤</label><input name="Calendar_after" readonly="readonly"
-			value="${clinet_no.calendar_after}">
+		<label>캘린더 뒤</label><input name="Calendar_after" readonly="readonly" value="${clinet_no.calendar_after}">
 	</div>
-
+	<div>
+		<label>유저 아이디</label><label>${user.id}</label>
+	</div>
 
 
 	<button id="ptlist">목록</button>
@@ -100,33 +99,35 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 	var operForm = $("#operForm");
-
+	
+		
 	$(document).ready(function() {
 		$("#ptlist").on("click", function() {
 			self.location = "/ptclient/clientlist";
 		})
 	});
 
-	var title = ${clinet_no.PT_title};
-	var price = ${clinet_no.PT_Price};
-	var pt_code = ${clinet_no.PT_code};
-	//var id = ${user.id};
+	
+	var PT_Price = '${clinet_no.PT_Price}';
+	var PT_title = '${clinet_no.PT_title}';
+	var PT_code= '${clinet_no.PT_code}';
+	var id = '${user.id}';
+	
+	var alldata={PT_Price,PT_title,PT_code,id};
 	function basketing(){
 		$.ajax({
 			url:"/ptclient/basketinsert",
-			processData:false,
-			contentType:false,
 			type:"GET",
-			data:{
-				title,
-				price,
-				pt_code
-			},
+			dataType:"text",
+			contentType:"application/json; charset=UTF-8",
+			timeout:3000,
+			data:alldata,
 			success:function(data){
 				alert("장바구니에 담겼습니다."+data);
+				document.location.reload();
 			},
 			error:function(){
-				alert("오류가 발생했습니다.");
+				alert("오류가 발생했습니다."+PT_title+","+PT_Price+","+id+","+PT_code);
 			}
 		});
 }
@@ -137,9 +138,8 @@
 <script>
 		function iamport() {
 			//가맹점 식별코드
-			const title = ${clinet_no.PT_title
-			};
-			var price = ${clinet_no.PT_Price};
+			const title ='${clinet_no.PT_title}';
+			var price = '${clinet_no.PT_Price}';
 
 			IMP.init('imp56221238');
 			IMP.request_pay({

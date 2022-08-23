@@ -55,6 +55,7 @@
 		select * 
 		from goods_sportswear 
 		where goods_swId = #{goods_swId}
+		
 	</select>	
 	
 	<!-- 상품 id 조회 -->
