@@ -13,5 +13,6 @@
 		where 
 			goods_swId = #{goods_swId}
 	</select>
+	
   </mapper>
   
