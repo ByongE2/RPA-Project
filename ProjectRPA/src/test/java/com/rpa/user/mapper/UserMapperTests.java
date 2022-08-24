@@ -17,28 +17,46 @@ public class UserMapperTests {
 	private UserMapper mapper;
 	
 
+	//회원가입 테스트
+//	@Test
+//	public void testJoin() {
+//		UserDTO user = new UserDTO();
+//		
+//		user.setId("test");
+//		user.setPw("test123");
+//		user.setName("테스트");
+//		user.setEmail("test123@google.com");
+//		user.setAddress("수원");
+//		user.setAddress2("수원2");
+//		user.setAddress3("수원3");
+//		
+//		mapper.userJoin(user);
+//	}//testJoin
 	
-	@Test
-	public void testJoin() {
-		UserDTO user = new UserDTO();
-		
-		user.setId("test");
-		user.setPw("test123");
-		user.setName("테스트");
-		user.setPhone("010-4545-4545");
-		user.setAddress("수원");
-		user.setEmail("test@naver.com");
-		
-		mapper.userJoin(user);
-	}
+	/* 아이디 중복 테스트*/
+//	@Test
+//	public void testIDcheck() {
+//		String id = "user";   //존재o
+//		String id2 = "aaaa";  // 존재x
+//		mapper.userIDCheck(id);
+//		mapper.userIDCheck(id2);
+//	}
 	
-	@Test
-	public void testIDcheck() {
-		String id = "test222";
-		String id2 = "tkfka";
-		mapper.userIDCheck(id);
-		mapper.userIDCheck(id2);
-	}
-	
+	/* 로그인 쿼리 테스트*/
+//	@Test
+//    public void userLoginTest() throws Exception{
+//        UserDTO user = new UserDTO();    // MemberVO 변수 선언 및 초기화
+//        
+//        /* 올바른 아이디 비번 입력경우 */
+////        user.setId("admin");
+////        user.setPw("1234");
+//        
+//        /* 올바른 않은 아이디 비번 입력경우 */
+//        user.setId("admin2222222222");
+//        user.setPw("12342222");
+//        
+//        mapper.userLogin(user);
+//        System.out.println("결과 값 : " +  mapper.userLogin(user));
+//    }//userLoginTest
 	
 }

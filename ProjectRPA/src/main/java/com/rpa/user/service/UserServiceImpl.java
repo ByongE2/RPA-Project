@@ -6,18 +6,22 @@ import org.springframework.stereotype.Service;
 import com.rpa.user.domain.UserDTO;
 import com.rpa.user.mapper.UserMapper;
 
+import lombok.extern.log4j.Log4j;
+
 
 @Service
+@Log4j
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserMapper mapper;
 	
+	//회원가입
 	@Override
 	public void userJoin(UserDTO user) throws Exception {
 		mapper.userJoin(user);
 	}
-
+	//아이디 중복 검사
 	@Override
 	public int userIDCheck(String id) throws Exception {
 		return mapper.userIDCheck(id);

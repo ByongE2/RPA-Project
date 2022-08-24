@@ -37,16 +37,6 @@ public class Goods_SportswearController {
 	
 	private AttachService attachService;
 	
-	
-//		@Autowired
-//		private ReplyService replyService;
-	
-	@GetMapping("/main")
-	public String mainPageGet() {
-		log.info("메인 페이지로 이동");
-		return "mainTEST";
-	}//mainPageGet
-	
 	@GetMapping("/goods/sportswear/list")
 	public String swListGet(SwCriteria cri, Model model) throws Exception{
 		log.info("sw 목록 페이지" + cri);

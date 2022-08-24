@@ -1,18 +1,17 @@
 package com.rpa.user.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import lombok.extern.log4j.Log4j;
 
 @Controller
+@Log4j
 public class MainController {
 
-private static final Logger log = LoggerFactory.getLogger(MainController.class);
-	
-	@RequestMapping(value = "/mainTEST", method = RequestMethod.GET)
+	@GetMapping("/main")
 	public void mainPageGET() {
-		log.info("main");
-	}
-}
+		
+		log.info("메인 페이지 진입ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+	}//mainPageGET
+}//MainController
