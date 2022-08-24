@@ -19,13 +19,14 @@
   	select count(*) from member where id=#{id}
   </select>
   
+  <!-- 로그인 id만 체크 : pw는 bCrypt로 따로 체크-->
   <select id="userLogin" resultType="com.rpa.user.domain.UserDTO">
   	select 
-  		id, name, grade, money, point
+  		id, pw, name, grade, money, point
   	from 
   		member
   	where 
-  		id=#{id} and pw=#{pw}
+  		id=#{id}
   </select>
   
   <select id="findId" resultType="com.rpa.user.domain.UserDTO">
