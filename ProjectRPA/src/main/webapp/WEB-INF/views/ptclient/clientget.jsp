@@ -45,15 +45,6 @@
 			value="${clinet_no.pt_name}">
 	</div>
 
-	<c:if test="${pt_code.PT_code ne null }">
-		<button id="basketed" class="basketed">담겨 있음</button>
-	</c:if>
-	<c:if test="${null eq pt_code.PT_code }">
-		<button id="basketing" class="basketing" onclick="basketing()">장바구니</button>
-	</c:if>
-
-
-
 	<button onclick="iamport()">구매하기</button>
 
 
@@ -106,32 +97,6 @@
 			self.location = "/ptclient/clientlist";
 		})
 	});
-
-	
-	var PT_Price = '${clinet_no.PT_Price}';
-	var PT_title = '${clinet_no.PT_title}';
-	var PT_code= '${clinet_no.PT_code}';
-	var id = '${user.id}';
-	
-	var alldata={PT_Price,PT_title,PT_code,id};
-	function basketing(){
-		$.ajax({
-			url:"/ptclient/basketinsert",
-			type:"GET",
-			dataType:"text",
-			contentType:"application/json; charset=UTF-8",
-			timeout:3000,
-			data:alldata,
-			success:function(data){
-				alert("장바구니에 담겼습니다."+data);
-				document.location.reload();
-			},
-			error:function(){
-				alert("오류가 발생했습니다."+PT_title+","+PT_Price+","+id+","+PT_code);
-			}
-		});
-}
-
 </script>
 
 
