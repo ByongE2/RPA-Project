@@ -37,6 +37,7 @@ public class UserControllerImpl implements UserController {
 	private UserService userService;
 	@Autowired
 	private JavaMailSender mailSender;
+	
 	/*@Autowired로는 빈 등록해도 빈을 찾을 수 없다는 에러가남..*/
 	@Bean
 	BCryptPasswordEncoder pwEncoder() {
@@ -61,7 +62,7 @@ public class UserControllerImpl implements UserController {
 		return "redirect:/main";
 	}//joinPOST
 	
-	/* 아이디 중복 검사 */
+	/* 회원 가입 시 아이디 중복 검사 , 비동기 방식*/
 	@Override
 	@PostMapping("/userIdChk")
 	@ResponseBody
@@ -76,7 +77,7 @@ public class UserControllerImpl implements UserController {
 		}		
 	} // userIDCheckPOST()
 	
-	/* 이메일 인증 */
+	/* 회원 가입 시 이메일 인증 */
 	@Override
 	@GetMapping("/mailCheck")
 	@ResponseBody
@@ -140,25 +141,25 @@ public class UserControllerImpl implements UserController {
 		UserDTO loginDto = userService.userLogin(user);	// 입력받은 아이디 일치하는 지 체크(id만 먼저)
 		
 		/*id 일치여부 체크하고 > 인코딩된 비밀번호 체크 순서*/
-		if(loginDto != null) {										// 일치하는 아이디 존재시
+		if(loginDto != null) {											//1 일치하는 아이디 존재시
 			
-			rawPw = user.getPw();				// 사용자가 제출한 비밀번호 
-			encodePw = loginDto.getPw();		// 데이터베이스에 저장된 인코딩된 비밀번호 
+			rawPw = user.getPw();			// 사용자가 제출한 비밀번호 
+			encodePw = loginDto.getPw();	// 데이터베이스에 저장된 인코딩된 비밀번호 
 					
 					//pwEncoder : BCryptPasswordEncoder 타입
-			if(true == pwEncoder().matches(rawPw, encodePw)) {		// 비밀번호 일치하면,
+			if(true == pwEncoder().matches(rawPw, encodePw)) {			//1-1 비밀번호 일치하면,
 				
-				loginDto.setPw("");							// loginDto에서 인코딩된 비밀번호 정보 지움
-				session.setAttribute("user", loginDto); 	// session에 사용자의 정보 저장
+				loginDto.setPw("");						// loginDto에서 인코딩된 비밀번호 정보 지움
+				session.setAttribute("user", loginDto); // session에 사용자의 정보 저장
 
-				return "redirect:/main";		// 메인페이지 이동
-			} else {												// 비밀번호 불일치하면,
+				return "redirect:/main"; // 로그인 성공 메인페이지 이동
+			} else {													//1-2 비밀번호 불일치하면,
 				rttr.addFlashAttribute("result", 0);//0:실패 1:성공			
-				return "redirect:/user/login";	// 로그인 페이지로 이동
+				return "redirect:/user/login";	
 			}
-		} else {													// 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
+		} else {														//2 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
 			rttr.addFlashAttribute("result", 0);			
-			return "redirect:/user/login";	// 로그인 페이지로 이동
+			return "redirect:/user/login";	
 		}
 	}//loginPOST
 	

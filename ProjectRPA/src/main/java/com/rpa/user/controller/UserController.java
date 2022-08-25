@@ -15,10 +15,10 @@ public interface UserController {
 	void joinGET();//joinGET
 	String joinPOST(UserDTO user) throws Exception;//joinPOST
 
-	/* 아이디 중복 검사 */
+	/* 회원 가입 시 아이디 중복 검사 , 비동기 방식*/
 	String userIDCheckPOST(String id) throws Exception; // userIDCheckPOST()
 
-	/* 이메일 인증 */
+	/* 회원 가입 시 이메일 인증 */
 	String mailCheckGET(String email) throws Exception;//mailCheckGET
 
 	/* 로그인 페이지 */

@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/admin")
 @Log4j
-public class AdminInterceptorController {
+public class AdminMainController {
 	
 	@GetMapping("/main")
 	public String adminMain() throws Exception{

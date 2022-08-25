@@ -463,7 +463,7 @@ a{
 		<h1>content area</h1>
 		</div>
 		<!-- class="content_area" End -->
-				<!-- Footer 영역 -->
+		<!-- Footer 영역 -->
 		<div class="footer_nav">
 			<div class="footer_nav_container">
 				<ul>
@@ -479,7 +479,8 @@ a{
 					<span class="line">|</span>
 				</ul>
 			</div>
-		</div> <!-- class="footer_nav" -->
+		</div> 
+		<!-- class="footer_nav" -->
 		
 		<div class="footer">
 			<div class="footer_container">
@@ -499,7 +500,8 @@ a{
 				</div>
 				<div class="clearfix"></div>
 			</div>
-		</div> <!-- class="footer" -->	
+		</div> 
+		<!-- class="footer" -->	
 	</div>
 	<!-- class="wrap End -->
 </div>
