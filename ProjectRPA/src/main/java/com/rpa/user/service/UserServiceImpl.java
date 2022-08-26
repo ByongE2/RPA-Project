@@ -50,6 +50,11 @@ public class UserServiceImpl implements UserService {
 	public UserDTO userLogin(UserDTO user) throws Exception {
 		return mapper.userLogin(user);
 	}
+	/* 주문자 정보 */
+	@Override
+	public UserDTO getUserInfo(String id) {
+		return mapper.getUserInfo(id);
+	}
 
 	@Override
 	public UserDTO findId(UserDTO user) throws Exception {

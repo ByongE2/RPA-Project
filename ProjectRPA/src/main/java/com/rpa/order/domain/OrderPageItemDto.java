@@ -7,7 +7,7 @@ import lombok.Data;
 public class OrderPageItemDto {
 	
 	//view로부터 전달 받을 값
-	private int goods_swId; //상품id
+	private Long goods_swId; //상품id
 	private int goods_sw_Count; // 주문한 상품의 수량
 	
 	//db로부터 가져올 값

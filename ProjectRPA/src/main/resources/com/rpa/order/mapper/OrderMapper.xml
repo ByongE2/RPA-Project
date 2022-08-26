@@ -5,13 +5,13 @@
   <mapper namespace="com.rpa.order.mapper.OrderMapper">
 	
 	<!-- 주문 상품 정보 -->
-	<select id="getGoodsInfo"	resultType="com.rpa.order.domain.OrderPageItemDTO">
+	<select id="getGoodsInfo" resultType="com.rpa.order.domain.OrderPageItemDto">
 		select 
-			goods_swId, goods_swName, goods_swPrice, goods_swDiscount
+			goods_swID, goods_swName, goods_swPrice, goods_swDiscount
 		from 
 			goods_sportsWear 
 		where 
-			goods_swId = #{goods_swId}
+			goods_swId = #{goods_swID}
 	</select>
 	
   </mapper>
