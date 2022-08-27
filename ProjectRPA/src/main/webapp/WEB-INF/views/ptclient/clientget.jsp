@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -19,7 +19,7 @@
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
-<!-- ¾ÆÀÓÆ÷Æ® -->
+<!-- ì•„ì„í¬íŠ¸ -->
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
@@ -37,54 +37,54 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Å¬¶óÀÌ¾ğÆ® »óÇ° º¸±âÆäÀÌÁö</h1>
+	<h1>í´ë¼ì´ì–¸íŠ¸ ìƒí’ˆ ë³´ê¸°í˜ì´ì§€</h1>
 
 
 	<div>
-		<label>ÆÇ¸ÅÀÚ</label><input name="pt_no" readonly="readonly"
+		<label>íŒë§¤ì</label><input name="pt_no" readonly="readonly"
 			value="${clinet_no.pt_name}">
 	</div>
 
-	<button onclick="iamport()">±¸¸ÅÇÏ±â</button>
+	<button onclick="iamport()">êµ¬ë§¤í•˜ê¸°</button>
 
 
 
 	<div>
-		<label>»óÇ°³»¿ë</label>
+		<label>ìƒí’ˆë‚´ìš©</label>
 		<div>${clinet_no.PT_content}</div>
 	</div>
 	<div>
-		<label>µî·Ï ¾ÆÀÌµğ</label><input class="id" name="PT_id" readonly="readonly"
+		<label>ë“±ë¡ ì•„ì´ë””</label><input class="id" name="PT_id" readonly="readonly"
 			value="${clinet_no.PT_id}">
 	</div>
 	<div>
-		<label>»óÇ° »óÅÂ</label><input name="PT_State" readonly="readonly"
+		<label>ìƒí’ˆ ìƒíƒœ</label><input name="PT_State" readonly="readonly"
 			value="${clinet_no.PT_State}">
 	</div>
 	<div>
-		<label>»óÇ° Á¦¸ñ</label><input class="title" name="PT_title" readonly="readonly"
+		<label>ìƒí’ˆ ì œëª©</label><input class="title" name="PT_title" readonly="readonly"
 			value="${clinet_no.PT_title}">
 	</div>
 	<div>
-		<label>»óÇ° °¡°İ</label><input class="price" name="PT_price" readonly="readonly"
+		<label>ìƒí’ˆ ê°€ê²©</label><input class="price" name="PT_price" readonly="readonly"
 			value="${clinet_no.PT_Price}">
 	</div>
 	<div>
-		<label>»óÇ° »çÁø</label><input name="PT_photourl" readonly="readonly" value="${clinet_no.PT_photourl}">
+		<label>ìƒí’ˆ ì‚¬ì§„</label><input name="PT_photourl" readonly="readonly" value="${clinet_no.PT_photourl}">
 	</div>
 
 	<div>
-		<label>Ä¶¸°´õ ¾Õ</label><input name="Calendar_before" readonly="readonly" value="${clinet_no.calendar_before}">
+		<label>ìº˜ë¦°ë” ì•</label><input name="Calendar_before" readonly="readonly" value="${clinet_no.calendar_before}">
 	</div>
 	<div>
-		<label>Ä¶¸°´õ µÚ</label><input name="Calendar_after" readonly="readonly" value="${clinet_no.calendar_after}">
+		<label>ìº˜ë¦°ë” ë’¤</label><input name="Calendar_after" readonly="readonly" value="${clinet_no.calendar_after}">
 	</div>
 	<div>
-		<label>À¯Àú ¾ÆÀÌµğ</label><label>${user.id}</label>
+		<label>ìœ ì € ì•„ì´ë””</label><label>${user.id}</label>
 	</div>
 
 
-	<button id="ptlist">¸ñ·Ï</button>
+	<button id="ptlist">ëª©ë¡</button>
 
 
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -102,33 +102,49 @@
 
 <script>
 		function iamport() {
-			//°¡¸ÍÁ¡ ½Äº°ÄÚµå
+			//ê°€ë§¹ì  ì‹ë³„ì½”ë“œ
 			const title ='${clinet_no.PT_title}';
 			var price = '${clinet_no.PT_Price}';
-
+			var id='${user.id}';
+			var pt_code
 			IMP.init('imp56221238');
 			IMP.request_pay({
 				pg : 'kcp',
 				pay_method : 'card',
 				merchant_uid : 'merchant_' + new Date().getTime(),
-				name : title, //°áÁ¦Ã¢¿¡¼­ º¸¿©Áú ÀÌ¸§
-				amount : price, //½ÇÁ¦ °áÁ¦µÇ´Â °¡°İ
+				name : title, //ê²°ì œì°½ì—ì„œ ë³´ì—¬ì§ˆ ì´ë¦„
+				amount : price, //ì‹¤ì œ ê²°ì œë˜ëŠ” ê°€ê²©
 				buyer_email : 'iamport@siot.do',
-				buyer_name : "kkao45617",
+				buyer_name : id,
 				buyer_tel : '010-1234-5678',
-				buyer_addr : '¼­¿ï °­³²±¸ µµ°îµ¿',
+				buyer_addr : 'ì„œìš¸ ê°•ë‚¨êµ¬ ë„ê³¡ë™',
 				buyer_postcode : '123-456'
 			}, function(rsp) {
 				console.log(rsp);
 				if (rsp.success) {
-					var msg = '°áÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.';
-					msg += '°íÀ¯ID : ' + rsp.imp_uid;
-					msg += '»óÁ¡ °Å·¡ID : ' + rsp.merchant_uid;
-					msg += '°áÁ¦ ±İ¾× : ' + rsp.paid_amount;
-					msg += 'Ä«µå ½ÂÀÎ¹øÈ£ : ' + rsp.apply_num;
+					var msg = 'ê²°ì œê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.';
+					msg += 'ê³ ìœ ID : ' + rsp.imp_uid;
+					msg += 'ìƒì  ê±°ë˜ID : ' + rsp.merchant_uid;
+					msg += 'ê²°ì œ ê¸ˆì•¡ : ' + rsp.paid_amount;
+					msg += 'ì¹´ë“œ ìŠ¹ì¸ë²ˆí˜¸ : ' + rsp.apply_num;
+					$.ajax({
+						url:"basketinsert",
+						type:'get',
+						data:{
+							title:'${clinet_no.PT_title}',
+							price:'${clinet_no.PT_Price}',
+							id:'${user.id}',
+							pt_code:'${clinet_no.PT_code}'
+						},
+						success:function(){
+							alert("ê²°ì œ ìŠ¹ì¸");
+						},error:function(){
+							alert("error");
+						}
+					})
 				} else {
-					var msg = '°áÁ¦¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.';
-					msg += '¿¡·¯³»¿ë : ' + rsp.error_msg;
+					var msg = 'ê²°ì œì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.';
+					msg += 'ì—ëŸ¬ë‚´ìš© : ' + rsp.error_msg;
 				}
 				alert(msg);
 			});

@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-장바구니로 흘러들어옴
+결제창
 
 <table	border="1">
 	<tr>

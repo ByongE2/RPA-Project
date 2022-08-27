@@ -59,11 +59,12 @@
         </ul>
     </div>
     <!--슬라이드-->
-    <div class="footerup"></div>
+   
     <!--본문 끝-->
+    <%@include file="../main/footer.jsp" %>
 </div>
     
-	<%@include file="../main/footer.jsp" %>
+	
 	
 	
 

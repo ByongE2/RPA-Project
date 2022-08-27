@@ -20,4 +20,16 @@ public class main {
 	public void main() {
 		log.info("메인");
 	}
+	@GetMapping("/map")
+	public void map() {
+		log.info("지도 맵");
+	}
+	@GetMapping("/Facility")
+	public void Facility() {
+		log.info("시설소개");
+	}
+	@GetMapping("/instructor")
+	public void instructor() {
+		log.info("강사소개");
+	}
 }

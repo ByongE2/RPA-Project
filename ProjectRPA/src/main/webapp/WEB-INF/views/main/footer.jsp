@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="../resources/CSS/main/main.css">
 </head>
 <body>
-
+<!-- 푸터 공백 -->
+ <div class="footerup"></div>
     <!-- 푸터 -->
     <footer>
         <div>
