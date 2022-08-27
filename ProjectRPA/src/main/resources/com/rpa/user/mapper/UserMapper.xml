@@ -32,7 +32,6 @@
   <!-- 주문자 정보 -->
 
   <select id="getUserInfo" resultType="com.rpa.user.domain.UserDTO">
-
 	SELECT 
 		id, name, email, address, address2, address3, money, point
 	FROM 

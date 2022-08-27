@@ -63,7 +63,7 @@
 				<c:if test="${ user != null }">
 					<div class="login_success_area">
 						<span>회원 : ${user.name}</span>
-						<span>충전금액:< member 테이블 추가<fmt:formatNumber value="" pattern="\#,###.##"/></span>
+						<span>충전금액:< User 테이블 추가<fmt:formatNumber value="" pattern="\#,###.##"/></span>
 						<span>포인트:< 테이블 추가<fmt:formatNumber value="" pattern="#,###" /></span>
 						<a href="/user/logout">로그아웃</a>
 					</div>
@@ -114,7 +114,7 @@
 										<th>주소</th>
 										<td>
 											${userInfo.address} ${userInfo.address2}<br>${userInfo.address3}
-											<input class="selectAddress" value="T" type="hidden">
+											<input class="selectAddress" value="T" type="hidden"> <!-- T : 사용자 정보 주소록 -->
 											<input class="addressee_input" value="${userInfo.name}" type="hidden">
 											<input class="address1_input" type="hidden" value="${userInfo.address}">
 											<input class="address2_input" type="hidden" value="${userInfo.address2}">
@@ -140,7 +140,7 @@
 									<tr>
 										<th>주소</th>
 										<td>
-											<input class="selectAddress" value="F" type="hidden">
+											<input class="selectAddress" value="F" type="hidden"> <!-- F : 직접 입력 주소록 -->
 											<input class="address1_input" readonly="readonly"> <a class="address_search_btn" onclick="execution_daum_address()">주소 찾기</a><br>
 											<input class="address2_input" readonly="readonly"><br>
 											<input class="address3_input" readonly="readonly">
@@ -273,7 +273,7 @@
 			<!-- 주문 요청 form -->
 			<form class="order_form" action="/order" method="post">
 				<!-- 주문자 회원번호 -->
-				<input name="memberId" value="${userInfo.id}" type="hidden">
+				<input name="id" value="${userInfo.id}" type="hidden">
 				<!-- 주소록 & 받는이-->
 				<input name="addressee" type="hidden">
 				<input name="memberAddr1" type="hidden">
@@ -550,15 +550,15 @@ $(".order_btn").on("click", function(){
 	/* 사용 포인트 */
 	$("input[name='usePoint']").val($(".order_point_input").val());	
 	
-	/* 상품정보 */
+	/* 상품정보 동적으로 추가*/
 	let form_contents = ''; 
 	$(".goods_table_price_td").each(function(index, element){
-		let bookId = $(element).find(".individual_bookId_input").val();
-		let bookCount = $(element).find(".individual_bookCount_input").val();
-		let bookId_input = "<input name='orders[" + index + "].bookId' type='hidden' value='" + bookId + "'>";
-		form_contents += bookId_input;
-		let bookCount_input = "<input name='orders[" + index + "].bookCount' type='hidden' value='" + bookCount + "'>";
-		form_contents += bookCount_input;
+		let goods_swId = $(element).find(".individual_goods_swId_input").val();
+		let goods_sw_Count = $(element).find(".individual_goods_sw_Count_input").val();
+		let goods_swId_input = "<input name='orders[" + index + "].goods_swId' type='hidden' value='" + goods_swId + "'>";
+		form_contents += goods_swId_input;
+		let goods_sw_Count_input = "<input name='orders[" + index + "].goods_sw_Count' type='hidden' value='" + goods_sw_Count + "'>";
+		form_contents += goods_sw_Count_input;
 	});	
 	$(".order_form").append(form_contents);	
 	
