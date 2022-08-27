@@ -92,11 +92,12 @@
 				<!-- 배송지 정보 -->
 				<div class="addressInfo_div">
 					<div class="addressInfo_button_div">
-						<button class="address_btn address_btn_1" onclick="showAdress('1')" style="background-color: #3c3838;">상용자 정보 주소록</button>
+						<button class="address_btn address_btn_1" onclick="showAdress('1')" style="background-color: #3c3838;">사용자 정보 주소록</button>
 						<button class="address_btn address_btn_2" onclick="showAdress('2')">직접 입력</button>
 					</div>
 					<div class="addressInfo_input_div_wrap">
 						<div class="addressInfo_input_div addressInfo_input_div_1" style="display: block">
+																																		<!-- css인라인으로 넣어서, 선택자 우선순위로 노출 되게끔 -->
 							<table>
 								<colgroup>
 									<col width="25%">
@@ -182,7 +183,7 @@
 								<tr>
 									<td>
 										<div class="image_wrap" 
-											data-bookid="${ol.imageList[0].goods_swID}" 
+											data-swid="${ol.imageList[0].goods_swID}" 
 											data-path="${ol.imageList[0].uploadPath}" 
 											data-uuid="${ol.imageList[0].uuid}" 
 											data-filename="${ol.imageList[0].fileName}">
@@ -194,13 +195,13 @@
 										<fmt:formatNumber value="${ol.salePrice}" pattern="#,### 원" /> | 수량 ${ol.goods_sw_Count}개
 										<br><fmt:formatNumber value="${ol.totalPrice}" pattern="#,### 원" />
 										<br>[<fmt:formatNumber value="${ol.totalPoint}" pattern="#,### 원" />P]
-										<input type="hidden" class="individual_bookPrice_input" value="${ol.bookPrice}">
+										<input type="hidden" class="individual_goods_swPrice_input" value="${ol.goods_swPrice}">
 										<input type="hidden" class="individual_salePrice_input" value="${ol.salePrice}">
-										<input type="hidden" class="individual_bookCount_input" value="${ol.bookCount}">
-										<input type="hidden" class="individual_totalPrice_input" value="${ol.salePrice * ol.bookCount}">
+										<input type="hidden" class="individual_goods_sw_Count_input" value="${ol.goods_sw_Count}">
+										<input type="hidden" class="individual_totalPrice_input" value="${ol.salePrice * ol.goods_sw_Count}">
 										<input type="hidden" class="individual_point_input" value="${ol.point}">
 										<input type="hidden" class="individual_totalPoint_input" value="${ol.totalPoint}">
-										<input type="hidden" class="individual_bookId_input" value="${ol.bookId}">
+										<input type="hidden" class="individual_goods_swId_input" value="${ol.goods_swId}">
 									</td>
 								</tr>							
 							</c:forEach>
@@ -221,7 +222,7 @@
 							<tr>
 								<th>포인트 사용</th>
 								<td>
-									${memberInfo.point} | <input class="order_point_input" value="0">원 
+									${userInfo.point} | <input class="order_point_input" value="0">원 
 									<a class="order_point_input_btn order_point_input_btn_N" data-state="N">모두사용</a>
 									<a class="order_point_input_btn order_point_input_btn_Y" data-state="Y" style="display: none;">사용취소</a>
 									
@@ -272,7 +273,7 @@
 			<!-- 주문 요청 form -->
 			<form class="order_form" action="/order" method="post">
 				<!-- 주문자 회원번호 -->
-				<input name="memberId" value="${memberInfo.memberId}" type="hidden">
+				<input name="memberId" value="${userInfo.id}" type="hidden">
 				<!-- 주소록 & 받는이-->
 				<input name="addressee" type="hidden">
 				<input name="memberAddr1" type="hidden">
@@ -327,7 +328,246 @@
 	</div>	<!-- class="wrap" -->
 </div>	<!-- class="wrapper" -->
 
+ <!-- 다음주소 API -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+$(document).ready(function(){	
+	/* 주문 조합정보란 최신화 */
+	setTotalInfo();
+	
+	/* 이미지 삽입 */
+	$(".image_wrap").each(function(i, obj){
+		
+		const bobj = $(obj);
+		
+		if(bobj.data("swid")){
+			const uploadPath = bobj.data("path");
+			const uuid = bobj.data("uuid");
+			const fileName = bobj.data("filename");
+			
+			const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
+			
+			$(this).find("img").attr('src', '/goods/sportswear/display?fileName=' + fileCallPath);
+		} else {
+			$(this).find("img").attr('src', '/resources/goods/no Image.png');
+		}
+		
+	});		
+	
+	
+});
+/* 주소입력란 버튼 동작(숨김, 등장) */
+function showAdress(className){
+	/* 컨텐츠 동작 */
+		/* 모두 숨기기 */
+		$(".addressInfo_input_div").css('display', 'none');
+		/* 컨텐츠 보이기 */
+		$(".addressInfo_input_div_" + className).css('display', 'block');		
+	
+	/* 버튼 색상 변경 */
+		/* 모든 색상 동일 */
+			$(".address_btn").css('backgroundColor', '#555');
+		/* 지정 색상 변경 */
+			$(".address_btn_"+className).css('backgroundColor', '#3c3838');	
+	/* selectAddress T/F */
+		/* 모든 selectAddress F만들기 */
+			$(".addressInfo_input_div").each(function(i, obj){
+				$(obj).find(".selectAddress").val("F");
+			});
+		/* 선택한 selectAdress T만들기 */
+			$(".addressInfo_input_div_" + className).find(".selectAddress").val("T");		
+		
+}
+/* 다음 주소 연동 */
+function execution_daum_address(){
+ 		console.log("동작");
+	   new daum.Postcode({
+	        oncomplete: function(data) {
+	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	            
+	        	// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+ 
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+ 
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                 	// 추가해야할 코드
+                    // 주소변수 문자열과 참고항목 문자열 합치기
+                      addr += extraAddr;
+                
+                } else {
+                	addr += ' ';
+                }
+ 
+             	// 제거해야할 코드
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                $(".address1_input").val(data.zonecode);
+                $(".address2_input").val(addr);				
+                // 커서를 상세주소 필드로 이동한다.
+                $(".address3_input").attr("readonly", false);
+                $(".address3_input").focus();	 
+	            
+	            
+	        }
+	    }).open();  	
+	
+}
+/* 포인트 입력 */
+//0 이상 & 최대 포인트 수 이하 유효성 체크
+$(".order_point_input").on("propertychange change keyup paste input", function(){
+	const maxPoint = parseInt('${userInfo.point}');	// 문자열로 인식 되서, parseInt로 타입 변환
+	
+	let inputValue = parseInt($(this).val());	
+	
+	if(inputValue < 0){
+		$(this).val(0);
+	} else if(inputValue > maxPoint){
+		$(this).val(maxPoint);
+	}	
+	
+	/* 주문 조합정보란 최신화 */
+	setTotalInfo();	
+	
+});
+/* 포인트 모두사용 취소 버튼 
+ * 모두사용 클릭하면 모두 취소 보이고, 모두취소 클릭하면 모두사용 보이고.
+ * Y: 모두사용 상태 / N : 모두 취소 상태
+ */
+$(".order_point_input_btn").on("click", function(){
+	const maxPoint = parseInt('${userInfo.point}');	
+	
+	let state = $(this).data("state");	
+	
+	if(state == 'N'){
+		console.log("n동작");
+		/* 모두사용 */
+		//값 변경
+		$(".order_point_input").val(maxPoint);
+		//글 변경
+		$(".order_point_input_btn_Y").css("display", "inline-block");
+		$(".order_point_input_btn_N").css("display", "none");
+	} else if(state == 'Y'){
+		console.log("y동작");
+		/* 취소 */
+		//값 변경
+		$(".order_point_input").val(0);
+		//글 변경
+		$(".order_point_input_btn_Y").css("display", "none");
+		$(".order_point_input_btn_N").css("display", "inline-block");		
+	}	
+	
+	/* 주문 조합정보란 최신화 */
+	setTotalInfo();	
+	
+});
+/* 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수, 종류) */
+// 사용 포인트에 따른 값 변화(cart에서는 체크한 물품에 따른 변화)
+function setTotalInfo(){
+	let totalPrice = 0;				// 총 가격
+	let totalCount = 0;				// 총 갯수
+	let totalKind = 0;				// 총 종류
+	let totalPoint = 0;				// 총 마일리지
+	let deliveryPrice = 0;			// 배송비
+	let usePoint = 0;				// 사용 포인트(할인가격)
+	let finalTotalPrice = 0; 		// 최종 가격(총 가격 + 배송비)	
+	
+	$(".goods_table_price_td").each(function(index, element){
+		// 총 가격
+		totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());
+		// 총 갯수
+		totalCount += parseInt($(element).find(".individual_goods_sw_Count_input").val());
+		// 총 종류
+		totalKind += 1;
+		// 총 마일리지
+		totalPoint += parseInt($(element).find(".individual_totalPoint_input").val());
+	});	
+	/* 배송비 결정 */
+	if(totalPrice >= 30000){
+		deliveryPrice = 0;
+	} else if(totalPrice == 0){
+		deliveryPrice = 0;
+	} else {
+		deliveryPrice = 3000;	
+	}
+	
+	finalTotalPrice = totalPrice + deliveryPrice;	
+	
+	/* 사용 포인트 */
+	usePoint = $(".order_point_input").val();
+	
+	finalTotalPrice = totalPrice - usePoint;	
+	
+	/* 값 삽입 */
+	// 총 가격
+	$(".totalPrice_span").text(totalPrice.toLocaleString());
+	// 총 갯수
+	$(".goods_kind_div_count").text(totalCount);
+	// 총 종류
+	$(".goods_kind_div_kind").text(totalKind);
+	// 총 마일리지
+	$(".totalPoint_span").text(totalPoint.toLocaleString());
+	// 배송비
+	$(".delivery_price_span").text(deliveryPrice.toLocaleString());	
+	// 최종 가격(총 가격 + 배송비)
+	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());		
+	// 할인가(사용 포인트)
+	$(".usePoint_span").text(usePoint.toLocaleString());	
+	
+}
+/* 주문 요청 */
+$(".order_btn").on("click", function(){
+	/* 주소 정보 & 받는이*/
+	$(".addressInfo_input_div").each(function(i, obj){
+		if($(obj).find(".selectAddress").val() === 'T'){
+			$("input[name='addressee']").val($(obj).find(".addressee_input").val());
+			$("input[name='memberAddr1']").val($(obj).find(".address1_input").val());
+			$("input[name='memberAddr2']").val($(obj).find(".address2_input").val());
+			$("input[name='memberAddr3']").val($(obj).find(".address3_input").val());
+		}
+	});	
+	
+	/* 사용 포인트 */
+	$("input[name='usePoint']").val($(".order_point_input").val());	
+	
+	/* 상품정보 */
+	let form_contents = ''; 
+	$(".goods_table_price_td").each(function(index, element){
+		let bookId = $(element).find(".individual_bookId_input").val();
+		let bookCount = $(element).find(".individual_bookCount_input").val();
+		let bookId_input = "<input name='orders[" + index + "].bookId' type='hidden' value='" + bookId + "'>";
+		form_contents += bookId_input;
+		let bookCount_input = "<input name='orders[" + index + "].bookCount' type='hidden' value='" + bookCount + "'>";
+		form_contents += bookCount_input;
+	});	
+	$(".order_form").append(form_contents);	
+	
+	/* 서버 전송 */
+	$(".order_form").submit();	
+	
+});	
+
+
 
 </script>
 

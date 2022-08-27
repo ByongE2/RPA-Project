@@ -1,5 +1,9 @@
 package com.rpa.order.domain;
 
+import java.util.List;
+
+import com.rpa.goods.sportswear.domain.AttachImageVO;
+
 import lombok.Data;
 
 //상품 data를 담을 DTO
@@ -20,6 +24,9 @@ public class OrderPageItemDto {
     private int totalPrice;
     private int point;
     private int totalPoint;
+    
+	/* 상품 이미지 */
+	private List<AttachImageVO> imageList;
     
     //만들어 낼 값 초기화
     public void initSaleTotal() {
