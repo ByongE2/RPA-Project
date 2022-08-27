@@ -98,5 +98,34 @@
 		select * from RPA_image where goods_swID = #{goods_swID}
 	</select>
 	
+	<!-- 주문 리스트 -->
+	<select id="getOrderList" resultType="com.rpa.order.domain.OrderDto">
+		<![CDATA[
+		select * 
+		from(
+		    select rownum rn, orderId, id, orderstate, orderdate
+		    from rpa_order
+		    where rownum <= #{pageNum} * #{amount} 
+		]]>    
+		<if test="keyword != null">
+			and id like '%'||#{keyword}||'%'
+		</if>
+		<![CDATA[
+		    
+		    order by orderdate desc
+		    )
+		where rn > (#{pageNum} -1) * #{amount}
+		]]>
+	</select>	
+	
+	<!-- 주문 총 개수 -->
+	<select id="getOrderTotal" resultType="int">
+		select count(*) from rpa_order
+		
+	    <if test="keyword != null">
+	    	where id like '%'||#{keyword}||'%'
+	    </if>
+	</select>
+	
 
   </mapper>

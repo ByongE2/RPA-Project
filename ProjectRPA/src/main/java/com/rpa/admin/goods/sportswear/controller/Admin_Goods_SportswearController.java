@@ -33,6 +33,7 @@ import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
 import com.rpa.goods.sportswear.domain.SwPageDto;
+import com.rpa.order.domain.OrderDto;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -327,6 +328,20 @@ public class Admin_Goods_SportswearController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 
 	}//deleteFile
+	
+	//주문 현황 페이지 
+	@GetMapping("/orderList")
+	public String orderListGET(SwCriteria cri, Model model) {
+		List<OrderDto> list = swService.getOrderList(cri);
+		
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+			model.addAttribute("pageMaker", new SwPageDto(cri, swService.getOrderTotal(cri)));
+		} else {
+			model.addAttribute("listCheck", "empty");
+		}
+		return "/admin/orderList";
+	}//orderListGET
 	
 	
 	

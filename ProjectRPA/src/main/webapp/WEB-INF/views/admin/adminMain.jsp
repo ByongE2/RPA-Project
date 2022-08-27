@@ -35,22 +35,19 @@
                 <div class="admin_navi_wrap">
 	              <ul>
 	                  <li >
-	                      <a class="admin_list_01" href="/admin/goodsEnroll">상품 등록</a>
+	                      <a class="admin_list_01" href="/admin/goods/sportswear/insert">상품 등록</a>
 	                  </li>
 	                  <li>
-	                      <a class="admin_list_02" href="/admin/goodsManage">상품 관리</a>
+	                      <a class="admin_list_02" href="/admin/goods/sportswear/list">상품 관리</a>
 	                  </li>
 	                  <lI>
-	                      <a class="admin_list_03" href="/admin/authorEnroll">작가 등록</a>                            
-	                  </lI>
-	                  <lI>
-	                      <a class="admin_list_04" href="/admin/authorManage">작가 관리</a>                            
+	                      <a class="admin_list_03" href="#">PT 관리</a>                            
 	                  </lI>
 	                  <lI>
 	                      <a class="admin_list_05">회원 관리</a>                            
 	                  </lI>                
 	                  <li>
-	                      <a class="admin_list_06" href="/admin/orderList">주문 현황</a>                            
+	                      <a class="admin_list_06" href="/admin/goods/sportswear/orderList">주문 현황</a>                            
 	                  </li>	                                                                                               
 	              </ul>
                 </div>

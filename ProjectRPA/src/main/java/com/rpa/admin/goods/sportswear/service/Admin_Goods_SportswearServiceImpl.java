@@ -11,6 +11,7 @@ import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
 import com.rpa.goods.sportswear.mapper.AttachMapper;
+import com.rpa.order.domain.OrderDto;
 
 import lombok.extern.log4j.Log4j;
 
@@ -103,4 +104,17 @@ public class Admin_Goods_SportswearServiceImpl implements Admin_Goods_Sportswear
 		
 		return swAdminMapper.getAttachInfo(swID);
 	}
+	
+	/* 주문 상품 리스트 */
+	@Override
+	public List<OrderDto> getOrderList(SwCriteria cri) {
+		return swAdminMapper.getOrderList(cri);
+	}
+	
+	/* 주문 총 갯수 */
+	@Override
+	public int getOrderTotal(SwCriteria cri) {
+		return swAdminMapper.getOrderTotal(cri);
+	}
+	
 }
