@@ -73,5 +73,36 @@
 			goods_swID = #{goods_swID}
 	</update>
 	
+	<!-- 주문취소 -->
+	<update id="orderCancle">
+		update 
+		rpa_order 
+		set 
+		orderState = '주문취소' 
+		where 
+		orderId = #{orderId}
+	</update>	
+
+	<!-- 주문 상품 정보(주문취소) -->
+	<select id="getOrderItemInfo" resultType="com.rpa.order.domain.OrderItemDto">
+		select 
+		* 
+		from 
+		rpa_orderItem
+		where 
+		orderId = #{orderId}
+	</select>
+	
+	<!-- 주문 정보(주문 취소) -->
+	<select id="getOrder" resultType="com.rpa.order.domain.OrderDto">
+		select 
+		* 
+		from 
+		rpa_order
+		where 
+		orderId = #{orderId}
+	</select>
+	
+	
   </mapper>
   

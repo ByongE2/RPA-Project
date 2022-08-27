@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../resources/CSS/admin/orderList.css">
+<link rel="stylesheet" href="/resources/CSS/admin/orderList.css">
 
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
@@ -130,7 +130,7 @@
 <script>
 let searchForm = $('#searchForm');
 let moveForm = $('#moveForm');
-/* 작거 검색 버튼 동작 */
+/* 주문아이디 검색 버튼 동작 */
 $("#searchForm button").on("click", function(e){
 	
 	e.preventDefault();
@@ -142,7 +142,6 @@ $("#searchForm button").on("click", function(e){
 	}
 	
 	searchForm.find("input[name='pageNum']").val("1");
-	
 	searchForm.submit();
 	
 });
@@ -154,7 +153,6 @@ $(".pageMaker_btn a").on("click", function(e){
 	console.log($(this).attr("href"));
 	
 	moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-	
 	moveForm.submit();
 	
 });

@@ -33,7 +33,9 @@ import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
 import com.rpa.goods.sportswear.domain.SwPageDto;
+import com.rpa.order.domain.OrderCancelDto;
 import com.rpa.order.domain.OrderDto;
+import com.rpa.order.service.OrderService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -46,6 +48,7 @@ import net.coobird.thumbnailator.Thumbnails;
 public class Admin_Goods_SportswearController {
 	
 	private Admin_Goods_SportswearService swService;
+	private OrderService orderService;
 	
 //	@RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
 //	public void admin_goods_sportswearMain() throws Exception{
@@ -343,6 +346,15 @@ public class Admin_Goods_SportswearController {
 		return "/admin/orderList";
 	}//orderListGET
 	
+	// 주문삭제 
+	@PostMapping("/orderCancle")
+	public String orderCanclePOST(OrderCancelDto dto) {
+		
+		orderService.orderCancle(dto);
+		
+		return "redirect:/admin/goods/sportswear/orderList?keyword=" + 
+		dto.getKeyword() + "&amount=" + dto.getAmount() + "&pageNum=" + dto.getPageNum();
+	}//orderCanclePOST
 	
 	
 }//Admin_Goods_SportswearController

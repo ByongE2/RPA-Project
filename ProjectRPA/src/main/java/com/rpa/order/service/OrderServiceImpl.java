@@ -16,6 +16,7 @@ import com.rpa.goods.sportswear.domain.SwCartDto;
 import com.rpa.goods.sportswear.mapper.AttachMapper;
 import com.rpa.goods.sportswear.mapper.Goods_SportswearMapper;
 import com.rpa.goods.sportswear.mapper.SwCartMapper;
+import com.rpa.order.domain.OrderCancelDto;
 import com.rpa.order.domain.OrderDto;
 import com.rpa.order.domain.OrderItemDto;
 import com.rpa.order.domain.OrderPageItemDto;
@@ -141,6 +142,56 @@ public class OrderServiceImpl implements OrderService{
 		}
 		
 	}//order
+	
+	
+	/*
+	1. DB에 저장된 주문, 주문상품 정보를 꺼내온다.
+ 	2. 꺼내온 정보를 통해 회원이 지불한 금액, 포인트, 받았던 포인트 값들을 구한다.
+ 	3. 앞서 꺼내고 만들어둔 데이터를 활용하여 회원이 사용한 '돈', '포인트'를 가산해준다.
+ 	  회원이 상품을 구매함으로써 받은 포인트를 회수한다.
+ 	  차감했던 재고를 다시 가산한다
+	*/
+	/* 주문취소 */
+	@Override
+	@Transactional
+	public void orderCancle(OrderCancelDto dto) {
+		/* 1. 주문, 주문상품 객체 */
+			/*회원*/
+			UserDTO user = userMapper.getUserInfo(dto.getId());
+			/*주문상품*/
+			List<OrderItemDto> ords = orderMapper.getOrderItemInfo(dto.getOrderId());
+			for(OrderItemDto ord : ords) {
+				ord.initSaleTotal();
+			}
+			/* 주문 */
+			OrderDto orw = orderMapper.getOrder(dto.getOrderId());
+			orw.setOrders(ords);
+			
+			orw.getOrderPriceInfo();
+			
+		/* 2. 주문상품 취소 DB */
+			orderMapper.orderCancle(dto.getOrderId());
+			
+		/* 3. money, 포인트, 재고 변환 */
+			/* money */
+			int calMoney = user.getMoney();
+			calMoney += orw.getOrderFinalSalePrice();
+			user.setMoney(calMoney);
+			
+			/* 포인트 */
+			int calPoint = user.getPoint();
+			calPoint = calPoint + orw.getUsePoint() - orw.getOrderSavePoint();
+			user.setPoint(calPoint);
+			
+			/* DB적용 */
+			orderMapper.deductMoney(user);
+			/* 재고 */
+			for(OrderItemDto ord : orw.getOrders()) {
+				SportswearDto sw = swMapper.swGetDetail(ord.getGoods_swId());
+				sw.setGoods_swStock(sw.getGoods_swStock() + ord.getGoods_sw_Count());
+				orderMapper.deductStock(sw);
+			}
+	}//orderCancle
 	
 	
 
