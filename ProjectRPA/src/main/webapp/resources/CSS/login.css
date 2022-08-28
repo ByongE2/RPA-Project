@@ -117,10 +117,16 @@
 		margin: 0px 0px 40px;
 		padding:0 120px;
 	}
+	
 	.kakao>a>img:hover{
 		color: black;
 		background: #FFF7D8;
 		border: solid 2px;
+	}
+	.login_warn{
+    	margin-top: 30px;
+    	text-align: center;
+    	color : red;
 	}
 	
 	/* float 속성 해제 */

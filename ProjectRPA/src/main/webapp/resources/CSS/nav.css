@@ -4,18 +4,18 @@
      }
 
      body {
-         width: 100%; height: 100%; background:#333
+         width: 100%; height: 100%; background:rgb(255, 255, 255)
          
      }
 
      header{
-     width: 1500px; height: 90px; margin: auto; display: block; 
+     width: 1500px; height: 90px; margin: auto; display: block;
      /* background-color: aqua; */
      
      }
 
      #Logo{
-     width:130px; height: 76px; margin:25px 10px 10px 10px; float: left; background-color:#b9e4b9;
+     width:130px; height: 76px; margin:25px 10px 10px 10px; float: left;
      }
 
      #nav{

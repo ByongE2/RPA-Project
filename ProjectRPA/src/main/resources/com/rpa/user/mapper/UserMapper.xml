@@ -7,51 +7,51 @@
   
   <!-- 회원가입 -->
   <insert id="userJoin">
-  	INSERT into 
-  		MEMBER
-  		(id, pw, name, email, address, address2, address3, grade, money, point, regDate)
-  	values
-  		(#{id},#{pw},#{name},#{email},#{address},#{address2},#{address3},#{grade},100000,5000,sysdate) 
+     INSERT into 
+        MEMBER
+        (id, pw, name, email, address, address2, address3, grade, money, point, regDate)
+     values
+        (#{id},#{pw},#{name},#{email},#{address},#{address2},#{address3},#{grade},100000,5000,sysdate) 
   </insert>
   
   <!-- id중복검사 -->
   <select id="userIDCheck" resultType="int">
-  	select count(*) from member where id=#{id}
+     select count(*) from member where id=#{id}
   </select>
   
   <!-- 로그인 id만 체크 : pw는 bCrypt로 따로 체크-->
   <select id="userLogin" resultType="com.rpa.user.domain.UserDTO">
-  	select 
-  		id, pw, name, grade, money, point
-  	from 
-  		member
-  	where 
-  		id=#{id}
+     select 
+        id, pw, name, grade, money, point
+     from 
+        member
+     where 
+        id=#{id}
   </select>
   
   <!-- 주문자 정보 -->
 
   <select id="getUserInfo" resultType="com.rpa.user.domain.UserDTO">
-	SELECT 
-		id, name, email, address, address2, address3, money, point
-	FROM 
-		member
-	WHERE 
-		id = #{id}
+   SELECT 
+      id, name, email, address, address2, address3, money, point
+   FROM 
+      member
+   WHERE 
+      id = #{id}
   </select>
   
   
   
   
   <select id="findId" resultType="com.rpa.user.domain.UserDTO">
-  	select id from member where name=#{name} and phone=#{phone}
+     select id from member where name=#{name} and phone=#{phone}
   </select>
   
   <select id="findPw" resultType="com.rpa.user.domain.UserDTO">
-  	select * from member where id=#{id} and name=#{name} and phone=#{phone}
+     select * from member where id=#{id} and name=#{name} and phone=#{phone}
   </select>
   
   <update id="updatePw">
-  	update member set pw=#{pw} where id=#{id}
+     update member set pw=#{pw} where id=#{id}
   </update>
 </mapper>

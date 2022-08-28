@@ -157,7 +157,7 @@ body {
 			<label>비밀번호를 변경해주세요.</label>
 		</div>
 		<div class="form-label-group">
-		<input type="hidden" id="id" name="updateid" value="${updateid }">
+		<input type="hidden" id="id" name="updateid" value="${updateid}">
 		
 			<input type="password" id="password" name="pw" class="form-control"/>
 			<label for="password">password</label>
