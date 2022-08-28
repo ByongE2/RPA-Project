@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.rpa.notice.mapper.NoticeMapper">
+
+	<sql id="Criterial">
+  		<trim prefix="(" suffix=") and">
+			     	<foreach collection="typeArr" item="type" separator="or">
+			     		<if test="type=='T'.toString()">
+			     			title like #{keyword}
+			     		</if>
+			     		<if test="type=='C'.toString()">
+			     			content like #{keyword}
+			     		</if>
+			     	</foreach>
+		   </trim>
+  </sql>
+
+	<select id="getList" resultType="com.rpa.notice.domain.NoticeDTO">
+		SELECT * FROM NOTICE
+	</select>
+	
+	<select id="get" resultType="com.rpa.notice.domain.NoticeDTO">
+		SELECT * FROM NOTICE where notice_no = #{notice_no}
+	</select>
+	
+	<insert id="insert">
+		insert into notice(notice_no, title, content)
+		values(seq_Nno.nextval, #{title}, #{content})
+	</insert>
+	
+	<delete id="delete">
+		delete from NOTICE where notice_no = #{notice_no}
+	</delete>
+	
+	<update id="update">
+		update NOTICE
+		set
+		title=#{title},
+		content = #{content}
+		where notice_no = #{notice_no}
+	</update>
+	
+	<select id="getListWithPagging" resultType="com.rpa.notice.domain.NoticeDTO">
+		
+		<![CDATA[
+        
+        select notice_no, title, content, regdate, notice_image
+        from(
+                select /*+ index_desc(notice pk_notice_no) */ 
+                rownum  as rn, notice_no, title, content, regdate, notice_image
+                  
+                from notice where 
+                ]]>
+                <include refid="Criterial"></include>
+                <![CDATA[
+                rownum <= #{pageNum} * #{amount}) 
+                where 
+        		rn > (#{pageNum} -1) * #{amount}
+    
+    ]]>
+		
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+	  		select count(*) from notice where
+  		 ]]>
+		     
+		     <include refid="Criterial"></include>
+		     	
+  		<![CDATA[
+	  		 notice_no>0
+  		 ]]>
+	</select>
+	
+	<!--  검색조건 -->
+  <select id="searchTest"   resultType="com.rpa.notice.domain.NoticeDTO">
+		<![CDATA[
+			select * from notice
+			where 
+		 ]]>
+		 	<trim prefix="(" suffix=") and">
+				<foreach collection="map" index="key" item="val"  separator="or">
+					<if test="key == 'T'.toString()">
+						title like #{val}
+					</if>
+					<if test="key == 'C'.toString()">
+						content like #{val}
+					</if>
+					<if test="key == 'W'.toString()">
+						writer like #{val}
+					</if>
+				</foreach>
+			</trim>			
+		<![CDATA[
+			rownum <10
+		 ]]>
+  <!-- /*+ index_desc(notice pk_notice_no) */ --> 
+  </select>
+	
+</mapper>

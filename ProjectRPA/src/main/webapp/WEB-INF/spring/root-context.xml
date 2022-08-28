@@ -45,6 +45,7 @@
 	<mybatis-spring:scan base-package="com.rpa.goods.sportswear.mapper" />
 	
 	<mybatis-spring:scan base-package="com.rpa.user.mapper"/>
+	<mybatis-spring:scan base-package="com.rpa.notice.mapper"/>
 	
 	<mybatis-spring:scan base-package="com.rpa.pt.mapper"/>
 
