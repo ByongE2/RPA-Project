@@ -1,13 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet">
+
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script
@@ -22,26 +20,28 @@
 
 <!-- include summernote-ko-KR -->
 <script src="/resources/js/summernote-ko-KR.js"></script>
-
-<meta charset="EUC-KR">
+<link rel="stylesheet" href="../resources/CSS/main/main.css">
+<meta charset="utf-8">
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Å¬¶óÀÌ¾ğÆ® ¸®½ºÆ®·Î µé¾î¿È</h1>
+<h1>í´ë¼ì´ì–¸íŠ¸ ë¦¬ìŠ¤íŠ¸ë¡œ ë“¤ì–´ì˜´</h1>
 
-<button onclick="location.href='/ptclient/basket?client_id=${user.id}'">Àå¹Ù±¸´Ï</button>
+
+
+<button onclick="location.href='/ptclient/basket?client_id=${user.id}'">êµ¬ë§¤ ë‚´ì—­</button>
 <table border="1">
 	<tr>
-		<th>¹øÈ£</th>
-		<th>ÀÌ¸§</th>
-		<th>¾ÆÀÌµğ</th>
-		<th>»ı¼º³¯Â¥</th>
-		<th>±İ¾×</th>
-		<th>¹°°Ç ÄÚµå</th>
-		<th>Á¦¸ñ</th>
-		<th>»çÁø</th>
-		<th>³¯Â¥1</th>
-		<th>³¯Â¥2</th>
+		<th>ë²ˆí˜¸</th>
+		<th>ì´ë¦„</th>
+		<th>ì•„ì´ë””</th>
+		<th>ìƒì„±ë‚ ì§œ</th>
+		<th>ê¸ˆì•¡</th>
+		<th>ë¬¼ê±´ ì½”ë“œ</th>
+		<th>ì œëª©</th>
+		<th>ì‚¬ì§„</th>
+		<th>ë‚ ì§œ1</th>
+		<th>ë‚ ì§œ2</th>
 
 	</tr>
 	<c:forEach items="${client}" var="client">
@@ -54,10 +54,10 @@
 			<td> ${client.PT_Price}</td>
 			<td>${client.PT_code}</td>
 			<td><a href="/ptclient/clientget?client_no=${client.PT_no }&&pt_code=${client.PT_code}"> ${client.PT_title}</a></td>
-			<td><img alt="ÀÌ¹ÌÁö ¾øÀ½"  src="/ProjectRPA/src/main/webapp/resources/ptimg/${client.PT_photourl}"></td>
+			<td><img alt="ì´ë¯¸ì§€ ì—†ìŒ"  src="/ProjectRPA/src/main/webapp/resources/ptimg/${client.PT_photourl}"></td>
 			<td>${client.calendar_before }</td>
 			<td>${client. calendar_after}</td>
-			<!-- pt_no°ªÀ» ¸ø°¡Á®¿È -->
+			<!-- pt_noê°’ì„ ëª»ê°€ì ¸ì˜´ -->
 			
 		</tr>
 	</c:forEach>

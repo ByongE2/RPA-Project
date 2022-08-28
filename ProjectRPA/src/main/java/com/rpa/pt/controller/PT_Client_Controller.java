@@ -37,7 +37,6 @@ public class PT_Client_Controller {
 		// 2. 세션에 id가 있는지 확인, 있으면 true를 반환
 		return session.getAttribute("user")!=null;
 	}
-		
 	
 	@GetMapping("/clientlist")
 	public void list(Model model) {
