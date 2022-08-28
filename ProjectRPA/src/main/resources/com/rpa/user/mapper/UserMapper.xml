@@ -9,9 +9,9 @@
   <insert id="userJoin">
   	INSERT into 
   		MEMBER
-  		(id, pw, name, email, address, address2, address3, grade, money, point, regDate)
+  		(id, pw, name, email, address, address2, address3, grade, money, point)
   	values
-  		(#{id},#{pw},#{name},#{email},#{address},#{address2},#{address3},#{grade},100000,5000,sysdate) 
+  		(#{id},#{pw},#{name},#{email},#{address},#{address2},#{address3},#{grade},100000,5000) 
   </insert>
   
   <!-- id중복검사 -->
