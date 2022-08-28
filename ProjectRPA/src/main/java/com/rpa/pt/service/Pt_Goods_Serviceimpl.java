@@ -69,6 +69,11 @@ public class Pt_Goods_Serviceimpl  implements Pt_Goods_Service{
 		
 	}
 
+	@Override
+	public Pt_Goods_basket_DTO basketExistence(String pt_code) {
+		return mapper.basketExistence(pt_code);
+	}
+
 
 
 	

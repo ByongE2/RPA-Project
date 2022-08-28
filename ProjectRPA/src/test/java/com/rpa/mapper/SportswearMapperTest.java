@@ -29,8 +29,6 @@ public class SportswearMapperTest {
 	private Admin_Goods_SportswearMapper mapper;
 	@Autowired
 	private Goods_SportswearMapper mapper2;
-	@Autowired
-	private AttachMapper mapper3;
 	
 //	@Test
 //	public void testMapper() {
@@ -158,14 +156,31 @@ public class SportswearMapperTest {
 //		assertTrue(mapper2.swRemove(81L) == 1); 
 //	}	
 //	
-// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAttachMapper test mapper3	
-	
+	/* 지정 상품 이미지 삭제 */
 //	@Test
-//	public void getAttachListTest() throws Exception{
-//		log.info(mapper3.getAttachList(226L)); 
+//	public void deleteImageAllTest() {
+//		Long swID = 260L;
+//		mapper.deleteImageAll(swID);
 //	}
 	
+	/* 어제자 날짜 이미지 리스트 */
+//	@Test
+//	public void checkImageListTest() {
+//		
+//		mapper.checkFileList();
+//		
+//	}
 	
+	/* 지정 상품 이미지 정보 얻기 */
+	@Test
+	public void getAttachInfoTest() {
+		
+		Long swID = 261L;
+		
+		List<AttachImageVO> list = mapper.getAttachInfo(swID);
+		
+		System.out.println("list : " + list);
+	}
 	
 	
 }

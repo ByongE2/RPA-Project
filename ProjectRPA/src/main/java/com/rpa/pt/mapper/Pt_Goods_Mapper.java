@@ -18,4 +18,5 @@ public interface Pt_Goods_Mapper {
 	public void ClientBasketInsert(Pt_Goods_basket_DTO dto);
 	public void ClientBasketDelete(String pt_code);
 	public List<Pt_Goods_basket_DTO> ClientBasketView(String client_id);
+	public Pt_Goods_basket_DTO basketExistence(String pt_code);
 }

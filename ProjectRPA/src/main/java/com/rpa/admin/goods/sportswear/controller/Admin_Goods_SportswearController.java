@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +33,9 @@ import com.rpa.goods.sportswear.domain.AttachImageVO;
 import com.rpa.goods.sportswear.domain.SportswearDto;
 import com.rpa.goods.sportswear.domain.SwCriteria;
 import com.rpa.goods.sportswear.domain.SwPageDto;
+import com.rpa.order.domain.OrderCancelDto;
+import com.rpa.order.domain.OrderDto;
+import com.rpa.order.service.OrderService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -43,6 +48,7 @@ import net.coobird.thumbnailator.Thumbnails;
 public class Admin_Goods_SportswearController {
 	
 	private Admin_Goods_SportswearService swService;
+	private OrderService orderService;
 	
 //	@RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
 //	public void admin_goods_sportswearMain() throws Exception{
@@ -142,6 +148,27 @@ public class Admin_Goods_SportswearController {
 	@PostMapping("/remove")
 	public String swRemove(Long goods_swID, @ModelAttribute("cri") SwCriteria cri, RedirectAttributes rttr) throws Exception{
 		log.info("sw 삭제 페이지" + goods_swID);
+		
+		//이미지 없는 상품정보 삭제 할 때, 외래키 걸려있어서 서버이미지,DB이미지,DB상품정보 삭제. 다른방법으로 외래키에 CSCADE 제약조건 걸어도됨. 
+		//서버(디렉토리) 이미지 삭제
+		List<AttachImageVO> fileList = swService.getAttachInfo(goods_swID);
+
+		if (fileList != null) {
+			List<Path> pathList = new ArrayList();
+			fileList.forEach(vo -> {
+				// 원본 이미지
+				Path path = Paths.get("C:\\upload", vo.getUploadPath(), vo.getUuid() + "_" + vo.getFileName());
+				pathList.add(path);
+				// 섬네일 이미지
+				path = Paths.get("C:\\upload", vo.getUploadPath(), "s_" + vo.getUuid() + "_" + vo.getFileName());
+				pathList.add(path);
+			});
+			pathList.forEach(path -> {
+				path.toFile().delete();
+			});
+
+		}//if
+		
 		System.out.println("swID : " + goods_swID);
 		System.out.println("cri : " + cri);
 		int result = swService.swRemove(goods_swID);
@@ -305,6 +332,29 @@ public class Admin_Goods_SportswearController {
 
 	}//deleteFile
 	
+	//주문 현황 페이지 
+	@GetMapping("/orderList")
+	public String orderListGET(SwCriteria cri, Model model) {
+		List<OrderDto> list = swService.getOrderList(cri);
+		
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+			model.addAttribute("pageMaker", new SwPageDto(cri, swService.getOrderTotal(cri)));
+		} else {
+			model.addAttribute("listCheck", "empty");
+		}
+		return "/admin/orderList";
+	}//orderListGET
+	
+	// 주문삭제 
+	@PostMapping("/orderCancle")
+	public String orderCanclePOST(OrderCancelDto dto) {
+		
+		orderService.orderCancle(dto);
+		
+		return "redirect:/admin/goods/sportswear/orderList?keyword=" + 
+		dto.getKeyword() + "&amount=" + dto.getAmount() + "&pageNum=" + dto.getPageNum();
+	}//orderCanclePOST
 	
 	
 }//Admin_Goods_SportswearController

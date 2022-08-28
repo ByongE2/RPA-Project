@@ -37,7 +37,7 @@ select * from PTproduct where PT_no=#{PT_no}
 
 <insert id="ClientBasketInsert">
 insert into PTbasket(PT_id_basket,PT_title_basket,PT_price_basket,pt_photourl_basket,purchase_basket,pt_code,pt_date)
-values(#{PT_id_basket},#{PT_title_basket},#{PT_price_basket},#{pt_photourl_basket},#{purchase_basket},#{PT_code},null)
+values(#{PT_id_basket},#{PT_title_basket},#{PT_price_basket},#{pt_photourl_basket},'결제완료',#{PT_code},null)
 
 </insert>
 
@@ -50,4 +50,7 @@ select * from PTBASKET where PT_ID_BASKET=#{PT_id_basket}
 
 </select>
 
+<select id="basketExistence" resultType="com.rpa.pt.domain.Pt_Goods_basket_DTO">
+	select pt_code from PTBASKET where pt_code=#{pt_code}
+</select>
 </mapper>

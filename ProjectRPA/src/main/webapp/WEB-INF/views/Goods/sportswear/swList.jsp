@@ -147,7 +147,7 @@
 					$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.");
 				}
 				$("#myModal").modal("show");
-			}
+			}//function checkModal(result)
 			//등록버튼
 			$("#regBtn").on("click",function(){
 				self.location = "/admin/goods/sportswear/insert";
@@ -160,7 +160,7 @@
 				e.preventDefault();
 				moveForm.find("input[name='pageNum']").val($(this).attr("href"));
 				moveForm.submit();
-		});		
+		});	//$(".paginate_button a").on("click", function(e)	
 		//상품 검색 버튼 동작
 		$("#searchForm button").on("click", function(e){
 			e.preventDefault();
@@ -171,16 +171,24 @@
 			}
 			searchForm.find("input[name='pageNum']").val("1");
 			searchForm.submit();
-		});
+		});//$("#searchForm button").on("click", function(e)
 		//
 		$(".move").on("click", function(e){
 			e.preventDefault();
 			moveForm.append("<input type='hidden' name='swID' value='"+$(this).attr("href") + "'>");
 			moveForm.attr("action", "/admin/goods/sportswear/detail");
 			moveForm.submit();
-		});
+		});//$(".move").on("click", function(e)
 
-	});
+	});//$(document).ready(function()
+	
+	//뒤로가기 했을 때 새로고침 되게.
+	window.onpageshow = function(e) {
+        if (e.persisted || (window.performance && window.performance.navigation.type == 2)) { //뒤로가기 감지
+           location.reload(); //현재 페이지 새로고침
+        }
+     }//window.onpageshow = function(e)
+	
 </script>	
 		
 

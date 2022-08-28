@@ -8,6 +8,7 @@
 *lombok-1.18.24.jar 
 *mybatis 3.5.10
 *utf-8
+*Quartz(batch program)
 
 DB
 테이블
@@ -35,3 +36,17 @@ create table RPA_image(
     primary key (uuid),
     foreign key (goods_swId) references goods_sportsWear(goods_swId)
 );
+
+--sw cart 장바구니
+create table goods_cart(
+    goods_cartId number primary key,
+    id varchar2(50),
+    goods_swId number,
+    goods_sw_Count number,
+    foreign key (id) references member(id),
+    foreign key (goods_swId) references goods_sportsWear(goods_swId)
+);
+create SEQUENCE seq_goods_cart;
+--유니크 제약
+alter table goods_cart add unique (id, goods_swId);
+

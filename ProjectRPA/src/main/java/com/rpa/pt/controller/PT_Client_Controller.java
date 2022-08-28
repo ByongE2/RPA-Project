@@ -1,13 +1,22 @@
 package com.rpa.pt.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
 import com.rpa.pt.domain.Pt_Goods_DTO;
 import com.rpa.pt.domain.Pt_Goods_basket_DTO;
 import com.rpa.pt.service.Pt_Goods_Service;
@@ -28,7 +37,6 @@ public class PT_Client_Controller {
 		// 2. 세션에 id가 있는지 확인, 있으면 true를 반환
 		return session.getAttribute("user")!=null;
 	}
-		
 	
 	@GetMapping("/clientlist")
 	public void list(Model model) {
@@ -37,9 +45,13 @@ public class PT_Client_Controller {
 	}
 	
 	@GetMapping("/clientget")
-	public void clientget(int client_no,Model model) {
+	public void clientget(int client_no,Model model,String pt_code) {
 		log.info(client_no+"번 쨰 클라이언트 상품");
+		log.info("pt 코드 : "+pt_code);
+		
+		model.addAttribute("pt_code",service.basketExistence(pt_code));
 		model.addAttribute("clinet_no",service.pt_get(client_no));
+		System.out.println(service.pt_get(client_no));
 	}
 	
 	
@@ -57,11 +69,26 @@ public class PT_Client_Controller {
 		}
 	      
 	
-	
-	@GetMapping("/basketinsert")
-	public String clientbasketinsert(Pt_Goods_basket_DTO dto,int client_no) {
+	@ResponseBody
+	@RequestMapping(value = "/basketinsert",method = {RequestMethod.GET})
+	//@GetMapping("/basketinsert")
+	public void clientbasketinsert( Pt_Goods_basket_DTO dto,
+			@RequestParam(value = "title", required=false)String title,
+			@RequestParam(value = "price",required = false)String price,
+			@RequestParam(value = "id",required = false)String id,
+			@RequestParam(value = "pt_code",required = false)String pt_code
+			) {
+		
+		System.out.println("타이틀"+title);
+		System.out.println("금액"+price);
+		System.out.println("코드"+pt_code);
+		
+		dto.setPT_code(pt_code);
+		dto.setPT_title_basket(title);
+		dto.setPT_price_basket(price);
+		dto.setPT_id_basket(id);
+		dto.setPt_photourl_basket("사진");
 		service.clientBasketinsert(dto);
-		return "ptclient/clientget?client_no="+client_no;
 	}
 	
 	@GetMapping("/basketdelete")
