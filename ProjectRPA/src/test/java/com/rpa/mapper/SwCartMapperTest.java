@@ -78,17 +78,31 @@ public class SwCartMapperTest {
 //	*/		
 //	/* 카트 확인 */
 //
+//	@Test
+//	public void checkCartTest() throws Exception {
+//		
+//		String memberId = "user";
+//		Long swID = 262L;
+//		
+//		SwCartDto cart = new SwCartDto();
+//		cart.setId(memberId);
+//		cart.setGoods_swID(swID);
+//		SwCartDto resutlCart = mapper.checkCart(cart);
+//		System.out.println("결과 : " + resutlCart);
+//	}
+	
+	/* 장바구니 제거(주문 처리) */
 	@Test
-	public void checkCartTest() throws Exception {
+	public void deleteOrderCart() {
+		String id = "admin";
+		Long swID = 3201L;
 		
-		String memberId = "user";
-		Long swID = 262L;
+		SwCartDto dto = new SwCartDto();
+		dto.setId(id);;
+		dto.setGoods_swID(swID);
 		
-		SwCartDto cart = new SwCartDto();
-		cart.setId(memberId);
-		cart.setGoods_swID(swID);
-		SwCartDto resutlCart = mapper.checkCart(cart);
-		System.out.println("결과 : " + resutlCart);
+		mapper.deleteOrderCart(dto);
+		
 	}
-//	
+	
 }

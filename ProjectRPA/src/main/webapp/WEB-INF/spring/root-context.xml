@@ -23,7 +23,7 @@
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
 		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/> -->
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="book1"/>
+		<property name="username" value="kbh"/>
 		<property name="password" value="1234"/>
 	</bean>
 	
@@ -36,6 +36,28 @@
 	<bean id="sqlSessionFatory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	
+    <!-- navermail설정 -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+	    <property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
+	    <property name="port" value="465"/> <!-- 메이서버 포트번호 -->
+	    <property name="username" value="kbh25962@naver.com"/> <!-- 관리자 이메일 아이디 -->
+	    <property name="password" value="4YRMBCB91RVB"/> <!-- 2단계 보안 앱 비밀번호 생성-->
+	    												 <!-- 네이버는 메일탭에서 SMTP 수신설정 따로 해줘야함 -->
+	      <!-- 보안연결 SSL과 관련된 설정 -->
+	    <property name="javaMailProperties">
+		    <props>
+			    <prop key="mail.smtp.auth">true</prop>
+		     	<prop key="mail.smtp.starttls.enable">true</prop>
+			    <prop key="mail.smtps.checkserveridentity">true</prop>
+			    <prop key="mail.smtps.ssl.trust">*</prop>
+			    <prop key="mail.debug">true</prop>
+			    <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+		    </props>
+	    </property>
+    </bean>
+	
 	
 	<!-- Tx -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -51,6 +73,7 @@
 	<mybatis-spring:scan base-package="com.rpa.goods.sportswear.mapper" />
 	<mybatis-spring:scan base-package="com.rpa.user.mapper"/>
 	<mybatis-spring:scan base-package="com.rpa.pt.mapper"/>
+	<mybatis-spring:scan base-package="com.rpa.order.mapper"/>
 
 	<context:component-scan	base-package="com.rpa"></context:component-scan>
 	

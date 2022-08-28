@@ -22,4 +22,8 @@ public interface SwCartMapper {
 	/* 카트 확인 */
 	public SwCartDto checkCart(SwCartDto cart);
 	
+	/* 카트 제거(주문) */
+	//장바구니에서 주문한 경우, '주문 상품에 대한' '장바구니 상품 정보' 삭제하는 메서드.
+	int deleteOrderCart(SwCartDto dto);
+	
 }

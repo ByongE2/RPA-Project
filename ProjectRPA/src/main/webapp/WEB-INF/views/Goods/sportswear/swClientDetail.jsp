@@ -92,7 +92,7 @@
 			</div>
 			<!-- 주문 form -->
 			<form action="/order/${user.id}" method="get" class="order_form">
-				<input type="hidden" name="orders[0].goods_swID" value="${swInfo.goods_swID}">
+				<input type="hidden" name="orders[0].goods_swId" value="${swInfo.goods_swID}">
 				<input type="hidden" name="orders[0].goods_sw_Count" value="">
 			</form>	
 		</div>

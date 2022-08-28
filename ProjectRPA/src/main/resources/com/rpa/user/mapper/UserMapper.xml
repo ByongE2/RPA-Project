@@ -7,20 +7,41 @@
   
   <!-- 회원가입 -->
   <insert id="userJoin">
-     INSERT into MEMBER(id, pw, name, phone, address, email, grade)
-   values(#{id},#{pw},#{name},#{phone},#{address},#{email},0)
-   </insert>
+  	INSERT into 
+  		MEMBER
+  		(id, pw, name, email, address, address2, address3, grade, money, point, regDate)
+  	values
+  		(#{id},#{pw},#{name},#{email},#{address},#{address2},#{address3},#{grade},100000,5000,sysdate) 
+  </insert>
   
   <!-- id중복검사 -->
   <select id="userIDCheck" resultType="int">
-  	select count(*) from member where id=#{id,jdbcType=VARCHAR}
+  	select count(*) from member where id=#{id}
   </select>
   
+  <!-- 로그인 id만 체크 : pw는 bCrypt로 따로 체크-->
   <select id="userLogin" resultType="com.rpa.user.domain.UserDTO">
-  	select id, name, phone, address, email, grade
-  	from member
-  	where id=#{id,jdbcType=VARCHAR} and pw=#{pw,jdbcType=VARCHAR}
+  	select 
+  		id, pw, name, grade, money, point
+  	from 
+  		member
+  	where 
+  		id=#{id}
   </select>
+  
+  <!-- 주문자 정보 -->
+
+  <select id="getUserInfo" resultType="com.rpa.user.domain.UserDTO">
+	SELECT 
+		id, name, email, address, address2, address3, money, point
+	FROM 
+		member
+	WHERE 
+		id = #{id}
+  </select>
+  
+  
+  
   
   <select id="findId" resultType="com.rpa.user.domain.UserDTO">
   	select id from member where name=#{name} and phone=#{phone}

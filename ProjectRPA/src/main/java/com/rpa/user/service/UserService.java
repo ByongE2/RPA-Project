@@ -3,20 +3,27 @@ package com.rpa.user.service;
 import com.rpa.user.domain.UserDTO;
 
 public interface UserService {
-
-	public void userJoin(UserDTO user) throws Exception;
-
-	public int userIDCheck(String id) throws Exception;
 	
-	public UserDTO userLogin(UserDTO user) throws Exception;
+	//회원가입
+	void userJoin(UserDTO user) throws Exception;
+	
+	//아이디 중복 검사
+	int userIDCheck(String id) throws Exception;
+	
+	//로그인
+	UserDTO userLogin(UserDTO user) throws Exception;
 	
 	//id찾기
-	public UserDTO findId(UserDTO user) throws Exception;
+	UserDTO findId(UserDTO user) throws Exception;
 	
 	//pw찾기
-	public UserDTO findPw(UserDTO user) throws Exception;
+	UserDTO findPw(UserDTO user) throws Exception;
 	
 	//pw 바꾸기
-	public UserDTO updatePw(UserDTO user) throws Exception;
+	UserDTO updatePw(UserDTO user) throws Exception;
+	
+	//주문자 정보
+	UserDTO getUserInfo(String id);
+	
 	
 }

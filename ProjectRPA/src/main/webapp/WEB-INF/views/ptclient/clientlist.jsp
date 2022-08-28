@@ -29,7 +29,7 @@
 
 
 
-<button onclick="location.href='/ptclient/basket?client_id=${user.id}'">장바구니</button>
+<button onclick="location.href='/ptclient/basket?client_id=${user.id}'">구매 내역</button>
 <table border="1">
 	<tr>
 		<th>번호</th>

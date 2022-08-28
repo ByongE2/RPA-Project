@@ -56,4 +56,14 @@
 			goods_swID = #{goods_swID}
 	</select>
 	
+	<!-- 카트 제거(주문) -->
+	<delete id="deleteOrderCart">
+		delete from 
+			goods_cart 
+		where 
+			id = #{id} 
+		and 
+			goods_swID = #{goods_swID}
+	</delete>
+	
   </mapper>
