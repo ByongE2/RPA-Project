@@ -457,6 +457,11 @@ a{
 		<!-- class="top_area End -->
 		<div class="navi_bar_area">
 		<h1>navi area</h1>
+			<ul>
+				<li>
+					<a class="#" href="/goods/sportswear/list">상품 보기</a>
+				</li>
+			</ul>
 		</div>
 		<!-- navi_bar_area -->
 		<div class="content_area">

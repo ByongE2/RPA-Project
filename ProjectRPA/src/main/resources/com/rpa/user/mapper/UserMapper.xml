@@ -29,6 +29,20 @@
   		id=#{id}
   </select>
   
+  <!-- 주문자 정보 -->
+
+  <select id="getUserInfo" resultType="com.rpa.user.domain.UserDTO">
+	SELECT 
+		id, name, email, address, address2, address3, money, point
+	FROM 
+		member
+	WHERE 
+		id = #{id}
+  </select>
+  
+  
+  
+  
   <select id="findId" resultType="com.rpa.user.domain.UserDTO">
   	select id from member where name=#{name} and phone=#{phone}
   </select>

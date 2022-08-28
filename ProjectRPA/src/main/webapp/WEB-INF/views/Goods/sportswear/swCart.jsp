@@ -113,7 +113,7 @@
 									<input type="hidden" class="individual_totalPrice_input" value="${ci.salePrice * ci.goods_sw_Count}">
 									<input type="hidden" class="individual_point_input" value="포인트 추가">
 									<input type="hidden" class="individual_totalPoint_input" value="총 포인트 추가">
-									<input type="hidden" class="individual_goods_swID_input" value="${ci.goods_swID}">								
+									<input type="hidden" class="individual_goods_swId_input" value="${ci.goods_swID}">								
 								</td>
 								<td class="td_width_2">
 									<div class="image_wrap" 
@@ -235,7 +235,8 @@
 			</form>	
 
 
-			</div> <!-- content_area -->
+		</div> 
+		<!-- content_area End-->
 		
 		<!-- Footer 영역 -->
 		<div class="footer_nav">
@@ -418,10 +419,10 @@ $(".order_btn").on("click", function(){
 		
 		if($(element).find(".individual_cart_checkbox").is(":checked") === true){	// 체크여부(체크된 상품만 <input> 태그로 감싸도록)
 			
-			let goods_swID = $(element).find(".individual_goods_swID_input").val();
+			let goods_swId = $(element).find(".individual_goods_swId_input").val();
 			let goods_sw_Count = $(element).find(".individual_goods_sw_Count_input").val();
 			
-			let goods_swID_input = "<input name='orders[" + orderNumber + "].goods_swID' type='hidden' value='" + goods_swID + "'>";
+			let goods_swID_input = "<input name='orders[" + orderNumber + "].goods_swId' type='hidden' value='" + goods_swId + "'>";
 			form_contents += goods_swID_input;
 			
 			let goods_sw_Count_input = "<input name='orders[" + orderNumber + "].goods_sw_Count' type='hidden' value='" + goods_sw_Count + "'>";
