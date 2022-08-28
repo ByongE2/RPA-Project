@@ -50,3 +50,43 @@ create SEQUENCE seq_goods_cart;
 --유니크 제약
 alter table goods_cart add unique (id, goods_swId);
 
+
+--주문
+--주문 테이블
+create table rpa_order(
+    orderId varchar2(50) primary key,
+    addressee varchar2(50) not null,
+    id varchar2(20),
+    memberAddr1 varchar2(100) not null,
+    memberAddr2 varchar2(100) not null,
+    memberAddr3 varchar2(100) not null,
+    orderState varchar2(30) not null,
+    deliveryCost number not null,
+    usePoint number not null,
+    orderDate date default sysdate,
+    FOREIGN KEY(id)REFERENCES member(id)
+);
+-- 주문-상품 맵핑테이블
+CREATE table rpa_orderItem(
+    orderItemId number primary key,
+    orderId varchar2(50),
+    goods_swId number,
+    goods_sw_Count number not null, --상품수량
+    goods_swPrice number not null,
+    goods_swDiscount number not null,
+    savePoint number not null,
+    FOREIGN KEY(orderId) REFERENCES rpa_order(orderId),
+    FOREIGN KEY(goods_swId) REFERENCES goods_sportsWear(goods_swId)
+);
+create SEQUENCE seq_rpa_orderItem;
+
+
+ALTER table member DROP COLUMN phone;
+ALTER TABLE member ADD address2 VARCHAR(100) ;
+ALTER TABLE member ADD address3 VARCHAR(100) ;
+ALTER TABLE member ADD money number default 0 not null ;
+ALTER TABLE member ADD point number default 0 not null ;
+ALTER TABLE member MODIFY(pw VARCHAR2(60));
+
+
+

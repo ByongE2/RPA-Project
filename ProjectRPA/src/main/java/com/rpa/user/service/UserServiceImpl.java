@@ -70,16 +70,16 @@ public class UserServiceImpl implements UserService {
 	public UserDTO updatePw(UserDTO user) throws Exception {
 		return mapper.updatePw(user);
 	}
-
-	@Override
-	public int updateInfo(UserDTO user) throws Exception {
-		int result = mapper.updateInfo(user);
-		return result;
-	}
-
-	@Override
-	public UserDTO get(String id) throws Exception {
-		return mapper.get(id);
-	}
+//
+//	@Override
+//	public int updateInfo(UserDTO user) throws Exception {
+//		int result = mapper.updateInfo(user);
+//		return result;
+//	}
+//
+//	@Override
+//	public UserDTO get(String id) throws Exception {
+//		return mapper.get(id);
+//	}
 
 }

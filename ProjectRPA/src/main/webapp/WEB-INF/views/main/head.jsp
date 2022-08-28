@@ -40,13 +40,29 @@
                     <li class="menu"><a href="/main/Facility">시설소개</a> </li>
                     <li class="menu"><a href="/main/instructor">강사소개 </a></li>
                     <li class="menu"><a href="/ptclient/clientlist">pt예약</a></li>
-                    <li class="menu"><a href="#">상품</a></li>
+                    <li class="menu"><a href="/goods/sportswear/list">Goods</a></li>
                 </div>
-                <div class="login">
-                    <div class="loginclick">
-                        <button class="loginbutton">로그인</button>
-                    </div>        
-                </div>
+                
+           	 <div class="login_area">
+			<h1>Login area</h1>
+				<!-- 로그인 하지 않은 상태 -->
+				<c:if test = "${user == null }">
+					<div class="login_button"><a href="/user/login">Login</a></div>
+					<span><a href="/user/join">Register</a></span>				
+				</c:if>				
+				<!-- 로그인한 상태 -->
+				<c:if test="${ user != null }">
+					<div class="login_success_area">
+						<span>회원 : ${user.name}</span>
+						<span>충전금액 : <fmt:formatNumber value="${user.money }" pattern="\#,###.##"/></span>
+						<span>포인트 : <fmt:formatNumber value="${user.point }" pattern="#,###" /></span>
+						<a id="login_area_logout_button">로그아웃2</a>
+					</div>
+				</c:if>
+			</div>
+			<!-- class="login_area" End-->
+                
+                
             </ul>
             <!--로그인-->
             <!--네비게이션 밑에 공백-->
