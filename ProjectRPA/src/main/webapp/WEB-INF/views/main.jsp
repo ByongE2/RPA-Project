@@ -433,6 +433,8 @@ a{
 			</div>
 			<div class="search_area">
 			<h1>Search area</h1>
+			<img src="/resources/ptimg/2022081820210927_105642.jpg">
+			<img src="C:\upload/test.jpg">
 			</div>
 			<div class="login_area">
 			<h1>Login area</h1>

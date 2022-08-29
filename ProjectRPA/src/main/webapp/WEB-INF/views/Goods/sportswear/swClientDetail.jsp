@@ -24,7 +24,11 @@
 			</div>			
 			<div class="content_top">
 				<div class="ct_left_area">
-					<div class="image_wrap" data-swid ="${swInfo.imageList[0].goods_swID}" data-path="${swInfo.imageList[0].uploadPath}" data-uuid="${swInfo.imageList[0].uuid}" data-filename="${swInfo.imageList[0].fileName}">
+					<div class="image_wrap" 
+						data-swid ="${swInfo.imageList[0].goods_swID}" 
+						data-path="${swInfo.imageList[0].uploadPath}" 
+						data-uuid="${swInfo.imageList[0].uuid}" 
+						data-filename="${swInfo.imageList[0].fileName}">
 						<img>
 					</div>				
 				</div>

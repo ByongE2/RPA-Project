@@ -152,7 +152,7 @@ public class UserControllerImpl implements UserController {
 				loginDto.setPw("");						// loginDto에서 인코딩된 비밀번호 정보 지움
 				session.setAttribute("user", loginDto); // session에 사용자의 정보 저장
 
-				return "redirect:/main"; // 로그인 성공 메인페이지 이동
+				return "redirect:/main/main"; // 로그인 성공 메인페이지 이동
 			} else {													//1-2 비밀번호 불일치하면,
 				rttr.addFlashAttribute("result", 0);//0:실패 1:성공			
 				return "redirect:/user/login";	
@@ -174,7 +174,7 @@ public class UserControllerImpl implements UserController {
         
         session.invalidate();
         
-        return "redirect:/main";        
+        return "redirect:/main/main";        
     }//logoutMainGET
 	
 	/* 비동기방식 로그아웃 메서드 */
