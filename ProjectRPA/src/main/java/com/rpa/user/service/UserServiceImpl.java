@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 		return mapper.updatePw(user);
 	}
 
-	@Override
+	/*@Override
 	public int updateInfo(UserDTO user) throws Exception {
 		int result = mapper.updateInfo(user);
 		return result;
@@ -80,6 +80,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO get(String id) throws Exception {
 		return mapper.get(id);
-	}
+	}*/
 
 }

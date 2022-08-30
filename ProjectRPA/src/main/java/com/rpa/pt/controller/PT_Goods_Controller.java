@@ -50,7 +50,7 @@ public class PT_Goods_Controller {
 	
 	//글쓰기
 	@PostMapping("/ptregister")
-	public String ptregister(MultipartHttpServletRequest request ,RedirectAttributes rttr) throws IOException {
+	public String ptregister(MultipartHttpServletRequest request ,RedirectAttributes rttr,@RequestParam MultipartFile PT_photourl) throws IOException {
 		Pt_Goods_DTO dto= new  Pt_Goods_DTO();
 		dto.setPt_name(request.getParameter("pt_name"));
 		dto.setPT_title(request.getParameter("PT_title"));
@@ -59,22 +59,35 @@ public class PT_Goods_Controller {
 		dto.setPT_content(request.getParameter("PT_content"));
 		dto.setPT_State(request.getParameter("PT_State"));
 		
-		
+		System.out.println("파일 이름 : "+PT_photourl);
 		MultipartFile mf = request.getFile("PT_photourl");
 		
 		if(mf.getSize()!=0) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-			Calendar calender = Calendar.getInstance();
-			String sysfilename=format.format(calender.getTime());
 			
-			sysfilename +=mf.getOriginalFilename();
-			dto.setPT_photourl(sysfilename);
+			String path=request.getSession().getServletContext().getRealPath("resources");
+			System.out.println("리소스 경로 : "+path);
+			String root=path+"\\ptimg";
+			File file = new File(root);
+			if(!file.exists()) {
+				file.mkdir();
+			}
 			
-			File savefile = new File("*/ProjectRPA/src/main/webapp/resources/ptimg"+"/"+sysfilename);
+			String originfilename= mf.getOriginalFilename();
+			String ext=originfilename.substring(originfilename.lastIndexOf("."));
+			String ranfilename=UUID.randomUUID().toString()+ext;
+			File changeFile = new File(root+"\\"+ranfilename);
+			
+			
+			dto.setPT_photourl(root+"\\"+ranfilename);
+			
+
+			
 			try {
-				mf.transferTo(savefile);
-			}catch (Exception e) {
+				PT_photourl.transferTo(changeFile);
+				System.out.println("파일업로드 완료");
+			}catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
+				System.out.println("파일업로드 실패");
 			}
 			
 		}else {
@@ -95,7 +108,6 @@ public class PT_Goods_Controller {
 		System.out.println("( "+PT_no+" ) 번째 상품"+service.pt_get(PT_no));
 		model.addAttribute("pt_no", service.pt_get(PT_no));
 	}
-	
 	
 	
 	@GetMapping("/ptregister")

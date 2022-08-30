@@ -26,8 +26,8 @@ public interface UserService {
 	UserDTO getUserInfo(String id);
 	
 	
-	public int updateInfo(UserDTO user) throws Exception;
+/*	public int updateInfo(UserDTO user) throws Exception;
 	
 	public UserDTO get(String id) throws Exception;
-	
+	*/
 }

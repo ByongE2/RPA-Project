@@ -23,7 +23,7 @@
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
 		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/> -->
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="mybatis"/>
+		<property name="username" value="book1"/>
 		<property name="password" value="1234"/>
 	</bean>
 	
@@ -72,14 +72,9 @@
 	<mybatis-spring:scan base-package="com.rpa.admin.goods.sportswear.mapper" />
 	<mybatis-spring:scan base-package="com.rpa.goods.sportswear.mapper" />
 	<mybatis-spring:scan base-package="com.rpa.user.mapper"/>
-<<<<<<< HEAD
 	<mybatis-spring:scan base-package="com.rpa.notice.mapper"/>
-	
-=======
->>>>>>> e292de34fed0b064bd924015adcd9bf159930fc8
 	<mybatis-spring:scan base-package="com.rpa.pt.mapper"/>
 	<mybatis-spring:scan base-package="com.rpa.order.mapper"/>
-
 	<context:component-scan	base-package="com.rpa"></context:component-scan>
 	
 

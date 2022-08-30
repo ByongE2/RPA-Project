@@ -50,6 +50,8 @@
 </div>
 <div>
 	<label>상품 사진</label><input name="PT_photourl" readonly="readonly" value="${pt_no.PT_photourl}">
+	<img src="/resources/ptimg/2022081829_20201102223045.png">
+	<img src="${pt_no.PT_photourl }">
 </div>
 <div>
 	<label>캘린더 앞</label><input name="Calendar_before" readonly="readonly" value="${pt_no.calendar_before}">

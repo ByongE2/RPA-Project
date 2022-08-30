@@ -41,7 +41,7 @@
 	                      <a class="admin_list_02" href="/admin/goods/sportswear/list">상품 관리</a>
 	                  </li>
 	                  <lI>
-	                      <a class="admin_list_03" href="#">PT 관리</a>                            
+	                      <a class="admin_list_03" href="/ptproduct/list">PT 관리</a>                            
 	                  </lI>
 	                  <lI>
 	                      <a class="admin_list_05">회원 관리</a>                            
