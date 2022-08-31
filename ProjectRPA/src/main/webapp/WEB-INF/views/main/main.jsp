@@ -63,11 +63,21 @@
     <!--본문 끝-->
     <%@include file="../main/footer.jsp" %>
 </div>
-    
-	
-	
-	
 
 </div>
 </body>
+<!-- <script>
+/* gnb_area 로그아웃 버튼 작동 */
+$("#login_area_logout_button").click(function(){
+    //alert("버튼 작동");
+    $.ajax({
+        type:"POST",
+        url:"/user/logout",
+        success:function(data){
+            alert("로그아웃 성공");
+            document.location.reload(); // 새로고침해야 세션변화 반영     
+        } 
+    }); // ajax 
+}); // $("#gnb_logout_button").click(function()
+</script> -->
 </html>
