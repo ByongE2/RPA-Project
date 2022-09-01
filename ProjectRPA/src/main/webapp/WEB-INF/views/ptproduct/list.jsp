@@ -60,7 +60,7 @@ $(document).ready(function() {
 			<td> ${pt.PT_Price}</td>
 			<td>${pt.PT_code}</td>
 			<td><a href="/ptproduct/ptget?PT_no=${pt.PT_no }"> ${pt.PT_title}</a></td>
-			<td><img alt="이미지 없음"  src="${pt.PT_photourl}"></td>
+			<td><img alt="이미지 없음" style="width: 50px; height: 50px;" src="${pt.PT_photourl}"></td>
 			<td>${pt.calendar_before }</td>
 			<td>${pt. calendar_after}</td>
 			<!-- pt_no값을 못가져옴 -->

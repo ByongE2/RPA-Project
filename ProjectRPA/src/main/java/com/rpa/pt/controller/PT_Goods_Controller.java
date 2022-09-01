@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
@@ -50,7 +51,7 @@ public class PT_Goods_Controller {
 	
 	//글쓰기
 	@PostMapping("/ptregister")
-	public String ptregister(MultipartHttpServletRequest request ,RedirectAttributes rttr,@RequestParam MultipartFile PT_photourl) throws IOException {
+	public String ptregister(HttpServletRequest request ,RedirectAttributes rttr,@RequestParam MultipartFile PT_photourl) throws IOException {
 		Pt_Goods_DTO dto= new  Pt_Goods_DTO();
 		dto.setPt_name(request.getParameter("pt_name"));
 		dto.setPT_title(request.getParameter("PT_title"));
@@ -60,39 +61,31 @@ public class PT_Goods_Controller {
 		dto.setPT_State(request.getParameter("PT_State"));
 		
 		System.out.println("파일 이름 : "+PT_photourl);
-		MultipartFile mf = request.getFile("PT_photourl");
 		
-		if(mf.getSize()!=0) {
-			
-			String path=request.getSession().getServletContext().getRealPath("resources");
-			System.out.println("리소스 경로 : "+path);
-			String root=path+"\\ptimg";
-			File file = new File(root);
-			if(!file.exists()) {
-				file.mkdir();
-			}
-			
-			String originfilename= mf.getOriginalFilename();
-			String ext=originfilename.substring(originfilename.lastIndexOf("."));
-			String ranfilename=UUID.randomUUID().toString()+ext;
-			File changeFile = new File(root+"\\"+ranfilename);
-			
-			
+		
+		String path = "C:\\Users\\kkao4\\Desktop\\RPA-project\\jeahyun\\ProjectRPA\\src\\main\\webapp\\resources";
+		System.out.println("패치 경로 : "+path);
+		String root = path+"\\ptimg";
+		
+		File file = new File(root);
+		if(!file.exists())file.mkdir();
+		
+		String originfilename = PT_photourl.getOriginalFilename();
+		String ext = originfilename.substring(originfilename.lastIndexOf("."));
+		String ranfilename = UUID.randomUUID().toString()+ext;
+		File changefile = new File(root+"\\"+ranfilename);
+		
+		
 			dto.setPT_photourl(root+"\\"+ranfilename);
-			
-
-			
 			try {
-				PT_photourl.transferTo(changeFile);
+				PT_photourl.transferTo(changefile);
 				System.out.println("파일업로드 완료");
 			}catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 				System.out.println("파일업로드 실패");
 			}
 			
-		}else {
-			dto.setPT_photourl("nan");
-		}
+		
 		
 		System.out.println("글쓰기 들어옴"+dto);
 		rttr.addFlashAttribute("result",dto.getPT_no());

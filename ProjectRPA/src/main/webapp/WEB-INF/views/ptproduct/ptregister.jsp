@@ -71,7 +71,7 @@
 	<br>
 	<br>
 
-
+	
 	<div style="width: 60%; margin: auto;">
 		<form id="articleForm" role="form" enctype="multipart/form-data" method="post" action="/ptproduct/ptregister">
 			<input type="text" name="PT_title" style="width: 40%;" placeholder="제목" /><br>
